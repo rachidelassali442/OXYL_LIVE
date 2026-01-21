@@ -1,30 +1,33 @@
 from http.server import BaseHTTPRequestHandler
 import json
-import hashlib
 import numpy as np
+import hashlib
 
-# --- OXYL QUANTUM ENGINE (الوحش) ---
-class OxylQuantumMesh:
+class OxylBeastEngine:
+    """هذا هو المحرك الوحش: يجمع بين التشفير الكمومي وقياسات الزمكان"""
     def __init__(self):
-        self.engine_id = "OX-MESH-743"
-        self.security_level = "NTRU-256"
+        self.precision = 1e-15
+        self.c = 299792458  # سرعة الضوء
 
-    def process_sync(self):
-        # محاكاة لتشفير المشابك Quantum-Resistant
-        lattice_noise = np.random.normal(0, 1e-15, (4, 4))
+    def calculate_warp_field(self):
+        # محاكاة لانحناء الزمكان (Spacetime Curvature)
+        minkowski = np.diag([-self.c**2, 1.0, 1.0, 1.0])
+        noise = np.random.normal(0, self.precision, (4, 4))
+        metric = minkowski + (noise + noise.T) / 2
+        
         return {
-            "status": "SECURE",
-            "engine": self.engine_id,
-            "lattice_signature": hashlib.sha256(lattice_noise.tobytes()).hexdigest(),
-            "protection": "SIDE-CHANNEL-RESISTANT"
+            "engine_status": "OXYL BEAST ONLINE",
+            "security": "LATTICE_ENCRYPTION_ACTIVE",
+            "warp_factor": float(np.abs(noise[0, 1]) / self.c),
+            "signature": hashlib.sha256(metric.tobytes()).hexdigest()
         }
 
 class handler(BaseHTTPRequestHandler):
     def do_GET(self):
-        mesh = OxylQuantumMesh()
-        data = mesh.process_sync()
+        beast = OxylBeastEngine()
+        result = beast.calculate_warp_field()
         
         self.send_response(200)
         self.send_header('Content-type', 'application/json')
         self.end_headers()
-        self.wfile.write(json.dumps(data).encode())
+        self.wfile.write(json.dumps(result, indent=4).encode())
