@@ -5,28 +5,26 @@ from supabase import create_client
 
 class handler(BaseHTTPRequestHandler):
     def do_GET(self):
-        # جلب الروابط من Vercel Environment
+        # هاد المرة غيجيبهم من السيستيم نيشان
         url = os.environ.get("SUPABASE_URL")
         key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
         
         try:
-            # الربط مع الوحش
+            if not url or not key:
+                raise ValueError("Environment variables not found in Production")
+                
             supabase = create_client(url, key)
-            
-            # جلب معلومات السيرفر للتأكد من الاتصال
-            # غنحاولوا نقرأوا أي داتا بسيطة
+            # تجربة بسيطة للاتصال
             data = {
                 "status": "OXYL BEAST ONLINE",
-                "infrastructure": "SUPABASE_ACTIVE",
-                "project_id": "nyzbxuejffqeullueydm",
-                "sync_engine": "v3.0.1-Stable",
-                "message": "Welcome to the future of Oxyl."
+                "infrastructure": "SUPABASE_CONNECTED",
+                "database_url": url[:20] + "...",
+                "message": "System is now fully operational."
             }
         except Exception as e:
             data = {
-                "status": "CONNECTING...",
-                "error": str(e),
-                "hint": "Wait for provisioning to finish"
+                "status": "CONNECTION_ERROR",
+                "error": str(e)
             }
 
         self.send_response(200)
