@@ -1,13 +1,5 @@
 {
   "version": 2,
-  "public": true,
   "cleanUrls": true,
-  "redirects": [
-    { "source": "/old-whitepaper", "destination": "/whitepaper", "permanent": true }
-  ],
-  "rewrites": [
-    { "source": "/whitepaper", "destination": "/whitepaper.html" },
-    { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
-    { "source": "/((?!api/|whitepaper|sitemap.xml).*).*", "destination": "/index.html" }
-  ]
+  "trailingSlash": true
 }
