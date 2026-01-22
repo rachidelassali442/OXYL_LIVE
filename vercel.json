@@ -1,13 +1,13 @@
 {
   "version": 2,
+  "public": true,
   "cleanUrls": true,
-  "trailingSlash": false,
-  "rules": [
-    { "handle": "filesystem" }
+  "redirects": [
+    { "source": "/old-whitepaper", "destination": "/whitepaper", "permanent": true }
   ],
   "rewrites": [
-    { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
     { "source": "/whitepaper", "destination": "/whitepaper.html" },
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
+    { "source": "/((?!api/|whitepaper|sitemap.xml).*).*", "destination": "/index.html" }
   ]
 }
