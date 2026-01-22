@@ -1,9 +1,13 @@
 {
   "version": 2,
   "cleanUrls": true,
+  "trailingSlash": false,
+  "rules": [
+    { "handle": "filesystem" }
+  ],
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/index.py" },
     { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
-    { "source": "/whitepaper", "destination": "/whitepaper.html" }
+    { "source": "/whitepaper", "destination": "/whitepaper.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
