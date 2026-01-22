@@ -3,41 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OXYL | NASA-STYLE QUANTUM SYNC ENGINE</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>OXYL OS | Quantum Control Center</title>
     <style>
-        /* ===== NASA CYBERPUNK THEME ===== */
         :root {
-            --nasablue: #0066cc;
-            --nasacyan: #00ccff;
-            --neoncyan: #00ffff;
-            --deepspace: #0a0a1a;
-            --cockpit-gray: #1a1a2e;
-            --panel-dark: #0f0f1f;
-            --warning-red: #ff3366;
-            --warning-yellow: #ffcc00;
-            --success-green: #00ff99;
-            --quantum-purple: #9966ff;
-            --glow-blue: rgba(0, 204, 255, 0.7);
-            --glow-cyan: rgba(0, 255, 255, 0.5);
+            --neon-green: #00ff41;
+            --dark-green: #00cc34;
+            --matrix-green: #00ff88;
+            --cyber-blue: #00f2ff;
+            --deep-black: #0a0a0a;
+            --dark-gray: #121212;
+            --medium-gray: #1a1a1a;
+            --light-gray: #333333;
+            --warning-red: #ff0040;
+            --alert-yellow: #ffff55;
+            --success-green: #00ff88;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Courier New', 'Consolas', 'Monaco', monospace;
+            font-family: 'Courier New', 'Monaco', monospace;
         }
 
         body {
-            background-color: var(--deepspace);
-            color: var(--nasacyan);
-            min-height: 100vh;
+            background-color: var(--deep-black);
+            color: var(--neon-green);
             overflow-x: hidden;
+            min-height: 100vh;
             position: relative;
         }
 
-        /* NASA Background with Stars and Grid */
+        /* Atomic Pulse Background */
         body::before {
             content: '';
             position: fixed;
@@ -46,1273 +43,912 @@
             width: 100%;
             height: 100%;
             background: 
-                radial-gradient(circle at 20% 30%, rgba(0, 102, 204, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(0, 255, 255, 0.03) 0%, transparent 50%),
-                linear-gradient(90deg, transparent 49%, rgba(0, 204, 255, 0.1) 50%, transparent 51%),
-                linear-gradient(0deg, transparent 49%, rgba(0, 204, 255, 0.1) 50%, transparent 51%);
-            background-size: 100% 100%, 100% 100%, 100px 100px, 100px 100px;
-            z-index: -2;
+                radial-gradient(circle at 20% 30%, rgba(0, 255, 65, 0.03) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(0, 242, 255, 0.02) 0%, transparent 40%),
+                radial-gradient(circle at 40% 80%, rgba(0, 255, 136, 0.02) 0%, transparent 40%);
+            pointer-events: none;
+            z-index: -1;
         }
 
-        /* Starfield Animation */
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(2px 2px at 20px 30px, var(--neoncyan), transparent),
-                radial-gradient(2px 2px at 40px 70px, var(--nasacyan), transparent),
-                radial-gradient(1px 1px at 90px 40px, white, transparent),
-                radial-gradient(1px 1px at 130px 80px, var(--nasacyan), transparent),
-                radial-gradient(2px 2px at 160px 20px, white, transparent),
-                radial-gradient(1px 1px at 200px 60px, var(--neoncyan), transparent);
-            background-repeat: repeat;
-            background-size: 250px 250px;
-            z-index: -2;
-            opacity: 0.5;
-            animation: twinkle 4s infinite alternate;
+        /* Atomic Pulse Animation */
+        @keyframes atomicPulse {
+            0%, 100% { 
+                opacity: 0.5; 
+                transform: scale(1);
+            }
+            50% { 
+                opacity: 1; 
+                transform: scale(1.1);
+            }
         }
 
-        @keyframes twinkle {
+        @keyframes pulse {
             0%, 100% { opacity: 0.3; }
             50% { opacity: 0.8; }
         }
 
-        /* CRT Flicker Effect */
-        .crt-flicker {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                rgba(18, 16, 16, 0) 50%, 
-                rgba(0, 0, 0, 0.25) 50%
-            );
-            background-size: 100% 4px;
-            z-index: 9999;
-            pointer-events: none;
-            opacity: 0.15;
-            animation: flicker 0.15s infinite;
-        }
-
-        @keyframes flicker {
-            0% { opacity: 0.1; }
-            50% { opacity: 0.15; }
-            100% { opacity: 0.1; }
-        }
-
-        /* Main Container - NASA Cockpit Layout */
-        .cockpit-container {
+        /* Main Container */
+        .container {
             display: grid;
-            grid-template-columns: 300px 1fr 350px;
-            grid-template-rows: auto 1fr auto;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto auto auto;
             gap: 20px;
             padding: 20px;
-            max-width: 2000px;
+            max-width: 1800px;
             margin: 0 auto;
             min-height: 100vh;
         }
 
-        /* ===== NASA HEADER ===== */
-        .nasa-header {
+        /* Header */
+        .header {
             grid-column: 1 / -1;
             text-align: center;
-            padding: 25px;
-            background: linear-gradient(to bottom, rgba(0, 51, 102, 0.3), rgba(0, 0, 0, 0.7));
-            border: 2px solid var(--nasablue);
-            border-radius: 10px;
+            padding: 30px 20px;
+            border-bottom: 2px solid var(--neon-green);
+            margin-bottom: 20px;
             position: relative;
             overflow: hidden;
-            margin-bottom: 10px;
-            box-shadow: 
-                0 0 30px rgba(0, 102, 204, 0.3),
-                inset 0 0 20px rgba(0, 204, 255, 0.1);
         }
 
-        .nasa-header::before {
+        .header::before {
             content: '';
             position: absolute;
             top: 0;
             left: -100%;
-            width: 100%;
+            width: 200%;
             height: 100%;
             background: linear-gradient(
                 90deg,
                 transparent,
-                rgba(0, 204, 255, 0.2),
+                rgba(0, 255, 65, 0.1),
                 transparent
             );
-            animation: nasa-scan 3s linear infinite;
+            animation: scanline 3s linear infinite;
         }
 
-        @keyframes nasa-scan {
+        @keyframes scanline {
             0% { transform: translateX(-100%); }
-            100% { transform: translateX(200%); }
+            100% { transform: translateX(100%); }
         }
 
-        .nasa-header h1 {
-            font-size: 3.2rem;
+        .header h1 {
+            font-size: 3.5rem;
             text-transform: uppercase;
             letter-spacing: 4px;
-            color: var(--neoncyan);
             text-shadow: 
-                0 0 15px var(--glow-cyan),
-                0 0 30px rgba(0, 255, 255, 0.3);
+                0 0 10px var(--neon-green),
+                0 0 20px var(--neon-green),
+                0 0 30px var(--neon-green);
             margin-bottom: 10px;
-            font-weight: 900;
-            position: relative;
+            animation: atomicPulse 2s ease-in-out infinite;
         }
 
-        .nasa-header h2 {
-            font-size: 1.3rem;
-            color: var(--nasacyan);
+        .header h2 {
+            font-size: 1.2rem;
+            color: var(--cyber-blue);
             letter-spacing: 3px;
-            font-weight: 300;
+            font-weight: normal;
         }
 
-        .nasa-badge {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            background: rgba(0, 51, 102, 0.7);
-            border: 1px solid var(--nasablue);
-            padding: 8px 15px;
-            border-radius: 5px;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 0 10px rgba(0, 102, 204, 0.3);
-        }
-
-        /* ===== CONTROL PANELS ===== */
-        .control-panel {
-            background: linear-gradient(to bottom, rgba(26, 26, 46, 0.9), rgba(15, 15, 31, 0.95));
-            border: 1px solid var(--nasablue);
+        /* Dashboard Cards */
+        .dashboard-card {
+            background: rgba(18, 18, 18, 0.85);
+            border: 1px solid var(--light-gray);
             border-radius: 8px;
             padding: 25px;
             position: relative;
             overflow: hidden;
-            box-shadow: 
-                inset 0 0 20px rgba(0, 0, 0, 0.5),
-                0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
         }
 
-        .control-panel::before {
+        .dashboard-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             height: 3px;
-            background: linear-gradient(90deg, var(--nasablue), var(--nasacyan));
-            animation: pulse-glow 2s infinite alternate;
+            background: linear-gradient(90deg, var(--neon-green), var(--cyber-blue));
+            animation: pulse 2s ease-in-out infinite;
         }
 
-        @keyframes pulse-glow {
-            0% { opacity: 0.5; box-shadow: 0 0 10px var(--nasablue); }
-            100% { opacity: 1; box-shadow: 0 0 20px var(--nasacyan); }
+        .dashboard-card:hover {
+            border-color: var(--neon-green);
+            box-shadow: 
+                0 0 20px rgba(0, 255, 65, 0.2),
+                inset 0 0 20px rgba(0, 255, 65, 0.1);
+            transform: translateY(-2px);
         }
 
-        .panel-title {
+        .card-title {
             font-size: 1.4rem;
-            color: var(--nasacyan);
-            margin-bottom: 25px;
+            color: var(--cyber-blue);
+            margin-bottom: 20px;
             text-transform: uppercase;
             letter-spacing: 2px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            border-bottom: 1px solid rgba(0, 204, 255, 0.3);
-            padding-bottom: 10px;
-        }
-
-        .panel-title i {
-            font-size: 1.6rem;
-            color: var(--neoncyan);
-        }
-
-        /* ===== LEFT SIDEBAR: QUANTUM ATOM VISUALIZER ===== */
-        #quantum-atom {
-            grid-column: 1;
-            grid-row: 2;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .atom-container {
-            position: relative;
-            width: 250px;
-            height: 250px;
-            margin: 20px auto;
-        }
-
-        .nucleus {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 40px;
-            height: 40px;
-            background: radial-gradient(circle, var(--quantum-purple), transparent);
-            border-radius: 50%;
-            animation: quantum-pulse 3s infinite ease-in-out;
-            box-shadow: 
-                0 0 40px var(--quantum-purple),
-                0 0 80px rgba(153, 102, 255, 0.3);
-            z-index: 2;
-        }
-
-        @keyframes quantum-pulse {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); }
-            50% { transform: translate(-50%, -50%) scale(1.1); }
-        }
-
-        .quantum-orbit {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            border: 1px solid rgba(0, 255, 255, 0.3);
-            border-radius: 50%;
-            animation: orbit-rotate linear infinite;
-        }
-
-        .quantum-electron {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background: var(--neoncyan);
-            border-radius: 50%;
-            top: -5px;
-            left: 50%;
-            transform: translateX(-50%);
-            box-shadow: 
-                0 0 15px var(--neoncyan),
-                0 0 30px rgba(0, 255, 255, 0.5);
-        }
-
-        .orbit-1 { width: 180px; height: 180px; animation-duration: 12s; }
-        .orbit-2 { width: 140px; height: 140px; animation-duration: 10s; animation-direction: reverse; }
-        .orbit-3 { width: 100px; height: 100px; animation-duration: 8s; }
-
-        @keyframes orbit-rotate {
-            from { transform: translate(-50%, -50%) rotate(0deg); }
-            to { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-
-        .atom-stats {
-            text-align: center;
-            margin-top: 20px;
-            width: 100%;
-        }
-
-        .atom-stat {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(0, 204, 255, 0.2);
-        }
-
-        .stat-label {
-            color: var(--nasacyan);
-            font-size: 0.9rem;
-        }
-
-        .stat-value {
-            color: var(--neoncyan);
-            font-weight: bold;
-            text-shadow: 0 0 5px currentColor;
-        }
-
-        /* ===== CENTER PANEL: ENGINE CONTROLS ===== */
-        #engine-controls {
-            grid-column: 2;
-            grid-row: 2;
-        }
-
-        .controls-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .control-button {
-            background: linear-gradient(to bottom, rgba(0, 51, 102, 0.7), rgba(0, 0, 0, 0.9));
-            border: 1px solid var(--nasablue);
-            border-radius: 6px;
-            padding: 25px 15px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .control-button:hover {
-            border-color: var(--neoncyan);
-            transform: translateY(-3px);
-            box-shadow: 
-                0 5px 20px rgba(0, 255, 255, 0.3),
-                inset 0 0 20px rgba(0, 255, 255, 0.1);
-        }
-
-        .control-button.active {
-            background: linear-gradient(to bottom, rgba(0, 102, 204, 0.8), rgba(0, 0, 0, 0.9));
-            border-color: var(--warning-yellow);
-            box-shadow: 
-                0 0 30px rgba(255, 204, 0, 0.4),
-                inset 0 0 20px rgba(255, 204, 0, 0.1);
-        }
-
-        .control-icon {
-            font-size: 2.5rem;
-            color: var(--nasacyan);
-            margin-bottom: 15px;
-            transition: all 0.3s ease;
-        }
-
-        .control-button:hover .control-icon {
-            color: var(--neoncyan);
-            transform: scale(1.1);
-        }
-
-        .control-label {
-            font-size: 1.1rem;
-            color: white;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-        }
-
-        .control-desc {
-            font-size: 0.8rem;
-            color: var(--nasacyan);
-            opacity: 0.8;
-        }
-
-        /* Real-time Variables Display */
-        .variables-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .variable-item {
-            background: rgba(0, 30, 60, 0.5);
-            border: 1px solid rgba(0, 102, 204, 0.3);
-            border-radius: 6px;
-            padding: 15px;
-            text-align: center;
-        }
-
-        .variable-label {
-            font-size: 0.9rem;
-            color: var(--nasacyan);
-            text-transform: uppercase;
-            margin-bottom: 8px;
-            letter-spacing: 1px;
-        }
-
-        .variable-value {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: var(--neoncyan);
-            text-shadow: 0 0 10px currentColor;
-            font-family: 'Courier New', monospace;
-        }
-
-        .variable-unit {
-            font-size: 0.8rem;
-            color: var(--nasacyan);
-            margin-left: 5px;
-        }
-
-        /* ===== RIGHT SIDEBAR: NASA TERMINAL ===== */
-        #nasa-terminal {
-            grid-column: 3;
-            grid-row: 2;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .terminal-wrapper {
-            flex: 1;
-            background: rgba(10, 10, 20, 0.95);
-            border: 1px solid var(--nasablue);
-            border-radius: 6px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .terminal-header {
-            background: linear-gradient(to right, rgba(0, 51, 102, 0.9), rgba(0, 0, 0, 0.7));
-            padding: 12px 20px;
-            border-bottom: 1px solid var(--nasablue);
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .terminal-dots {
-            display: flex;
-            gap: 8px;
+        .card-title i {
+            font-size: 1.6rem;
         }
 
-        .terminal-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
-
-        .dot-red { background: #ff3366; }
-        .dot-yellow { background: #ffcc00; }
-        .dot-green { background: #00ff99; }
-
-        .terminal-title {
-            color: var(--nasacyan);
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-            margin-left: 10px;
-        }
-
-        .terminal-content {
-            flex: 1;
-            padding: 15px;
-            overflow-y: auto;
-            font-family: 'Courier New', monospace;
-            font-size: 0.85rem;
-            line-height: 1.5;
-            background: rgba(0, 0, 0, 0.7);
-        }
-
-        .log-entry {
-            margin-bottom: 8px;
-            padding: 8px 10px;
-            border-left: 3px solid var(--nasablue);
-            background: linear-gradient(to right, rgba(0, 51, 102, 0.1), transparent);
-            animation: log-fade 0.5s ease;
-        }
-
-        @keyframes log-fade {
-            from { opacity: 0; transform: translateX(-10px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        .log-time {
-            color: var(--warning-yellow);
-            margin-right: 10px;
-            font-size: 0.8rem;
-        }
-
-        .log-message {
-            color: var(--nasacyan);
-        }
-
-        .log-message.command { color: var(--success-green); }
-        .log-message.error { color: var(--warning-red); }
-        .log-message.warning { color: var(--warning-yellow); }
-
-        /* ===== FOOTER: SYSTEM STATUS ===== */
-        .system-status {
-            grid-column: 1 / -1;
-            grid-row: 3;
-            background: linear-gradient(to right, rgba(0, 51, 102, 0.3), rgba(0, 0, 0, 0.7));
-            border: 1px solid var(--nasablue);
-            border-radius: 8px;
-            padding: 20px;
-            margin-top: 10px;
+        /* Status Dashboard */
+        #status-dashboard {
+            grid-column: 1;
+            grid-row: 2;
         }
 
         .status-grid {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
         }
 
         .status-item {
-            text-align: center;
+            background: rgba(26, 26, 26, 0.7);
             padding: 15px;
-            background: rgba(0, 30, 60, 0.5);
             border-radius: 6px;
-            border: 1px solid rgba(0, 102, 204, 0.3);
-            transition: all 0.3s ease;
+            border-left: 4px solid var(--neon-green);
         }
 
-        .status-item:hover {
-            border-color: var(--nasacyan);
-            box-shadow: 0 0 15px rgba(0, 204, 255, 0.2);
-        }
-
-        .status-name {
+        .status-label {
             font-size: 0.9rem;
-            color: var(--nasacyan);
+            color: var(--matrix-green);
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .status-value {
             font-size: 1.8rem;
             font-weight: bold;
-            color: var(--neoncyan);
             text-shadow: 0 0 10px currentColor;
+        }
+
+        .status-good { color: var(--success-green); }
+        .status-warning { color: var(--alert-yellow); animation: pulse 1s infinite; }
+        .status-critical { color: var(--warning-red); animation: pulse 0.5s infinite; }
+
+        /* Live Log Stream */
+        #log-stream {
+            grid-column: 2;
+            grid-row: 2 / span 2;
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .log-container {
+            flex: 1;
+            background: rgba(10, 10, 10, 0.9);
+            border: 1px solid var(--light-gray);
+            border-radius: 6px;
+            padding: 15px;
+            overflow-y: auto;
             font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            margin-top: 10px;
         }
 
-        .status-indicator {
-            width: 10px;
-            height: 10px;
+        .log-entry {
+            margin-bottom: 8px;
+            padding: 5px 10px;
+            border-left: 2px solid var(--neon-green);
+            background: rgba(0, 255, 65, 0.05);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .log-timestamp {
+            color: var(--cyber-blue);
+            margin-right: 10px;
+        }
+
+        .log-message {
+            color: var(--matrix-green);
+        }
+
+        /* Quantum Connectivity Visualizer */
+        #quantum-visualizer {
+            grid-column: 1;
+            grid-row: 3;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .visualizer-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+        }
+
+        .atom-core {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, var(--neon-green), transparent);
             border-radius: 50%;
-            display: inline-block;
-            margin-right: 8px;
-            vertical-align: middle;
-            animation: status-pulse 2s infinite;
+            animation: atomicPulse 2s ease-in-out infinite;
+            box-shadow: 
+                0 0 30px var(--neon-green),
+                0 0 60px rgba(0, 255, 65, 0.3);
         }
 
-        .status-online { background: var(--success-green); }
-        .status-warning { background: var(--warning-yellow); }
-        .status-critical { background: var(--warning-red); }
-
-        @keyframes status-pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+        .electron-orbit {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px solid rgba(0, 255, 65, 0.3);
+            border-radius: 50%;
+            animation: rotate 20s linear infinite;
         }
 
-        /* ===== RESPONSIVE DESIGN ===== */
-        @media (max-width: 1400px) {
-            .cockpit-container {
+        .electron {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: var(--cyber-blue);
+            border-radius: 50%;
+            top: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 
+                0 0 10px var(--cyber-blue),
+                0 0 20px rgba(0, 242, 255, 0.5);
+        }
+
+        @keyframes rotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .orbit-1 { width: 200px; height: 200px; animation-duration: 15s; }
+        .orbit-2 { width: 150px; height: 150px; animation-duration: 12s; animation-direction: reverse; }
+        .orbit-3 { width: 100px; height: 100px; animation-duration: 10s; }
+
+        .connectivity-stats {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--cyber-blue);
+            text-shadow: 0 0 10px currentColor;
+        }
+
+        /* Infrastructure Map */
+        #infrastructure-map {
+            grid-column: 1;
+            grid-row: 4;
+        }
+
+        .infrastructure-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .infra-node {
+            background: rgba(26, 26, 26, 0.7);
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            border: 1px solid var(--light-gray);
+            transition: all 0.3s ease;
+        }
+
+        .infra-node:hover {
+            border-color: var(--cyber-blue);
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
+        }
+
+        .node-status {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin: 0 auto 10px;
+            background: var(--success-green);
+            box-shadow: 0 0 10px currentColor;
+        }
+
+        .node-status.offline { background: var(--warning-red); }
+        .node-status.degraded { background: var(--alert-yellow); }
+
+        /* Latency Monitor */
+        #latency-monitor {
+            grid-column: 2;
+            grid-row: 4;
+        }
+
+        .latency-chart {
+            height: 200px;
+            margin-top: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .latency-bar {
+            position: absolute;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to top, var(--neon-green), transparent);
+            transition: all 0.3s ease;
+        }
+
+        /* Data Packet Display */
+        #data-packet {
+            grid-column: 1 / -1;
+            grid-row: 5;
+            margin-top: 20px;
+        }
+
+        .packet-display {
+            background: rgba(10, 10, 10, 0.9);
+            border: 1px solid var(--light-gray);
+            border-radius: 6px;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            margin-top: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .json-key { color: var(--cyber-blue); }
+        .json-string { color: var(--matrix-green); }
+        .json-number { color: var(--alert-yellow); }
+        .json-boolean { color: var(--warning-red); }
+
+        /* Footer */
+        .footer {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid var(--light-gray);
+            margin-top: 20px;
+            color: var(--matrix-green);
+            font-size: 0.9rem;
+        }
+
+        .update-timer {
+            color: var(--cyber-blue);
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .container {
                 grid-template-columns: 1fr;
-                grid-template-rows: auto auto auto auto auto;
             }
             
-            #quantum-atom,
-            #engine-controls,
-            #nasa-terminal {
+            #status-dashboard,
+            #log-stream,
+            #quantum-visualizer,
+            #infrastructure-map,
+            #latency-monitor,
+            #data-packet {
                 grid-column: 1;
             }
             
-            #quantum-atom { grid-row: 2; }
-            #engine-controls { grid-row: 3; }
-            #nasa-terminal { grid-row: 4; }
-            .system-status { grid-row: 5; }
-            
-            .controls-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .variables-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            
-            .status-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
+            #log-stream { grid-row: 3; }
+            #quantum-visualizer { grid-row: 4; }
+            #infrastructure-map { grid-row: 5; }
+            #latency-monitor { grid-row: 6; }
+            #data-packet { grid-row: 7; }
         }
 
         @media (max-width: 768px) {
-            .nasa-header h1 {
-                font-size: 2.2rem;
+            .header h1 {
+                font-size: 2.5rem;
             }
             
-            .controls-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .variables-grid {
+            .status-grid,
+            .infrastructure-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
             
-            .status-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .visualizer-container {
+                width: 250px;
+                height: 250px;
             }
             
-            .atom-container {
-                width: 200px;
-                height: 200px;
-            }
-            
-            .orbit-1 { width: 140px; height: 140px; }
-            .orbit-2 { width: 110px; height: 110px; }
+            .orbit-1 { width: 160px; height: 160px; }
+            .orbit-2 { width: 120px; height: 120px; }
             .orbit-3 { width: 80px; height: 80px; }
         }
 
         @media (max-width: 480px) {
-            .nasa-header h1 {
+            .header h1 {
                 font-size: 1.8rem;
             }
             
-            .variables-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .status-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .control-panel {
+            .dashboard-card {
                 padding: 15px;
+            }
+            
+            .status-grid,
+            .infrastructure-grid {
+                grid-template-columns: 1fr;
             }
         }
 
-        /* Loading Animation */
-        .loading {
+        /* Loading Spinner */
+        .spinner {
             display: inline-block;
             width: 20px;
             height: 20px;
-            border: 2px solid rgba(0, 204, 255, 0.3);
-            border-top-color: var(--neoncyan);
+            border: 2px solid rgba(0, 255, 65, 0.3);
+            border-top-color: var(--neon-green);
             border-radius: 50%;
             animation: spin 1s linear infinite;
             vertical-align: middle;
-            margin-right: 8px;
+            margin-right: 10px;
         }
 
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
 
-        /* NASA Connection Status */
-        .nasa-connection {
+        /* Connection Status */
+        .connection-status {
             position: fixed;
             top: 20px;
             right: 20px;
-            background: rgba(0, 51, 102, 0.9);
-            border: 1px solid var(--nasablue);
-            border-radius: 4px;
             padding: 10px 20px;
+            background: rgba(18, 18, 18, 0.9);
+            border: 1px solid var(--neon-green);
+            border-radius: 4px;
             font-size: 0.9rem;
+            z-index: 1000;
             display: flex;
             align-items: center;
             gap: 10px;
-            z-index: 1000;
-            box-shadow: 0 0 15px rgba(0, 102, 204, 0.3);
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
         }
 
-        .connection-dot {
-            width: 8px;
-            height: 8px;
+        .status-dot {
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
             background: var(--success-green);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        /* Scrollbar Styling */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: rgba(0, 30, 60, 0.3);
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--nasablue);
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--nasacyan);
+            animation: pulse 2s ease-in-out infinite;
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- CRT Flicker Effect -->
-    <div class="crt-flicker"></div>
-
-    <!-- NASA Connection Status -->
-    <div class="nasa-connection">
-        <div class="connection-dot"></div>
-        <span>NASA LINK: <span id="connection-status">ESTABLISHED</span></span>
+    <!-- Connection Status Indicator -->
+    <div class="connection-status">
+        <div class="status-dot"></div>
+        <span>Quantum Link: <span id="connection-status">ESTABLISHED</span></span>
     </div>
 
-    <!-- Main Cockpit Container -->
-    <div class="cockpit-container">
-        <!-- NASA Header -->
-        <header class="nasa-header">
-            <h1><i class="fas fa-satellite"></i> OXYL QUANTUM SYNC ENGINE</h1>
-            <h2>NASA-STYLE COCKPIT INTERFACE | REAL-TIME QUANTUM CONTROL</h2>
-            <div class="nasa-badge">
-                <i class="fas fa-shield-alt"></i>
-                <span>SECURITY LEVEL: QUANTUM</span>
-            </div>
-        </header>
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1><i class="fas fa-atom"></i> OXYL OS QUANTUM CONTROL CENTER</h1>
+            <h2>REAL-TIME SPACETIME TELEMETRY & QUANTUM SYNCHRONIZATION</h2>
+        </div>
 
-        <!-- Left Panel: Quantum Atom Visualizer -->
-        <section class="control-panel" id="quantum-atom">
-            <div class="panel-title">
-                <i class="fas fa-atom"></i>
-                QUANTUM ATOM VISUALIZER
+        <!-- Status Dashboard -->
+        <div class="dashboard-card" id="status-dashboard">
+            <div class="card-title">
+                <i class="fas fa-heartbeat"></i>
+                SYSTEM VITAL SIGNS
             </div>
-            <div class="atom-container">
-                <div class="nucleus"></div>
-                <div class="quantum-orbit orbit-1">
-                    <div class="quantum-electron"></div>
-                </div>
-                <div class="quantum-orbit orbit-2">
-                    <div class="quantum-electron"></div>
-                </div>
-                <div class="quantum-orbit orbit-3">
-                    <div class="quantum-electron"></div>
-                </div>
+            <div class="status-grid" id="status-grid">
+                <!-- Dynamic status items will be inserted here -->
             </div>
-            <div class="atom-stats">
-                <div class="atom-stat">
-                    <span class="stat-label">QUANTUM STATE</span>
-                    <span class="stat-value" id="quantum-state">COHERENT</span>
-                </div>
-                <div class="atom-stat">
-                    <span class="stat-label">ENTANGLEMENT RATE</span>
-                    <span class="stat-value" id="entanglement-rate">96.4%</span>
-                </div>
-                <div class="atom-stat">
-                    <span class="stat-label">STABILITY INDEX</span>
-                    <span class="stat-value" id="stability-index">0.992</span>
-                </div>
-                <div class="atom-stat">
-                    <span class="stat-label">ENERGY LEVEL</span>
-                    <span class="stat-value" id="energy-level">2.47 GeV</span>
-                </div>
-            </div>
-        </section>
+        </div>
 
-        <!-- Center Panel: Engine Controls -->
-        <section class="control-panel" id="engine-controls">
-            <div class="panel-title">
-                <i class="fas fa-rocket"></i>
-                QUANTUM ENGINE CONTROLS
-            </div>
-            
-            <div class="controls-grid">
-                <div class="control-button" id="pulse-sync">
-                    <div class="control-icon">
-                        <i class="fas fa-sync-alt"></i>
-                    </div>
-                    <div class="control-label">PULSE SYNC</div>
-                    <div class="control-desc">Initiate quantum synchronization pulse</div>
-                </div>
-                
-                <div class="control-button" id="quantum-tunnel">
-                    <div class="control-icon">
-                        <i class="fas fa-random"></i>
-                    </div>
-                    <div class="control-label">QUANTUM TUNNELING</div>
-                    <div class="control-desc">Activate quantum tunneling protocol</div>
-                </div>
-                
-                <div class="control-button" id="nasa-scan">
-                    <div class="control-icon">
-                        <i class="fas fa-satellite-dish"></i>
-                    </div>
-                    <div class="control-label">NASA DATA SCAN</div>
-                    <div class="control-desc">Perform deep space telemetry scan</div>
-                </div>
-                
-                <div class="control-button" id="system-check">
-                    <div class="control-icon">
-                        <i class="fas fa-cogs"></i>
-                    </div>
-                    <div class="control-label">SYSTEM CHECK</div>
-                    <div class="control-desc">Run full system diagnostics</div>
-                </div>
-            </div>
-            
-            <!-- Real-time Variables -->
-            <div class="panel-title" style="margin-top: 30px;">
-                <i class="fas fa-chart-line"></i>
-                REAL-TIME QUANTUM VARIABLES
-            </div>
-            
-            <div class="variables-grid">
-                <div class="variable-item">
-                    <div class="variable-label">QUBIT STABILITY</div>
-                    <div class="variable-value" id="qubit-stability">97.2<span class="variable-unit">%</span></div>
-                </div>
-                
-                <div class="variable-item">
-                    <div class="variable-label">SYNC LATENCY</div>
-                    <div class="variable-value" id="sync-latency">3.4<span class="variable-unit">ms</span></div>
-                </div>
-                
-                <div class="variable-item">
-                    <div class="variable-label">ENGINE TORQUE</div>
-                    <div class="variable-value" id="engine-torque">2.47<span class="variable-unit">kN·m</span></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Right Panel: NASA Terminal -->
-        <section class="control-panel" id="nasa-terminal">
-            <div class="panel-title">
+        <!-- Live Log Stream -->
+        <div class="dashboard-card" id="log-stream">
+            <div class="card-title">
                 <i class="fas fa-terminal"></i>
-                NASA LIVE TERMINAL
+                LIVE QUANTUM LOG STREAM
             </div>
-            
-            <div class="terminal-wrapper">
-                <div class="terminal-header">
-                    <div class="terminal-dots">
-                        <div class="terminal-dot dot-red"></div>
-                        <div class="terminal-dot dot-yellow"></div>
-                        <div class="terminal-dot dot-green"></div>
-                    </div>
-                    <div class="terminal-title">~/oxyl/quantum_engine.log</div>
-                </div>
-                
-                <div class="terminal-content" id="terminal-content">
-                    <!-- Terminal logs will be inserted here -->
-                </div>
+            <div class="log-container" id="log-container">
+                <!-- Log entries will be inserted here -->
             </div>
-        </section>
+        </div>
 
-        <!-- Footer: System Status -->
-        <footer class="system-status">
-            <div class="status-grid">
-                <div class="status-item">
-                    <div class="status-name">
-                        <span class="status-indicator status-online"></span>
-                        QUANTUM CORE
-                    </div>
-                    <div class="status-value">ONLINE</div>
+        <!-- Quantum Connectivity Visualizer -->
+        <div class="dashboard-card" id="quantum-visualizer">
+            <div class="card-title">
+                <i class="fas fa-satellite-dish"></i>
+                QUANTUM CONNECTIVITY MATRIX
+            </div>
+            <div class="visualizer-container">
+                <div class="atom-core"></div>
+                <div class="electron-orbit orbit-1">
+                    <div class="electron"></div>
                 </div>
-                
-                <div class="status-item">
-                    <div class="status-name">
-                        <span class="status-indicator status-online"></span>
-                        TELEMETRY ARRAY
-                    </div>
-                    <div class="status-value">ACTIVE</div>
+                <div class="electron-orbit orbit-2">
+                    <div class="electron"></div>
                 </div>
-                
-                <div class="status-item">
-                    <div class="status-name">
-                        <span class="status-indicator status-online"></span>
-                        POWER GRID
-                    </div>
-                    <div class="status-value">100%</div>
+                <div class="electron-orbit orbit-3">
+                    <div class="electron"></div>
                 </div>
-                
-                <div class="status-item">
-                    <div class="status-name">
-                        <span class="status-indicator status-online"></span>
-                        TEMPERATURE
-                    </div>
-                    <div class="status-value">-271°C</div>
-                </div>
-                
-                <div class="status-item">
-                    <div class="status-name">
-                        <span class="status-indicator status-online"></span>
-                        UPTIME
-                    </div>
-                    <div class="status-value">47:22:15</div>
+                <div class="connectivity-stats">
+                    <div>ENTANGLEMENT RATE: <span id="entanglement-rate">94.7%</span></div>
+                    <div>COHERENCE TIME: <span id="coherence-time">156ms</span></div>
                 </div>
             </div>
-        </footer>
+        </div>
+
+        <!-- Infrastructure Map -->
+        <div class="dashboard-card" id="infrastructure-map">
+            <div class="card-title">
+                <i class="fas fa-network-wired"></i>
+                QUANTUM INFRASTRUCTURE GRID
+            </div>
+            <div class="infrastructure-grid" id="infrastructure-grid">
+                <!-- Infrastructure nodes will be inserted here -->
+            </div>
+        </div>
+
+        <!-- Latency Monitor -->
+        <div class="dashboard-card" id="latency-monitor">
+            <div class="card-title">
+                <i class="fas fa-tachometer-alt"></i>
+                SPACETIME LATENCY MONITOR
+            </div>
+            <div class="latency-chart" id="latency-chart">
+                <!-- Latency bars will be inserted here -->
+            </div>
+            <div style="text-align: center; margin-top: 10px;">
+                CURRENT LATENCY: <span id="current-latency">--</span> ms
+            </div>
+        </div>
+
+        <!-- Data Packet Display -->
+        <div class="dashboard-card" id="data-packet">
+            <div class="card-title">
+                <i class="fas fa-code"></i>
+                RAW QUANTUM DATA PACKET
+            </div>
+            <div class="packet-display" id="packet-display">
+                {/* Waiting for quantum data stream... */}
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div>OXYL OS QUANTUM CONTROL CENTER v3.7.0</div>
+            <div class="update-timer">
+                NEXT QUANTUM UPDATE: <span id="update-timer">2</span>s
+            </div>
+            <div style="margin-top: 10px; font-size: 0.8rem; color: var(--light-gray);">
+                © 2024 OXYL ADVANCED CODE FACTORY | PROPRIETARY QUANTUM SYSTEMS
+            </div>
+        </div>
     </div>
 
     <script>
-        // ===== NASA QUANTUM SYNC ENGINE =====
-        
         // DOM Elements
-        const terminalContent = document.getElementById('terminal-content');
+        const statusGrid = document.getElementById('status-grid');
+        const logContainer = document.getElementById('log-container');
+        const infrastructureGrid = document.getElementById('infrastructure-grid');
+        const latencyChart = document.getElementById('latency-chart');
+        const packetDisplay = document.getElementById('packet-display');
+        const currentLatency = document.getElementById('current-latency');
+        const updateTimer = document.getElementById('update-timer');
         const connectionStatus = document.getElementById('connection-status');
-        const controlButtons = document.querySelectorAll('.control-button');
-        
-        // Real-time variable elements
-        const qubitStability = document.getElementById('qubit-stability');
-        const syncLatency = document.getElementById('sync-latency');
-        const engineTorque = document.getElementById('engine-torque');
-        const quantumState = document.getElementById('quantum-state');
         const entanglementRate = document.getElementById('entanglement-rate');
-        const stabilityIndex = document.getElementById('stability-index');
-        const energyLevel = document.getElementById('energy-level');
-        
+        const coherenceTime = document.getElementById('coherence-time');
+
         // Configuration
-        const API_ENDPOINT = '/api/index.py';
+        const API_ENDPOINT = '/api'; // Updated to match your Flask route
+        const UPDATE_INTERVAL = 2000; // 2 seconds
+        let latencyHistory = [];
         let logHistory = [];
-        let isProcessing = false;
-        let systemTimer = 0;
-        
-        // Initialize System
+        let updateCount = 0;
+
+        // Initialize
         document.addEventListener('DOMContentLoaded', () => {
-            initializeTerminal();
-            startSystemUpdates();
-            setupControlButtons();
-            addLog('SYSTEM', 'NASA Quantum Sync Engine initialized. All systems nominal.', 'command');
-            addLog('SYSTEM', 'Establishing quantum entanglement link...', 'command');
-            
-            // Simulate initial connection
-            setTimeout(() => {
-                addLog('QUANTUM', 'Quantum link established. Entanglement rate: 96.4%', 'command');
-                updateConnectionStatus('ESTABLISHED');
-            }, 1500);
+            initializeDashboard();
+            fetchQuantumData();
+            setInterval(fetchQuantumData, UPDATE_INTERVAL);
+            startUpdateTimer();
         });
-        
-        // Initialize Terminal with NASA Welcome
-        function initializeTerminal() {
-            const welcomeMessages = [
-                "========================================",
-                " NASA QUANTUM SYNC ENGINE v3.7.0",
-                "========================================",
-                "SYSTEM TIME: " + new Date().toISOString(),
-                "PLATFORM: OXYL Quantum Core",
-                "MISSION: Deep Space Quantum Computing",
-                "STATUS: All systems operational",
-                "========================================",
-                ""
+
+        // Initialize Dashboard with Default Values
+        function initializeDashboard() {
+            // Initialize status grid
+            const defaultStatus = [
+                { label: 'QUANTUM STATE', value: 'COHERENT', status: 'good' },
+                { label: 'ENTANGLEMENT', value: '94.7%', status: 'good' },
+                { label: 'WARP STABILITY', value: '99.2%', status: 'good' },
+                { label: 'ENERGY FLUX', value: '2.4 TWh', status: 'warning' },
+                { label: 'TEMPORAL DRIFT', value: '±3.2ps', status: 'good' },
+                { label: 'GRAVITATIONAL LENSING', value: '0.4μrad', status: 'good' }
             ];
-            
-            welcomeMessages.forEach(msg => {
-                const entry = document.createElement('div');
-                entry.className = 'log-entry';
-                entry.innerHTML = `<span class="log-time">[${getTimeStamp()}]</span> <span class="log-message command">${msg}</span>`;
-                terminalContent.appendChild(entry);
-                logHistory.push({type: 'command', message: msg});
+
+            defaultStatus.forEach(status => {
+                const statusItem = document.createElement('div');
+                statusItem.className = 'status-item';
+                statusItem.innerHTML = `
+                    <div class="status-label">${status.label}</div>
+                    <div class="status-value status-${status.status}">${status.value}</div>
+                `;
+                statusGrid.appendChild(statusItem);
             });
-            
-            terminalContent.scrollTop = terminalContent.scrollHeight;
-        }
-        
-        // Setup Control Button Events
-        function setupControlButtons() {
-            controlButtons.forEach(button => {
-                button.addEventListener('click', async function() {
-                    if (isProcessing) {
-                        addLog('SYSTEM', 'Previous command still processing. Please wait.', 'warning');
-                        return;
-                    }
-                    
-                    const command = this.id.replace('-', '_').toUpperCase();
-                    this.classList.add('active');
-                    
-                    // Add command to log
-                    addLog('CONTROL', `Executing ${this.querySelector('.control-label').textContent}...`, 'command');
-                    
-                    // Send API request
-                    await executeCommand(command);
-                    
-                    // Remove active state after delay
-                    setTimeout(() => {
-                        this.classList.remove('active');
-                    }, 2000);
-                });
+
+            // Initialize infrastructure grid
+            const defaultNodes = [
+                { name: 'Q-CORE-01', status: 'online' },
+                { name: 'Q-CORE-02', status: 'online' },
+                { name: 'WARP-GATE-01', status: 'online' },
+                { name: 'TELEMETRY-ARRAY', status: 'degraded' },
+                { name: 'CRYPTO-MESH', status: 'online' },
+                { name: 'NEURAL-SYNC', status: 'online' }
+            ];
+
+            defaultNodes.forEach(node => {
+                const nodeElement = document.createElement('div');
+                nodeElement.className = 'infra-node';
+                nodeElement.innerHTML = `
+                    <div class="node-status ${node.status}"></div>
+                    <div>${node.name}</div>
+                `;
+                infrastructureGrid.appendChild(nodeElement);
             });
+
+            // Initialize latency chart
+            for (let i = 0; i < 50; i++) {
+                const bar = document.createElement('div');
+                bar.className = 'latency-bar';
+                bar.style.left = `${i * 6}px`;
+                bar.style.height = '0px';
+                latencyChart.appendChild(bar);
+            }
+
+            // Add initial log entry
+            addLogEntry('Quantum Control Center initialized. Establishing spacetime link...');
         }
-        
-        // Execute Command via API
-        async function executeCommand(command) {
-            isProcessing = true;
-            
+
+        // Fetch Quantum Data from API
+        async function fetchQuantumData() {
             try {
-                addLog('API', `Sending request to ${API_ENDPOINT}...`, 'command');
+                const response = await fetch(API_ENDPOINT);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
                 
-                // Simulate API call (replace with actual fetch when backend is ready)
-                const response = await simulateAPIRequest(command);
+                const data = await response.json();
+                updateDashboard(data);
+                updateConnectionStatus('ESTABLISHED');
                 
-                if (response.success) {
-                    addLog('SYSTEM', `Command ${command} executed successfully.`, 'command');
-                    addLog('DATA', JSON.stringify(response.data, null, 2), 'command');
-                    
-                    // Update real-time variables with new data
-                    updateRealTimeVariables(response.data);
-                    
-                } else {
-                    addLog('ERROR', `Command ${command} failed: ${response.error}`, 'error');
-                }
+                // Add successful fetch to log
+                addLogEntry(`Quantum data packet received. Entanglement: ${data.status || 'ACTIVE'}`);
                 
             } catch (error) {
-                addLog('ERROR', `API connection failed: ${error.message}`, 'error');
+                console.error('Failed to fetch quantum data:', error);
                 updateConnectionStatus('DEGRADED');
+                addLogEntry(`Quantum link disruption: ${error.message}`);
                 
-                // Fallback: Use simulated data
-                const simulatedData = generateSimulatedData(command);
-                updateRealTimeVariables(simulatedData);
-                addLog('SYSTEM', 'Using simulated quantum data.', 'warning');
-                
-            } finally {
-                isProcessing = false;
+                // Update with fallback data
+                updateDashboard(getFallbackData());
             }
         }
-        
-        // Simulate API Request (Replace with actual fetch)
-        async function simulateAPIRequest(command) {
-            return new Promise(resolve => {
-                setTimeout(() => {
-                    const responses = {
-                        'PULSE_SYNC': {
-                            success: true,
-                            data: {
-                                qubit_stability: (Math.random() * 2 + 95).toFixed(1),
-                                sync_latency: (Math.random() * 2 + 2.5).toFixed(1),
-                                engine_torque: (Math.random() * 0.5 + 2.3).toFixed(2),
-                                quantum_state: ['COHERENT', 'SUPERPOSED', 'ENTANGLED'][Math.floor(Math.random() * 3)],
-                                timestamp: new Date().toISOString()
-                            }
-                        },
-                        'QUANTUM_TUNNELING': {
-                            success: true,
-                            data: {
-                                qubit_stability: (Math.random() * 3 + 94).toFixed(1),
-                                sync_latency: (Math.random() * 1 + 1.5).toFixed(1),
-                                engine_torque: (Math.random() * 0.8 + 2.5).toFixed(2),
-                                quantum_state: 'TUNNELING',
-                                entanglement_rate: (Math.random() * 3 + 95).toFixed(1) + '%',
-                                timestamp: new Date().toISOString()
-                            }
-                        },
-                        'NASA_DATA_SCAN': {
-                            success: true,
-                            data: {
-                                qubit_stability: (Math.random() * 1 + 97).toFixed(1),
-                                sync_latency: (Math.random() * 0.5 + 1.0).toFixed(1),
-                                engine_torque: (Math.random() * 0.3 + 2.6).toFixed(2),
-                                quantum_state: 'SCANNING',
-                                scan_results: {
-                                    anomalies_detected: Math.floor(Math.random() * 3),
-                                    data_rate: (Math.random() * 100 + 900).toFixed(0) + ' Gbps',
-                                    accuracy: (Math.random() * 2 + 98).toFixed(1) + '%'
-                                },
-                                timestamp: new Date().toISOString()
-                            }
-                        },
-                        'SYSTEM_CHECK': {
-                            success: true,
-                            data: {
-                                qubit_stability: 99.1,
-                                sync_latency: 0.8,
-                                engine_torque: 2.65,
-                                quantum_state: 'OPTIMAL',
-                                system_status: 'ALL SYSTEMS NOMINAL',
-                                timestamp: new Date().toISOString()
-                            }
-                        }
-                    };
+
+        // Update Dashboard with Live Data
+        function updateDashboard(data) {
+            updateCount++;
+            
+            // Update status values
+            if (data.status) {
+                updateStatusValue('QUANTUM STATE', data.status);
+            }
+            if (data.infrastructure) {
+                updateInfrastructure(data.infrastructure);
+            }
+            if (data.latency !== undefined) {
+                updateLatency(data.latency);
+                currentLatency.textContent = data.latency;
+            }
+            
+            // Update quantum metrics
+            if (updateCount % 5 === 0) {
+                entanglementRate.textContent = `${(Math.random() * 5 + 94).toFixed(1)}%`;
+                coherenceTime.textContent = `${Math.floor(Math.random() * 50 + 150)}ms`;
+            }
+            
+            // Update packet display with syntax highlighting
+            packetDisplay.innerHTML = syntaxHighlight(JSON.stringify(data, null, 2));
+            
+            // Add timestamp to log
+            if (data.timestamp) {
+                addLogEntry(`Quantum coherence maintained. Temporal sync: ${new Date(data.timestamp).toLocaleTimeString()}`);
+            }
+        }
+
+        // Update Status Value
+        function updateStatusValue(label, value) {
+            const statusItems = document.querySelectorAll('.status-item');
+            statusItems.forEach(item => {
+                if (item.querySelector('.status-label').textContent === label) {
+                    const valueElement = item.querySelector('.status-value');
+                    valueElement.textContent = value;
                     
-                    resolve(responses[command] || {
-                        success: false,
-                        error: 'Unknown command'
-                    });
-                }, 1500);
+                    // Update status color based on value
+                    if (typeof value === 'string') {
+                        if (value.includes('COHERENT') || value.includes('STABLE')) {
+                            valueElement.className = 'status-value status-good';
+                        } else if (value.includes('DEGRADED') || value.includes('WARNING')) {
+                            valueElement.className = 'status-value status-warning';
+                        } else {
+                            valueElement.className = 'status-value status-critical';
+                        }
+                    }
+                }
             });
         }
-        
-        // Generate Simulated Data for Fallback
-        function generateSimulatedData(command) {
-            const baseData = {
-                qubit_stability: (Math.random() * 4 + 93).toFixed(1),
-                sync_latency: (Math.random() * 3 + 2).toFixed(1),
-                engine_torque: (Math.random() * 0.6 + 2.4).toFixed(2),
-                quantum_state: ['COHERENT', 'SUPERPOSED', 'ENTANGLED'][Math.floor(Math.random() * 3)],
-                timestamp: new Date().toISOString()
-            };
-            
-            if (command === 'QUANTUM_TUNNELING') {
-                baseData.quantum_state = 'TUNNELING';
-                baseData.entanglement_rate = (Math.random() * 3 + 95).toFixed(1) + '%';
-            }
-            
-            if (command === 'NASA_DATA_SCAN') {
-                baseData.quantum_state = 'SCANNING';
-            }
-            
-            return baseData;
+
+        // Update Infrastructure
+        function updateInfrastructure(infraData) {
+            const nodes = document.querySelectorAll('.infra-node .node-status');
+            nodes.forEach((node, index) => {
+                if (infraData[index]) {
+                    node.className = `node-status ${infraData[index].status}`;
+                }
+            });
         }
-        
-        // Update Real-time Variables
-        function updateRealTimeVariables(data) {
-            if (data.qubit_stability) {
-                qubitStability.textContent = data.qubit_stability;
-                animateValueChange(qubitStability);
+
+        // Update Latency Chart
+        function updateLatency(latency) {
+            latencyHistory.push(latency);
+            if (latencyHistory.length > 50) {
+                latencyHistory.shift();
             }
             
-            if (data.sync_latency) {
-                syncLatency.textContent = data.sync_latency;
-                animateValueChange(syncLatency);
-            }
+            const maxLatency = Math.max(...latencyHistory, 100);
+            const bars = document.querySelectorAll('.latency-bar');
             
-            if (data.engine_torque) {
-                engineTorque.textContent = data.engine_torque;
-                animateValueChange(engineTorque);
-            }
-            
-            if (data.quantum_state) {
-                quantumState.textContent = data.quantum_state;
-                updateQuantumStateColor(data.quantum_state);
-            }
-            
-            if (data.entanglement_rate) {
-                entanglementRate.textContent = data.entanglement_rate;
-            }
-            
-            // Update other variables with slight random variations
-            stabilityIndex.textContent = (Math.random() * 0.008 + 0.99).toFixed(3);
-            energyLevel.textContent = (Math.random() * 0.3 + 2.4).toFixed(2) + ' GeV';
+            latencyHistory.forEach((lat, index) => {
+                if (bars[index]) {
+                    const height = (lat / maxLatency) * 180;
+                    bars[index].style.height = `${height}px`;
+                    
+                    // Color based on latency
+                    if (lat < 30) {
+                        bars[index].style.background = 'linear-gradient(to top, var(--success-green), transparent)';
+                    } else if (lat < 70) {
+                        bars[index].style.background = 'linear-gradient(to top, var(--alert-yellow), transparent)';
+                    } else {
+                        bars[index].style.background = 'linear-gradient(to top, var(--warning-red), transparent)';
+                    }
+                }
+            });
         }
-        
-        // Animate Value Changes
-        function animateValueChange(element) {
-            element.style.color = 'var(--warning-yellow)';
-            element.style.transform = 'scale(1.1)';
-            
-            setTimeout(() => {
-                element.style.color = 'var(--neoncyan)';
-                element.style.transform = 'scale(1)';
-            }, 500);
-        }
-        
-        // Update Quantum State Color
-        function updateQuantumStateColor(state) {
-            const colors = {
-                'COHERENT': 'var(--success-green)',
-                'SUPERPOSED': 'var(--warning-yellow)',
-                'ENTANGLED': 'var(--quantum-purple)',
-                'TUNNELING': 'var(--nasacyan)',
-                'SCANNING': 'var(--neoncyan)',
-                'OPTIMAL': 'var(--success-green)'
-            };
-            
-            quantumState.style.color = colors[state] || 'var(--neoncyan)';
-            quantumState.style.textShadow = `0 0 10px ${colors[state] || 'var(--neoncyan)'}`;
-        }
-        
+
         // Add Log Entry
-        function addLog(source, message, type = 'command') {
-            const timestamp = getTimeStamp();
-            const entry = document.createElement('div');
-            entry.className = 'log-entry';
-            entry.innerHTML = `
-                <span class="log-time">[${timestamp}]</span>
-                <span class="log-message ${type}"><strong>${source}:</strong> ${message}</span>
+        function addLogEntry(message) {
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = document.createElement('div');
+            logEntry.className = 'log-entry';
+            logEntry.innerHTML = `
+                <span class="log-timestamp">[${timestamp}]</span>
+                <span class="log-message">${message}</span>
             `;
             
-            terminalContent.appendChild(entry);
-            logHistory.push({timestamp, source, message, type});
+            logContainer.appendChild(logEntry);
+            logHistory.push({ timestamp, message });
             
             // Keep only last 50 entries
             if (logHistory.length > 50) {
                 logHistory.shift();
-                if (terminalContent.firstChild) {
-                    terminalContent.removeChild(terminalContent.firstChild);
+                if (logContainer.firstChild) {
+                    logContainer.removeChild(logContainer.firstChild);
                 }
             }
             
             // Auto-scroll to bottom
-            terminalContent.scrollTop = terminalContent.scrollHeight;
+            logContainer.scrollTop = logContainer.scrollHeight;
         }
-        
-        // Get Timestamp
-        function getTimeStamp() {
-            const now = new Date();
-            return `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
-        }
-        
+
         // Update Connection Status
         function updateConnectionStatus(status) {
             connectionStatus.textContent = status;
-            const dot = document.querySelector('.connection-dot');
+            const statusDot = document.querySelector('.status-dot');
             
             switch(status) {
                 case 'ESTABLISHED':
-                    dot.style.background = 'var(--success-green)';
-                    dot.style.animation = 'pulse 2s infinite';
+                    statusDot.style.background = 'var(--success-green)';
+                    statusDot.style.animation = 'pulse 2s ease-in-out infinite';
                     break;
                 case 'DEGRADED':
-                    dot.style.background = 'var(--warning-yellow)';
-                    dot.style.animation = 'pulse 1s infinite';
+                    statusDot.style.background = 'var(--alert-yellow)';
+                    statusDot.style.animation = 'pulse 1s ease-in-out infinite';
                     break;
                 case 'LOST':
-                    dot.style.background = 'var(--warning-red)';
-                    dot.style.animation = 'pulse 0.5s infinite';
+                    statusDot.style.background = 'var(--warning-red)';
+                    statusDot.style.animation = 'pulse 0.5s ease-in-out infinite';
                     break;
             }
         }
-        
-        // Start System Updates (Real-time variable changes)
-        function startSystemUpdates() {
-            // Update timer every second
+
+        // Start Update Timer
+        function startUpdateTimer() {
+            let seconds = UPDATE_INTERVAL / 1000;
             setInterval(() => {
-                systemTimer++;
-                const hours = Math.floor(systemTimer / 3600);
-                const minutes = Math.floor((systemTimer % 3600) / 60);
-                const seconds = systemTimer % 60;
-                document.querySelector('.system-status .status-item:last-child .status-value').textContent = 
-                    `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                seconds--;
+                if (seconds < 0) seconds = UPDATE_INTERVAL / 1000;
+                updateTimer.textContent = seconds;
             }, 1000);
-            
-            // Update variables with slight random variations
-            setInterval(() => {
-                if (!isProcessing) {
-                    const currentStability = parseFloat(qubitStability.textContent);
-                    const currentLatency = parseFloat(syncLatency.textContent);
-                    const currentTorque = parseFloat(engineTorque.textContent);
-                    
-                    // Add small random variations
-                    qubitStability.textContent = Math.max(90, Math.min(99.9, 
-                        (currentStability + (Math.random() - 0.5) * 0.2).toFixed(1)));
-                    
-                    syncLatency.textContent = Math.max(0.5, Math.min(5.0,
-                        (currentLatency + (Math.random() - 0.5) * 0.1).toFixed(1)));
-                    
-                    engineTorque.textContent = Math.max(2.0, Math.min(3.0,
-                        (currentTorque + (Math.random() - 0.5) * 0.05).toFixed(2)));
-                    
-                    // Update atom stats
-                    stabilityIndex.textContent = (Math.random() * 0.008 + 0.99).toFixed(3);
-                    energyLevel.textContent = (Math.random() * 0.3 + 2.4).toFixed(2) + ' GeV';
-                }
-            }, 3000);
-            
-            // Random system events
-            setInterval(() => {
-                if (Math.random() > 0.7) {
-                    const events = [
-                        'Quantum fluctuation detected within normal parameters.',
-                        'Telemetry array recalibrating for optimal accuracy.',
-                        'Power grid stable at 100% capacity.',
-                        'Cooling systems operating at -271°C.',
-                        'Entanglement rate holding steady at 96.4%.'
-                    ];
-                    
-                    addLog('SYSTEM', events[Math.floor(Math.random() * events.length)], 'command');
-                }
-            }, 8000);
         }
-        
-        // Enhance Quantum Atom Animation
-        function enhanceAtomAnimation() {
-            const electrons = document.querySelectorAll('.quantum-electron');
+
+        // JSON Syntax Highlighting
+        function syntaxHighlight(json) {
+            json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, 
+                function(match) {
+                    let cls = 'json-number';
+                    if (/^"/.test(match)) {
+                        if (/:$/.test(match)) {
+                            cls = 'json-key';
+                        } else {
+                            cls = 'json-string';
+                        }
+                    } else if (/true|false/.test(match)) {
+                        cls = 'json-boolean';
+                    } else if (/null/.test(match)) {
+                        cls = 'json-null';
+                    }
+                    return '<span class="' + cls + '">' + match + '</span>';
+                }
+            );
+        }
+
+        // Fallback Data for Offline Mode
+        function getFallbackData() {
+            return {
+                status: 'DEGRADED',
+                infrastructure: [
+                    { name: 'Q-CORE-01', status: 'online' },
+                    { name: 'Q-CORE-02', status: 'offline' },
+                    { name: 'WARP-GATE-01', status: 'online' },
+                    { name: 'TELEMETRY-ARRAY', status: 'degraded' },
+                    { name: 'CRYPTO-MESH', status: 'online' },
+                    { name: 'NEURAL-SYNC', status: 'degraded' }
+                ],
+                latency: Math.floor(Math.random() * 100) + 50,
+                timestamp: new Date().toISOString(),
+                message: 'FALLBACK MODE: Quantum link temporarily degraded'
+            };
+        }
+
+        // Quantum Animation Enhancement
+        function enhanceQuantumAnimation() {
+            const electrons = document.querySelectorAll('.electron');
             electrons.forEach((electron, index) => {
                 setTimeout(() => {
                     electron.style.animation = `pulse ${1 + Math.random()}s ease-in-out infinite`;
                 }, index * 300);
             });
         }
-        
-        // Initialize atom animation
-        enhanceAtomAnimation();
-        
-        // Add some initial random log entries
-        setTimeout(() => {
-            addLog('QUANTUM', 'Quantum coherence established across all qubits.', 'command');
-        }, 3000);
-        
-        setTimeout(() => {
-            addLog('TELEMETRY', 'Deep space scan initiated. Collecting astrophysical data.', 'command');
-        }, 6000);
+
+        // Initialize quantum animation
+        enhanceQuantumAnimation();
     </script>
 </body>
 </html>
