@@ -1,5 +1,10 @@
 {
   "version": 2,
   "cleanUrls": true,
-  "trailingSlash": true
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/whitepaper", "destination": "/whitepaper/index.html" },
+    { "source": "/sitemap", "destination": "/sitemap/index.xml" },
+    { "source": "/api/(.*)", "destination": "/api/index.py" }
+  ]
 }
