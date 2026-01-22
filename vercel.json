@@ -2,6 +2,8 @@
   "version": 2,
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/index.py" },
-    { "source": "/sitemap.xml", "destination": "/sitemap.xml" }
+    { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
+    { "source": "/whitepaper", "destination": "/whitepaper.html" },
+    { "source": "/whitepaper.html", "destination": "/whitepaper.html" }
   ]
 }
