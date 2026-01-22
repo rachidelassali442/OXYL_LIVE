@@ -1,9 +1,9 @@
 {
   "version": 2,
+  "cleanUrls": true,
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/index.py" },
     { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
-    { "source": "/whitepaper", "destination": "/whitepaper.html" },
-    { "source": "/whitepaper.html", "destination": "/whitepaper.html" }
+    { "source": "/whitepaper", "destination": "/whitepaper.html" }
   ]
 }
