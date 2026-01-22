@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>OXYL OS | Quantum Control Center</title>
     <style>
         :root {
@@ -24,14 +24,21 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Courier New', 'Monaco', monospace;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
         }
 
         body {
             background-color: var(--deep-black);
             color: var(--neon-green);
-            overflow-x: hidden;
-            min-height: 100vh;
             position: relative;
+            display: flex;
+            flex-direction: column;
         }
 
         /* Atomic Pulse Background */
@@ -67,27 +74,17 @@
             50% { opacity: 0.8; }
         }
 
-        /* Main Container */
-        .container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: auto auto auto;
-            gap: 20px;
-            padding: 20px;
-            max-width: 1800px;
-            margin: 0 auto;
-            min-height: 100vh;
-        }
-
         /* Header */
         .header {
-            grid-column: 1 / -1;
             text-align: center;
-            padding: 30px 20px;
+            padding: 15px 10px;
             border-bottom: 2px solid var(--neon-green);
-            margin-bottom: 20px;
             position: relative;
             overflow: hidden;
+            flex-shrink: 0;
+            background: rgba(18, 18, 18, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
         }
 
         .header::before {
@@ -112,33 +109,81 @@
         }
 
         .header h1 {
-            font-size: 3.5rem;
+            font-size: clamp(1.2rem, 4vw, 2rem);
             text-transform: uppercase;
-            letter-spacing: 4px;
+            letter-spacing: 2px;
             text-shadow: 
                 0 0 10px var(--neon-green),
-                0 0 20px var(--neon-green),
-                0 0 30px var(--neon-green);
-            margin-bottom: 10px;
+                0 0 20px var(--neon-green);
+            margin-bottom: 5px;
             animation: atomicPulse 2s ease-in-out infinite;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .header h2 {
-            font-size: 1.2rem;
+            font-size: clamp(0.7rem, 2vw, 0.9rem);
             color: var(--cyber-blue);
-            letter-spacing: 3px;
+            letter-spacing: 1px;
             font-weight: normal;
+        }
+
+        /* Main Container - Mobile First */
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 80px);
+            overflow: hidden;
+            padding: 10px;
+            gap: 10px;
+        }
+
+        /* Top Row */
+        .top-row {
+            display: flex;
+            gap: 10px;
+            height: 40%;
+            min-height: 200px;
+        }
+
+        /* Bottom Row */
+        .bottom-row {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            height: 60%;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--neon-green) var(--dark-gray);
+        }
+
+        .bottom-row::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .bottom-row::-webkit-scrollbar-track {
+            background: var(--dark-gray);
+        }
+
+        .bottom-row::-webkit-scrollbar-thumb {
+            background: var(--neon-green);
+            border-radius: 2px;
         }
 
         /* Dashboard Cards */
         .dashboard-card {
             background: rgba(18, 18, 18, 0.85);
             border: 1px solid var(--light-gray);
-            border-radius: 8px;
-            padding: 25px;
+            border-radius: 6px;
+            padding: 15px;
             position: relative;
             overflow: hidden;
             transition: all 0.3s ease;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
         }
 
         .dashboard-card::before {
@@ -147,7 +192,7 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 3px;
+            height: 2px;
             background: linear-gradient(90deg, var(--neon-green), var(--cyber-blue));
             animation: pulse 2s ease-in-out infinite;
         }
@@ -155,57 +200,72 @@
         .dashboard-card:hover {
             border-color: var(--neon-green);
             box-shadow: 
-                0 0 20px rgba(0, 255, 65, 0.2),
-                inset 0 0 20px rgba(0, 255, 65, 0.1);
-            transform: translateY(-2px);
+                0 0 15px rgba(0, 255, 65, 0.2),
+                inset 0 0 15px rgba(0, 255, 65, 0.1);
         }
 
         .card-title {
-            font-size: 1.4rem;
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
             color: var(--cyber-blue);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .card-title i {
-            font-size: 1.6rem;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
         }
 
         /* Status Dashboard */
         #status-dashboard {
-            grid-column: 1;
-            grid-row: 2;
+            min-width: 0;
         }
 
         .status-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            flex: 1;
+            overflow-y: auto;
+            scrollbar-width: none;
+        }
+
+        .status-grid::-webkit-scrollbar {
+            display: none;
         }
 
         .status-item {
             background: rgba(26, 26, 26, 0.7);
-            padding: 15px;
-            border-radius: 6px;
-            border-left: 4px solid var(--neon-green);
+            padding: 10px;
+            border-radius: 4px;
+            border-left: 3px solid var(--neon-green);
+            min-width: 0;
         }
 
         .status-label {
-            font-size: 0.9rem;
+            font-size: clamp(0.6rem, 1.8vw, 0.7rem);
             color: var(--matrix-green);
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .status-value {
-            font-size: 1.8rem;
+            font-size: clamp(1rem, 3vw, 1.3rem);
             font-weight: bold;
-            text-shadow: 0 0 10px currentColor;
+            text-shadow: 0 0 8px currentColor;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .status-good { color: var(--success-green); }
@@ -214,32 +274,43 @@
 
         /* Live Log Stream */
         #log-stream {
-            grid-column: 2;
-            grid-row: 2 / span 2;
-            min-height: 600px;
-            display: flex;
-            flex-direction: column;
+            min-width: 0;
         }
 
         .log-container {
             flex: 1;
             background: rgba(10, 10, 10, 0.9);
             border: 1px solid var(--light-gray);
-            border-radius: 6px;
-            padding: 15px;
+            border-radius: 4px;
+            padding: 10px;
             overflow-y: auto;
             font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
-            line-height: 1.4;
-            margin-top: 10px;
+            font-size: clamp(0.6rem, 1.8vw, 0.7rem);
+            line-height: 1.3;
+            scrollbar-width: thin;
+            scrollbar-color: var(--cyber-blue) var(--dark-gray);
+        }
+
+        .log-container::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        .log-container::-webkit-scrollbar-track {
+            background: var(--dark-gray);
+        }
+
+        .log-container::-webkit-scrollbar-thumb {
+            background: var(--cyber-blue);
+            border-radius: 1.5px;
         }
 
         .log-entry {
-            margin-bottom: 8px;
-            padding: 5px 10px;
+            margin-bottom: 6px;
+            padding: 5px 8px;
             border-left: 2px solid var(--neon-green);
             background: rgba(0, 255, 65, 0.05);
             animation: fadeIn 0.3s ease;
+            word-break: break-word;
         }
 
         @keyframes fadeIn {
@@ -249,27 +320,31 @@
 
         .log-timestamp {
             color: var(--cyber-blue);
-            margin-right: 10px;
+            margin-right: 8px;
+            font-size: 0.7em;
         }
 
         .log-message {
             color: var(--matrix-green);
         }
 
-        /* Quantum Connectivity Visualizer */
-        #quantum-visualizer {
-            grid-column: 1;
-            grid-row: 3;
-            min-height: 400px;
+        /* Quantum Visualizer Row */
+        .quantum-row {
             display: flex;
-            align-items: center;
-            justify-content: center;
+            gap: 10px;
+            min-height: 150px;
+        }
+
+        #quantum-visualizer {
+            flex: 1;
+            min-width: 0;
         }
 
         .visualizer-container {
             position: relative;
-            width: 300px;
-            height: 300px;
+            width: 100%;
+            height: 100%;
+            min-height: 120px;
         }
 
         .atom-core {
@@ -277,14 +352,14 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 60px;
-            height: 60px;
+            width: 30px;
+            height: 30px;
             background: radial-gradient(circle, var(--neon-green), transparent);
             border-radius: 50%;
             animation: atomicPulse 2s ease-in-out infinite;
             box-shadow: 
-                0 0 30px var(--neon-green),
-                0 0 60px rgba(0, 255, 65, 0.3);
+                0 0 20px var(--neon-green),
+                0 0 40px rgba(0, 255, 65, 0.3);
         }
 
         .electron-orbit {
@@ -292,23 +367,23 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            border: 1px solid rgba(0, 255, 65, 0.3);
+            border: 1px solid rgba(0, 255, 65, 0.2);
             border-radius: 50%;
-            animation: rotate 20s linear infinite;
+            animation: rotate linear infinite;
         }
 
         .electron {
             position: absolute;
-            width: 12px;
-            height: 12px;
+            width: 6px;
+            height: 6px;
             background: var(--cyber-blue);
             border-radius: 50%;
-            top: -6px;
+            top: -3px;
             left: 50%;
             transform: translateX(-50%);
             box-shadow: 
-                0 0 10px var(--cyber-blue),
-                0 0 20px rgba(0, 242, 255, 0.5);
+                0 0 8px var(--cyber-blue),
+                0 0 16px rgba(0, 242, 255, 0.5);
         }
 
         @keyframes rotate {
@@ -316,69 +391,88 @@
             to { transform: translate(-50%, -50%) rotate(360deg); }
         }
 
-        .orbit-1 { width: 200px; height: 200px; animation-duration: 15s; }
-        .orbit-2 { width: 150px; height: 150px; animation-duration: 12s; animation-direction: reverse; }
-        .orbit-3 { width: 100px; height: 100px; animation-duration: 10s; }
+        .orbit-1 { width: 80px; height: 80px; animation-duration: 12s; }
+        .orbit-2 { width: 60px; height: 60px; animation-duration: 10s; animation-direction: reverse; }
+        .orbit-3 { width: 40px; height: 40px; animation-duration: 8s; }
 
         .connectivity-stats {
             position: absolute;
-            bottom: 20px;
+            bottom: 5px;
             left: 0;
             right: 0;
             text-align: center;
-            font-size: 1.2rem;
+            font-size: clamp(0.7rem, 2vw, 0.9rem);
             color: var(--cyber-blue);
-            text-shadow: 0 0 10px currentColor;
+            text-shadow: 0 0 5px currentColor;
         }
 
         /* Infrastructure Map */
         #infrastructure-map {
-            grid-column: 1;
-            grid-row: 4;
+            flex: 1;
+            min-width: 0;
         }
 
         .infrastructure-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin-top: 10px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            flex: 1;
+            overflow-y: auto;
+            scrollbar-width: none;
+        }
+
+        .infrastructure-grid::-webkit-scrollbar {
+            display: none;
         }
 
         .infra-node {
             background: rgba(26, 26, 26, 0.7);
-            padding: 15px;
-            border-radius: 6px;
+            padding: 10px;
+            border-radius: 4px;
             text-align: center;
             border: 1px solid var(--light-gray);
             transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 60px;
         }
 
         .infra-node:hover {
             border-color: var(--cyber-blue);
-            box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
+            box-shadow: 0 0 10px rgba(0, 242, 255, 0.2);
         }
 
         .node-status {
-            width: 12px;
-            height: 12px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
-            margin: 0 auto 10px;
+            margin-bottom: 5px;
             background: var(--success-green);
-            box-shadow: 0 0 10px currentColor;
+            box-shadow: 0 0 6px currentColor;
         }
 
         .node-status.offline { background: var(--warning-red); }
         .node-status.degraded { background: var(--alert-yellow); }
 
+        .infra-node div:last-child {
+            font-size: clamp(0.6rem, 1.8vw, 0.7rem);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+        }
+
         /* Latency Monitor */
         #latency-monitor {
-            grid-column: 2;
-            grid-row: 4;
+            flex: 1;
+            min-width: 0;
         }
 
         .latency-chart {
-            height: 200px;
-            margin-top: 10px;
+            height: 60px;
+            margin-top: 5px;
             position: relative;
             overflow: hidden;
         }
@@ -386,31 +480,51 @@
         .latency-bar {
             position: absolute;
             bottom: 0;
-            width: 4px;
+            width: 3px;
             background: linear-gradient(to top, var(--neon-green), transparent);
             transition: all 0.3s ease;
         }
 
+        .latency-value {
+            text-align: center;
+            font-size: clamp(0.8rem, 2.5vw, 1rem);
+            margin-top: 5px;
+            color: var(--cyber-blue);
+        }
+
         /* Data Packet Display */
         #data-packet {
-            grid-column: 1 / -1;
-            grid-row: 5;
-            margin-top: 20px;
+            width: 100%;
         }
 
         .packet-display {
             background: rgba(10, 10, 10, 0.9);
             border: 1px solid var(--light-gray);
-            border-radius: 6px;
-            padding: 20px;
+            border-radius: 4px;
+            padding: 10px;
             font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
-            line-height: 1.6;
+            font-size: clamp(0.6rem, 1.8vw, 0.7rem);
+            line-height: 1.3;
             white-space: pre-wrap;
             overflow-x: auto;
-            margin-top: 10px;
-            max-height: 200px;
+            max-height: 150px;
             overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--cyber-blue) var(--dark-gray);
+        }
+
+        .packet-display::-webkit-scrollbar {
+            width: 3px;
+            height: 3px;
+        }
+
+        .packet-display::-webkit-scrollbar-track {
+            background: var(--dark-gray);
+        }
+
+        .packet-display::-webkit-scrollbar-thumb {
+            background: var(--cyber-blue);
+            border-radius: 1.5px;
         }
 
         .json-key { color: var(--cyber-blue); }
@@ -420,118 +534,309 @@
 
         /* Footer */
         .footer {
-            grid-column: 1 / -1;
             text-align: center;
-            padding: 20px;
+            padding: 10px;
             border-top: 1px solid var(--light-gray);
-            margin-top: 20px;
             color: var(--matrix-green);
-            font-size: 0.9rem;
+            font-size: clamp(0.6rem, 1.8vw, 0.7rem);
+            flex-shrink: 0;
+            background: rgba(18, 18, 18, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
         }
 
         .update-timer {
             color: var(--cyber-blue);
             font-weight: bold;
-            margin-top: 5px;
         }
 
-        /* Responsive Design */
-        @media (max-width: 1200px) {
-            .container {
-                grid-template-columns: 1fr;
-            }
-            
-            #status-dashboard,
-            #log-stream,
-            #quantum-visualizer,
-            #infrastructure-map,
-            #latency-monitor,
-            #data-packet {
-                grid-column: 1;
-            }
-            
-            #log-stream { grid-row: 3; }
-            #quantum-visualizer { grid-row: 4; }
-            #infrastructure-map { grid-row: 5; }
-            #latency-monitor { grid-row: 6; }
-            #data-packet { grid-row: 7; }
+        /* Connection Status */
+        .connection-status {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 8px 12px;
+            background: rgba(18, 18, 18, 0.9);
+            border: 1px solid var(--neon-green);
+            border-radius: 4px;
+            font-size: clamp(0.6rem, 1.8vw, 0.7rem);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
+            max-width: 60%;
         }
 
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2.5rem;
-            }
-            
-            .status-grid,
-            .infrastructure-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .visualizer-container {
-                width: 250px;
-                height: 250px;
-            }
-            
-            .orbit-1 { width: 160px; height: 160px; }
-            .orbit-2 { width: 120px; height: 120px; }
-            .orbit-3 { width: 80px; height: 80px; }
-        }
-
-        @media (max-width: 480px) {
-            .header h1 {
-                font-size: 1.8rem;
-            }
-            
-            .dashboard-card {
-                padding: 15px;
-            }
-            
-            .status-grid,
-            .infrastructure-grid {
-                grid-template-columns: 1fr;
-            }
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--success-green);
+            animation: pulse 2s ease-in-out infinite;
+            flex-shrink: 0;
         }
 
         /* Loading Spinner */
         .spinner {
             display: inline-block;
-            width: 20px;
-            height: 20px;
+            width: 16px;
+            height: 16px;
             border: 2px solid rgba(0, 255, 65, 0.3);
             border-top-color: var(--neon-green);
             border-radius: 50%;
             animation: spin 1s linear infinite;
             vertical-align: middle;
-            margin-right: 10px;
+            margin-right: 6px;
         }
 
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
 
-        /* Connection Status */
-        .connection-status {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 10px 20px;
-            background: rgba(18, 18, 18, 0.9);
-            border: 1px solid var(--neon-green);
-            border-radius: 4px;
-            font-size: 0.9rem;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
+        /* Touch Device Optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            .dashboard-card:hover {
+                transform: none;
+            }
+            
+            .infra-node:hover {
+                transform: none;
+            }
+            
+            .status-item, .infra-node {
+                cursor: default;
+            }
         }
 
-        .status-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: var(--success-green);
-            animation: pulse 2s ease-in-out infinite;
+        /* Tablet and Desktop */
+        @media (min-width: 768px) {
+            .container {
+                height: calc(100vh - 100px);
+                padding: 15px;
+                gap: 15px;
+            }
+            
+            .header {
+                padding: 20px 15px;
+            }
+            
+            .top-row {
+                height: 45%;
+                min-height: 250px;
+            }
+            
+            .bottom-row {
+                height: 55%;
+            }
+            
+            .dashboard-card {
+                padding: 20px;
+            }
+            
+            .status-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
+            }
+            
+            .infrastructure-grid {
+                grid-template-columns: repeat(6, 1fr);
+                gap: 10px;
+            }
+            
+            .quantum-row {
+                min-height: 200px;
+            }
+            
+            .atom-core {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .orbit-1 { width: 120px; height: 120px; }
+            .orbit-2 { width: 90px; height: 90px; }
+            .orbit-3 { width: 60px; height: 60px; }
+            
+            .electron {
+                width: 8px;
+                height: 8px;
+            }
+            
+            .latency-chart {
+                height: 80px;
+            }
+            
+            .packet-display {
+                max-height: 200px;
+            }
+        }
+
+        /* Desktop */
+        @media (min-width: 1024px) {
+            .container {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: auto 1fr auto;
+                gap: 15px;
+                padding: 20px;
+            }
+            
+            .header {
+                grid-column: 1 / -1;
+            }
+            
+            .top-row {
+                grid-column: 1;
+                grid-row: 2;
+                flex-direction: column;
+                height: auto;
+            }
+            
+            .log-stream-row {
+                grid-column: 2;
+                grid-row: 2;
+                height: auto;
+                display: flex;
+                flex-direction: column;
+            }
+            
+            .bottom-row {
+                grid-column: 1 / -1;
+                grid-row: 3;
+                flex-direction: row;
+                height: auto;
+                overflow: visible;
+            }
+            
+            .quantum-row {
+                grid-column: 1;
+                grid-row: 3;
+                min-height: 150px;
+            }
+            
+            .infrastructure-latency-row {
+                grid-column: 2;
+                grid-row: 3;
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            #data-packet {
+                grid-column: 1 / -1;
+                grid-row: 4;
+            }
+            
+            .footer {
+                grid-column: 1 / -1;
+                grid-row: 5;
+            }
+            
+            .status-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .infrastructure-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* Large Desktop */
+        @media (min-width: 1400px) {
+            .container {
+                max-width: 1600px;
+                margin: 0 auto;
+            }
+            
+            .status-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .infrastructure-grid {
+                grid-template-columns: repeat(6, 1fr);
+            }
+            
+            .atom-core {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .orbit-1 { width: 150px; height: 150px; }
+            .orbit-2 { width: 110px; height: 110px; }
+            .orbit-3 { width: 70px; height: 70px; }
+        }
+
+        /* Portrait Orientation */
+        @media (orientation: portrait) and (max-height: 700px) {
+            .container {
+                height: calc(100vh - 70px);
+            }
+            
+            .header {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: clamp(1rem, 3.5vw, 1.5rem);
+            }
+            
+            .header h2 {
+                font-size: clamp(0.6rem, 1.8vw, 0.8rem);
+            }
+            
+            .dashboard-card {
+                padding: 10px;
+            }
+            
+            .card-title {
+                margin-bottom: 10px;
+            }
+            
+            .status-grid {
+                gap: 6px;
+            }
+            
+            .status-item {
+                padding: 8px;
+            }
+            
+            .log-container {
+                padding: 8px;
+            }
+            
+            .log-entry {
+                margin-bottom: 4px;
+                padding: 4px 6px;
+            }
+        }
+
+        /* Landscape Orientation */
+        @media (orientation: landscape) and (max-height: 500px) {
+            .container {
+                height: calc(100vh - 60px);
+                flex-direction: row;
+                gap: 10px;
+            }
+            
+            .top-row {
+                width: 60%;
+                height: 100%;
+            }
+            
+            .bottom-row {
+                width: 40%;
+                height: 100%;
+            }
+            
+            .header h1 {
+                font-size: 1.2rem;
+            }
+            
+            .header h2 {
+                font-size: 0.7rem;
+            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -543,26 +848,29 @@
         <span>Quantum Link: <span id="connection-status">ESTABLISHED</span></span>
     </div>
 
+    <!-- Header -->
+    <div class="header">
+        <h1><i class="fas fa-atom"></i> OXYL OS QUANTUM CONTROL CENTER</h1>
+        <h2>REAL-TIME SPACETIME TELEMETRY & QUANTUM SYNCHRONIZATION</h2>
+    </div>
+
     <!-- Main Container -->
     <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <h1><i class="fas fa-atom"></i> OXYL OS QUANTUM CONTROL CENTER</h1>
-            <h2>REAL-TIME SPACETIME TELEMETRY & QUANTUM SYNCHRONIZATION</h2>
-        </div>
-
-        <!-- Status Dashboard -->
-        <div class="dashboard-card" id="status-dashboard">
-            <div class="card-title">
-                <i class="fas fa-heartbeat"></i>
-                SYSTEM VITAL SIGNS
-            </div>
-            <div class="status-grid" id="status-grid">
-                <!-- Dynamic status items will be inserted here -->
+        <!-- Top Row -->
+        <div class="top-row">
+            <!-- Status Dashboard -->
+            <div class="dashboard-card" id="status-dashboard">
+                <div class="card-title">
+                    <i class="fas fa-heartbeat"></i>
+                    SYSTEM VITAL SIGNS
+                </div>
+                <div class="status-grid" id="status-grid">
+                    <!-- Dynamic status items will be inserted here -->
+                </div>
             </div>
         </div>
 
-        <!-- Live Log Stream -->
+        <!-- Log Stream Row -->
         <div class="dashboard-card" id="log-stream">
             <div class="card-title">
                 <i class="fas fa-terminal"></i>
@@ -573,52 +881,55 @@
             </div>
         </div>
 
-        <!-- Quantum Connectivity Visualizer -->
-        <div class="dashboard-card" id="quantum-visualizer">
-            <div class="card-title">
-                <i class="fas fa-satellite-dish"></i>
-                QUANTUM CONNECTIVITY MATRIX
-            </div>
-            <div class="visualizer-container">
-                <div class="atom-core"></div>
-                <div class="electron-orbit orbit-1">
-                    <div class="electron"></div>
+        <!-- Quantum Visualizer Row -->
+        <div class="quantum-row">
+            <div class="dashboard-card" id="quantum-visualizer">
+                <div class="card-title">
+                    <i class="fas fa-satellite-dish"></i>
+                    QUANTUM CONNECTIVITY MATRIX
                 </div>
-                <div class="electron-orbit orbit-2">
-                    <div class="electron"></div>
-                </div>
-                <div class="electron-orbit orbit-3">
-                    <div class="electron"></div>
-                </div>
-                <div class="connectivity-stats">
-                    <div>ENTANGLEMENT RATE: <span id="entanglement-rate">94.7%</span></div>
-                    <div>COHERENCE TIME: <span id="coherence-time">156ms</span></div>
+                <div class="visualizer-container">
+                    <div class="atom-core"></div>
+                    <div class="electron-orbit orbit-1">
+                        <div class="electron"></div>
+                    </div>
+                    <div class="electron-orbit orbit-2">
+                        <div class="electron"></div>
+                    </div>
+                    <div class="electron-orbit orbit-3">
+                        <div class="electron"></div>
+                    </div>
+                    <div class="connectivity-stats">
+                        <div>ENTANGLEMENT RATE: <span id="entanglement-rate">94.7%</span></div>
+                        <div>COHERENCE TIME: <span id="coherence-time">156ms</span></div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Infrastructure Map -->
-        <div class="dashboard-card" id="infrastructure-map">
-            <div class="card-title">
-                <i class="fas fa-network-wired"></i>
-                QUANTUM INFRASTRUCTURE GRID
+        <!-- Infrastructure & Latency Row -->
+        <div class="bottom-row">
+            <div class="dashboard-card" id="infrastructure-map">
+                <div class="card-title">
+                    <i class="fas fa-network-wired"></i>
+                    QUANTUM INFRASTRUCTURE GRID
+                </div>
+                <div class="infrastructure-grid" id="infrastructure-grid">
+                    <!-- Infrastructure nodes will be inserted here -->
+                </div>
             </div>
-            <div class="infrastructure-grid" id="infrastructure-grid">
-                <!-- Infrastructure nodes will be inserted here -->
-            </div>
-        </div>
 
-        <!-- Latency Monitor -->
-        <div class="dashboard-card" id="latency-monitor">
-            <div class="card-title">
-                <i class="fas fa-tachometer-alt"></i>
-                SPACETIME LATENCY MONITOR
-            </div>
-            <div class="latency-chart" id="latency-chart">
-                <!-- Latency bars will be inserted here -->
-            </div>
-            <div style="text-align: center; margin-top: 10px;">
-                CURRENT LATENCY: <span id="current-latency">--</span> ms
+            <div class="dashboard-card" id="latency-monitor">
+                <div class="card-title">
+                    <i class="fas fa-tachometer-alt"></i>
+                    SPACETIME LATENCY MONITOR
+                </div>
+                <div class="latency-chart" id="latency-chart">
+                    <!-- Latency bars will be inserted here -->
+                </div>
+                <div class="latency-value">
+                    CURRENT LATENCY: <span id="current-latency">--</span> ms
+                </div>
             </div>
         </div>
 
@@ -632,17 +943,15 @@
                 {/* Waiting for quantum data stream... */}
             </div>
         </div>
+    </div>
 
-        <!-- Footer -->
-        <div class="footer">
-            <div>OXYL OS QUANTUM CONTROL CENTER v3.7.0</div>
-            <div class="update-timer">
-                NEXT QUANTUM UPDATE: <span id="update-timer">2</span>s
-            </div>
-            <div style="margin-top: 10px; font-size: 0.8rem; color: var(--light-gray);">
-                © 2024 OXYL ADVANCED CODE FACTORY | PROPRIETARY QUANTUM SYSTEMS
-            </div>
+    <!-- Footer -->
+    <div class="footer">
+        <div>OXYL OS QUANTUM CONTROL CENTER v3.7.0</div>
+        <div class="update-timer">
+            NEXT QUANTUM UPDATE: <span id="update-timer">2</span>s
         </div>
+        <div>© 2024 OXYL ADVANCED CODE FACTORY | PROPRIETARY QUANTUM SYSTEMS</div>
     </div>
 
     <script>
@@ -659,11 +968,12 @@
         const coherenceTime = document.getElementById('coherence-time');
 
         // Configuration
-        const API_ENDPOINT = '/api'; // Updated to match your Flask route
-        const UPDATE_INTERVAL = 2000; // 2 seconds
+        const API_ENDPOINT = '/api';
+        const UPDATE_INTERVAL = 2000;
         let latencyHistory = [];
         let logHistory = [];
         let updateCount = 0;
+        let isPortrait = window.innerHeight > window.innerWidth;
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
@@ -671,7 +981,32 @@
             fetchQuantumData();
             setInterval(fetchQuantumData, UPDATE_INTERVAL);
             startUpdateTimer();
+            setupResponsiveBehavior();
         });
+
+        // Setup responsive behavior
+        function setupResponsiveBehavior() {
+            window.addEventListener('resize', handleResize);
+            window.addEventListener('orientationchange', handleOrientationChange);
+        }
+
+        function handleResize() {
+            isPortrait = window.innerHeight > window.innerWidth;
+            adjustLayoutForOrientation();
+        }
+
+        function handleOrientationChange() {
+            setTimeout(() => {
+                isPortrait = window.innerHeight > window.innerWidth;
+                adjustLayoutForOrientation();
+            }, 100);
+        }
+
+        function adjustLayoutForOrientation() {
+            // Adjust font sizes and layouts based on orientation
+            const fontSizeMultiplier = isPortrait ? 0.9 : 1;
+            document.documentElement.style.fontSize = `${fontSizeMultiplier * 100}%`;
+        }
 
         // Initialize Dashboard with Default Values
         function initializeDashboard() {
@@ -716,10 +1051,11 @@
             });
 
             // Initialize latency chart
-            for (let i = 0; i < 50; i++) {
+            const barsCount = isPortrait ? 30 : 50;
+            for (let i = 0; i < barsCount; i++) {
                 const bar = document.createElement('div');
                 bar.className = 'latency-bar';
-                bar.style.left = `${i * 6}px`;
+                bar.style.left = `${i * (latencyChart.offsetWidth / barsCount)}px`;
                 bar.style.height = '0px';
                 latencyChart.appendChild(bar);
             }
@@ -817,17 +1153,20 @@
         // Update Latency Chart
         function updateLatency(latency) {
             latencyHistory.push(latency);
-            if (latencyHistory.length > 50) {
+            const barsCount = isPortrait ? 30 : 50;
+            if (latencyHistory.length > barsCount) {
                 latencyHistory.shift();
             }
             
             const maxLatency = Math.max(...latencyHistory, 100);
             const bars = document.querySelectorAll('.latency-bar');
+            const barWidth = latencyChart.offsetWidth / barsCount;
             
             latencyHistory.forEach((lat, index) => {
                 if (bars[index]) {
-                    const height = (lat / maxLatency) * 180;
+                    const height = (lat / maxLatency) * 80;
                     bars[index].style.height = `${height}px`;
+                    bars[index].style.left = `${index * barWidth}px`;
                     
                     // Color based on latency
                     if (lat < 30) {
@@ -854,8 +1193,9 @@
             logContainer.appendChild(logEntry);
             logHistory.push({ timestamp, message });
             
-            // Keep only last 50 entries
-            if (logHistory.length > 50) {
+            // Keep only last 30 entries
+            const maxLogs = isPortrait ? 20 : 30;
+            if (logHistory.length > maxLogs) {
                 logHistory.shift();
                 if (logContainer.firstChild) {
                     logContainer.removeChild(logContainer.firstChild);
@@ -949,6 +1289,22 @@
 
         // Initialize quantum animation
         enhanceQuantumAnimation();
+
+        // Prevent zoom on mobile
+        document.addEventListener('touchstart', function(e) {
+            if (e.touches.length > 1) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(e) {
+            const now = Date.now();
+            if (now - lastTouchEnd <= 300) {
+                e.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
     </script>
 </body>
 </html>
