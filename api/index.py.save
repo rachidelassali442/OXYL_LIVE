@@ -1,3 +1,4 @@
+#!/bin/bash
 # OXYL.XYZ - Final Master Deployment Script
 # Advanced Code Factory with Python Backend & Modern Frontend
 # AlmaLinux 9.7 (Moss Jungle Cat) - WSL2 Optimized
@@ -1029,7 +1030,7 @@ class PolynomialRing:
         """Polynomial multiplication modulo x^N - 1"""
         result = [0] * self.N
         
-        fori in range(self.N):
+        for i in range(self.N):
             for j in range(self.N):
                 idx = (i + j) % self.N
                 result[idx] = (result[idx] + a[i] * b[j]) % self.q
@@ -1045,7 +1046,7 @@ class PolynomialRing:
             c_mod = c % self.q
             if c_mod > half_q:
                 lifted.append(c_mod - self.q)
-         lse:
+            else:
                 lifted.append(c_mod)
         
         return lifted
@@ -1057,7 +1058,7 @@ class PolynomialRing:
         try:
             # For ternary polynomials, check if invertible
             if all(abs(c) <= 1 for c in f):
-                # Simplified inversion (acal NTRU uses different algorithm)
+                # Simplified inversion (actual NTRU uses different algorithm)
                 return self._approximate_inverse(f)
         except Exception as e:
             logger.error(f"Inversion failed: {e}")
@@ -1069,7 +1070,7 @@ class PolynomialRing:
         result = [0] * self.N
         result[0] = 1  # Simple approximation
         
-        # Scale to sati* finv ≈ 1 mod q
+        # Scale to satisfy f * finv ≈ 1 mod q
         for i in range(1, self.N):
             result[i] = (-f[i] * result[0]) % self.q
         
@@ -1084,7 +1085,7 @@ class NoiseSampler:
         self._entropy_source = secrets.SystemRandom()
         
     async def sample_gaussian(self, size: int = 1) -> List[float]:
-        """Sampfrom discrete Gaussian distribution"""
+        """Sample from discrete Gaussian distribution"""
         await asyncio.sleep(0.001)  # Simulate sampling time
         
         samples = []
@@ -1555,7 +1556,7 @@ class CryptographicMeshNode:
         """Receive and decrypt secure message"""
         try:
             package = json.loads(encrypted_package.decode('utf-8'))
-            session_id = package["session_id"]
+     session_id = package["session_id"]
             
             if session_id not in self.active_sessions:
                 logger.error(f"Session not found: {session_id}")
@@ -1568,7 +1569,7 @@ class CryptographicMeshNode:
             ciphertext = b64decode(package["ciphertext"])
             plaintext = await self._authenticated_decrypt(ciphertext, session_key)
             
-            # Verify sequence
+        # Verify sequence
             received_sequence = package.get("sequence", 0)
             if received_sequence <= session["message_count"]:
                 logger.warning(f"Possible replay attack detected in session {session_id}")
@@ -1578,7 +1579,7 @@ class CryptographicMeshNode:
             
             return plaintext
         except Exception as e:
-            logger.error(f"Failed to receive secure message: {e}")
+            logger.error(f"Failed to receivee message: {e}")
             return None
 
 class CryptographicMeshNetwork:
@@ -1592,7 +1593,7 @@ class CryptographicMeshNetwork:
         
     async def add_node(self, 
                       node_id: str, 
-                      security_level: LatticeDimension = LatticeDimension.NTRU_256) -> CryptographicMeshNode:
+                      security_level: LatticeDimension = LatticeDimensio_256) -> CryptographicMeshNode:
         """Add new node to mesh network"""
         node = CryptographicMeshNode(node_id, security_level)
         await node.generate_key_pair()
@@ -1605,7 +1606,7 @@ class CryptographicMeshNetwork:
     
     async def connect_nodes(self, node_a_id: str, node_b_id: str) -> bool:
         """Establish connection between two nodes"""
-        if node_a_id not in self.nodes or node_b_id not in self.nodes:
+        ifode_a_id not in self.nodes or node_b_id not in self.nodes:
             logger.error(f"One or both nodes not found")
             return False
         
@@ -1618,7 +1619,7 @@ class CryptographicMeshNetwork:
         
         # Update routing table
         if node_b_id not in self.routing_table[node_a_id]:
-            self.routing_table[node_a_id].append(node_b_id)
+         .routing_table[node_a_id].append(node_b_id)
         if node_a_id not in self.routing_table[node_b_id]:
             self.routing_table[node_b_id].append(node_a_id)
         
@@ -1630,7 +1631,7 @@ class CryptographicMeshNetwork:
     async def route_message(self, 
                           source_id: str, 
                           target_id: str, 
-                          message: bytes) -> bool:
+                          message: bytes) ->ol:
         """Route encrypted message through mesh network"""
         if source_id not in self.nodes or target_id not in self.nodes:
             logger.error(f"Source or target node not found")
@@ -1642,7 +1643,7 @@ class CryptographicMeshNetwork:
             logger.error(f"No path found from {source_id} to {target_id}")
             return False
         
-        logger.info(f"Routing message from {source_id} to {target_id} via {path}")
+        logger.info(f"Routing me from {source_id} to {target_id} via {path}")
         
         # Encrypt message at source
         source_node = self.nodes[source_id]
@@ -1656,7 +1657,7 @@ class CryptographicMeshNetwork:
         # Store message record
         message_record = {
             "message_id": hashlib.sha256(message).hexdigest()[:16],
-            "source": source_id,
+            "so: source_id,
             "target": target_id,
             "path": path,
             "timestamp": datetime.utcnow().isoformat(),
@@ -1670,7 +1671,7 @@ class CryptographicMeshNetwork:
             next_node = path[i + 1]
             
             # In real implementation, this would involve actual network transmission
-            logger.info(f"  Hop {i+1}: {current_node} -> {next_node}")
+            l.info(f"  Hop {i+1}: {current_node} -> {next_node}")
             await asyncio.sleep(0.001)  # Simulate network delay
         
         logger.info(f"Message successfully routed to {target_id}")
@@ -1701,7 +1702,7 @@ class CryptographicMeshNetwork:
         
         return None
     
-    def get_network_stats(self) -> Dict[str, Any]:
+    def get_network_stats(self)  Dict[str, Any]:
         """Get network statistics"""
         total_messages = len(self.encrypted_messages)
         total_nodes = len(self.nodes)
@@ -1715,18 +1716,18 @@ class CryptographicMeshNetwork:
         return {
             "network_id": self.network_id,
             "total_nodes": total_nodes,
-            "total_connections": sum(len(neighbors) for neighbors in self.routing_table.values()) // 2,
+           "total_connections": sum(len(neighbors) for neighbors in self.routing_table.values()) // 2,
             "total_messages": total_messages,
             "avg_path_length": avg_path_length,
             "security_levels": {
                 node_id: node.security_level.name 
-                for node_id, node in self.nodes)
+                for node_id, node in self.nodes.items()
             }
         }
 
 # Factory function for creating cryptographic mesh
 def create_cryptographic_mesh(network_id: str, 
-                            initial_nodes: Optional[List[Tuple[str, LatticeDimension]]] = None) -> CryptographicMeshNetwork:
+                            initial_nodes: Optional[Liste[str, LatticeDimension]]] = None) -> CryptographicMeshNetwork:
     """Create and initialize cryptographic mesh network"""
     mesh = CryptographicMeshNetwork(network_id)
     
@@ -1734,11 +1735,11 @@ def create_cryptographic_mesh(network_id: str,
     if initial_nodes:
         async def init_nodes():
             for node_id, security_level in initial_nodes:
-          await mesh.add_node(node_id, security_level)
+                await mesh.add_node(node_id, security_level)
         
         # Run initialization synchronously for this simplified version
         import asyncio
-        asyncio.run(init_nodes())
+        asyncio.run(initnodes())
     
     return mesh
 
@@ -1749,11 +1750,12 @@ async def demo_cryptographic_mesh():
     mesh = create_cryptographic_mesh("OXYL-SECURE-MESH-001")
     
     # Add nodes with different security levels
-    node_a = await mesh.add_node("node_alpha", LatticeDimension.NTRU_256    node_b = await mesh.add_node("node_beta", LatticeDimension.NTRU_192)
+    node_a = await mesh.add_node("node_alpha", LatticeDimension.NTRU_256)
+    node_b = await mesh.add_node("node_beta", LatticeDimension.NTRU_192)
     node_c = await mesh.add_node("node_gamma", LatticeDimension.NTRU_128)
     
     # Connect nodes
-    await mesh.connect_nodes("node_alpha", "node_beta")
+    awaiconnect_nodes("node_alpha", "node_beta")
     await mesh.connect_nodes("node_beta", "node_gamma")
     
     # Route a secure message
@@ -1766,7 +1768,7 @@ async def demo_cryptographic_mesh():
     # Display network statistics
     stats = mesh.get_network_stats()
     print(f"\nNetwork Statistics:")
-    print(f"  Nodes: {stats['total_nodes']}")
+    print(f"  Nodes: {st['total_nodes']}")
     print(f"  Connections: {stats['total_connections']}")
     print(f"  Messages routed: {stats['total_messages']}")
     print(f"  Average path length: {stats['avg_path_length']:.2f} hops")
@@ -1776,12 +1778,12 @@ if __name__ == "__main__":
 """
 EOF
 
-print_success "Complex Python sni created with advanced cryptography and quantum computing"
+print_success "Complex Python snippets created with advanced cryptography and quantum computing"
 
 # ========== PHASE 3: FRONTEND MASTERY ==========
 print_header "PHASE 3: FRONTEND MASTERY WITH GLASSMORPHISM DESIGN"
 
-cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
+cat > $RONTEND_DIR/index.html << 'HTML_EOF'
 <!DOCTYPE html>
 <html lang="en" dir="ltr" class="dark-mode">
 <head>
@@ -1790,22 +1792,22 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
     <meta name="theme-color" content="#0a0a0a">
     
     <!-- === ULTRA-AGGRESSIVE SEO === -->
-    <e>OXYL.XYZ | Advanced Code Factory - Proprietary Python Assets & Algorithmic Manufacturing</title>
-    <meta name="description" content="OXYL.XYZ is a Secure Software Source Code Factory specializing in Neural Framework Development, Advanced Cryptography, Quantum Computing Algorithms, and Spacetime Telemetry Systems. We provide proprietary Python assets for algorithmic manufacturing and secure logic licensing.">
-    <meta name="keywords" content="Proprietary Python Assets, Algorithmic Manufacturing, OXYL Neramework, Secure Logic Licensing, Advanced Cryptography, Quantum Storage Arrays, Spacetime Telemetry, Asynchronous Neural Networks, Post-Quantum Cryptography, Software Source Code Factory, Python Development, AI Algorithms, Machine Learning, Quantum Computing, Blockchain Security">
+    <title>OXYL.XYZ | Advanced Code Factory - Proprietary Python Assets & Algorithmic Manufacturing</title>
+    <meta name="description" content="OXYL.XYZ is a Secure Software Source Code Fac specializing in Neural Framework Development, Advanced Cryptography, Quantum Computing Algorithms, and Spacetime Telemetry Systems. We provide proprietary Python assets for algorithmic manufacturing and secure logic licensing.">
+    <meta name="keywords" content="Proprietary Python Assets, Algorithmic Manufacturing, OXYL Neural Framework, Secure Logic Licensing, Advanced Cryptography, Quantum Storage Arrays, Spacetime Telemetry, Asynchronous Neural Networks, Post-Quantum Cryptography, Software Source Code ory, Python Development, AI Algorithms, Machine Learning, Quantum Computing, Blockchain Security">
     <meta name="author" content="OXYL Advanced Code Factory">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-    <meta name="googlebot" content="index, follow, max-et:-1, max-image-preview:large, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     
-    <!-- CANONICAL & ALTERNATE LINKS -->
+    <! CANONICAL & ALTERNATE LINKS -->
     <link rel="canonical" href="https://oxyl.xyz">
     <link rel="alternate" hreflang="en" href="https://oxyl.xyz">
     <link rel="alternate" hreflang="x-default" href="https://oxyl.xyz">
     
     <!-- OPEN GRAPH META -->
-    <meta property="og:title" content="OXYL.XYZ | Advanced Code Factory - Prtary Python Assets">
-    <meta property="og:description" content="Secure Software Source Code Factory specializing in Neural Framework Development, Advanced Cryptography, and Quantum Computing Algorithms">
+    <meta property="og:title" content="OXYL.XYZ | Advanced Code Factory - Proprietary Python Assets">
+    <meta property="og:description" content="Secure Software Source Code Factory specializing in Neural Framework Development, Advanced Cryptography, and Qantum Computing Algorithms">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://oxyl.xyz">
     <meta property="og:image" content="https://oxyl.xyz/assets/og-image.png">
@@ -1813,16 +1815,16 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="OXYL.XYZ Advanced Code Factory Interface">
     <meta property="og:site_name" content="OXYL Advanced Code Factory">
-    <meta property="og:locale" content="en_US">
+    <meta property="og:locale" content=en_US">
     
     <!-- TWITTER CARD -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="OXYL.XYZ | Advanced Code Factory">
     <meta name="twitter:description" content="Proprietary Python Assets & Algorithmic Manufacturing">
-    <meta name="twitter:image" content="https://oxyl.xyz/ssets/twitter-card.png">
+    <meta name="twitter:image" content="https://oxyl.xyz/assets/twitter-card.png">
     <meta name="twitter:site" content="@oxyl_xyz">
     <meta name="twitter:creator" content="@oxyl_xyz">
-    <meta name="twitter:label1" content="Asset Valuation">
+    <meta name="twitter:label1" content="Asset luation">
     <meta name="twitter:data1" content="$2.5B+">
     <meta name="twitter:label2" content="Security Level">
     <meta name="twitter:data2" content="Quantum-Resistant">
@@ -1832,10 +1834,11 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
     {
         "@context": "https://schema.org",
         "@graph": [
-                           "@type": "Organization",
+            {
+                "@type": "Organization",
                 "@id": "https://oxyl.xyz/#organization",
                 "name": "OXYL Advanced Code Factory",
-                "url": "https://oxyl.xyz",
+                "url": "s://oxyl.xyz",
                 "sameAs": [
                     "https://github.com/oxyl-xyz",
                     "https://linkedin.com/company/oxyl-xyz",
@@ -1848,27 +1851,28 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
                     "height": 512,
                     "caption": "OXYL Advanced Code Factory Logo"
                 },
-                "description": "Software Source Code Factory specializing in advanced algorithm manufacturing and proprietary Python assets",
+           "description": "Software Source Code Factory specializing in advanced algorithm manufacturing and proprietary Python assets",
                 "foundingDate": "2024",
                 "founder": {
                     "@type": "Person",
                     "name": "Senior DevOps Engineer & Python Architect"
-                },              "address": {
+                },
+                "address": {
                     "@type": "PostalAddress",
                     "addressCountry": "Digital"
                 },
                 "contactPoint": {
-                    "@type": "ContactPoint",
+                 "@type": "ContactPoint",
                     "contactType": "technical support",
                     "email": "rachidelassali442@gmail.com",
                     "availableLanguage": ["English", "French", "Arabic"]
                 },
                 "knowsAbout": [
                     "Advanced Python Development",
-                "Neural Network Architectures",
+                    "Neural Network Architectures",
                     "Quantum Computing Algorithms",
                     "Cryptographic Systems",
-                    "High-Frequency Trading Systems",
+                    "High-Frequency Trng Systems",
                     "Spacetime Telemetry",
                     "DevOps Engineering",
                     "Algorithmic Manufacturing"
@@ -1877,9 +1881,9 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
                     {
                         "@type": "Offer",
                         "itemOffered": {
-                          type": "Service",
+                            "@type": "Service",
                             "name": "Proprietary Python Assets Licensing",
-                            "description": "Advanced code modules for neural frameworks, quantum algorithms, and cryptographic systems"
+                            "description": "Advanced code modules for neural frameworksquantum algorithms, and cryptographic systems"
                         },
                         "priceSpecification": {
                             "@type": "PriceSpecification",
@@ -1887,22 +1891,23 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
                             "price": "100000"
                         }
                     }
-          ]
+                ]
             },
             {
                 "@type": "WebSite",
                 "@id": "https://oxyl.xyz/#website",
                 "url": "https://oxyl.xyz",
-                "name": "OXYL.XYZ Advanced Code Factory",
+              "name": "OXYL.XYZ Advanced Code Factory",
                 "description": "Secure Software Source Code Factory",
                 "publisher": {
                     "@id": "https://oxyl.xyz/#organization"
                 },
                 "potentialAction": [
                     {
-                        "@type": "SearchAction                      "target": "https://oxyl.xyz/search?q={search_term_string}",
+                        "@type": "SearchAction",
+                        "target": "https://oxyl.xyz/search?q={search_term_string}",
                         "query-input": "required name=search_term_string"
-                    }
+                 
                 ]
             },
             {
@@ -1910,11 +1915,11 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
                 "name": "OXYL Neural Framework",
                 "description": "Proprietary neural network framework with quantum synchronization",
                 "programmingLanguage": "Python",
-                "runtimePlatform": "AlmaLi 9.7",
+                "runtimePlatform": "AlmaLinux 9.7",
                 "codeRepository": "https://github.com/oxyl-xyz/neural-framework",
                 "license": "https://oxyl.xyz/license",
                 "author": {
-                    "@id": "https://oxyl.xyz/#organization"
+                   "@id": "https://oxyl.xyz/#organization"
                 }
             }
         ]
@@ -1922,11 +1927,11 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
     </script>
     
     <!-- SECURITY HEADERS -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: blob: 'unsafe-inline' 'unsafe-eval'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cdflare.com 'unsafe-inline' 'unsafe-eval'; style-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline'; font-src 'self' https://cdnjs.cloudflare.com data:; frame-src https://www.linkedin.com; connect-src 'self' https://api.oxyl.xyz; img-src 'self' data: https: blob:">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: blob: 'unsafe-inline' 'unsafe-eval'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com 'unsafe-inline' 'unsafe-eval'; style-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline'; font-src 'self' https://cdnjs.cloudflare.com data:; frame-src https//www.linkedin.com; connect-src 'self' https://api.oxyl.xyz; img-src 'self' data: https: blob:">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="X-Frame-Options" content="DENY">
     <meta http-equiv="X-XSS-Protection" content="1; mode=block">
-    <meta http-equiv="Referrer-Policy" content="strict-orhen-cross-origin">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
     <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=(), interest-cohort=()">
     
     <!-- RESOURCE HINTS -->
@@ -1934,16 +1939,16 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-    <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/x/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- ICONS & MANIFEST -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 fill=%22%2300ff41%22>⚡</text></svg>">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http/www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 fill=%22%2300ff41%22>⚡</text></svg>">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="manifest" href="/manifest.json">
     
     <!-- EXTERNAL DEPENDENCIES -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     <!-- GLASSMORPHISM STYLES -->
     <style>
@@ -1952,12 +1957,12 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
             --primary: #00ff41;
             --primary-dark: #00cc34;
             --primary-light: #33ff6b;
-         --secondary: #00f2ff;
+            --secondary: #00f2ff;
             --secondary-dark: #00b8c4;
             --secondary-light: #33f5ff;
             --accent: #ff55ff;
             --warning: #ffff55;
-            --danger: #ff0040;
+          --danger: #ff0040;
             --success: #00ff88;
             
             /* Background Colors */
@@ -1970,13 +1975,13 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
             --glass-bg: rgba(255, 255, 255, 0.05);
             --glass-border: rgba(255, 255, 255, 0.1);
             --glass-shadow: 0 8px 32px rgba(0, 255, 65, 0.1);
-            --glass-blur: blur(20px);
+            --glass-blur: blur(2;
             --glass-backdrop: saturate(180%) blur(20px);
             
             /* Typography */
             --font-mono: 'Cascadia Code', 'Fira Code', 'Monaco', 'Courier New', monospace;
             --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            --font-heading: 'Space Grotesk', var(--ns);
+            --font-heading: 'Space Grotesk', var(--font-sans);
             
             /* Spacing */
             --space-xs: 0.25rem;
@@ -1993,7 +1998,7 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
             --transition-bounce: 500ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
         
-        
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -2014,7 +2019,7 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
             background-image: 
                 radial-gradient(circle at 15% 50%, rgba(0, 255, 65, 0.05) 0%, transparent 50%),
                 radial-gradient(circle at 85% 30%, rgba(0, 242, 255, 0.03) 0%, transparent 50%),
-                radial-gradient(circle at 50% 80%, rgba(255, 85, 255, 0.02) 0%, transparent 50%);
+                ial-gradient(circle at 50% 80%, rgba(255, 85, 255, 0.02) 0%, transparent 50%);
             position: relative;
         }
         
@@ -2026,8 +2031,8 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
             width: 100%;
             height: 100%;
             background: 
-                lin-gradient(45deg, transparent 30%, rgba(0, 255, 65, 0.02) 50%, transparent 70%),
-                linear-gradient(135deg, transparent 30%, rgba(0, 242, 255, 0.02) 50%, transparent 70%);
+                linear-gradient(45deg, transparent 30%, rgba(0, 255, 65, 0.02) 50%, transparent 70%),
+                linear-gradient(135deg, transparent 30%, rgba(0, 242, 255, 0.02) 50%, parent 70%);
             pointer-events: none;
             z-index: -1;
         }
@@ -2040,12 +2045,12 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
             width: 100%;
             height: 100%;
             background: var(--bg-primary);
-         isplay: flex;
+            display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            transition: opacity var(--transition-slow);
+            transiti: opacity var(--transition-slow);
         }
         
         .loader {
@@ -2056,7 +2061,7 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
             border-radius: 50%;
             animation: spin 1s linear infinite;
             position: relative;
-            margin-bm: var(--space-xl);
+            margin-bottom: var(--space-xl);
         }
         
         .loader::before {
@@ -2078,7 +2083,7 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
             text-transform: uppercase;
             background: linear-gradient(90deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
-            background-clip: text;
+          kground-clip: text;
             color: transparent;
             animation: pulse 2s ease-in-out infinite;
         }
@@ -2090,10 +2095,10 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
             left: 0;
             width: 100%;
             background: var(--glass-bg);
-            backilter: var(--glass-backdrop);
+            backdrop-filter: var(--glass-backdrop);
             -webkit-backdrop-filter: var(--glass-backdrop);
             border-bottom: 1px solid var(--glass-border);
-            z-index: 1000;
+            z-in000;
             padding: var(--space-md) var(--space-xl);
         }
         
@@ -2107,12 +2112,12 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
         
         .logo {
             display: flex;
-            alms: center;
+            align-items: center;
             gap: var(--space-sm);
             font-size: 1.8rem;
             font-weight: 700;
             text-decoration: none;
-            color: var(--primary);
+            color: va-primary);
             transition: all var(--transition-normal);
         }
         
@@ -2133,7 +2138,7 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
         }
         
         .nav-link {
-            color: var(--primary);
+            color: var(--primar;
             text-decoration: none;
             font-size: 1rem;
             font-weight: 500;
@@ -2145,13 +2150,13 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
         }
         
         .nav-link::after {
-       content: '';
+            content: '';
             position: absolute;
             bottom: 0;
             left: 0;
             width: 0;
             height: 2px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            backgroundnear-gradient(90deg, var(--primary), var(--secondary));
             transition: width var(--transition-normal);
         }
         
@@ -2167,7 +2172,7 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: var(--bg-primary);
             padding: var(--space-sm) var(--space-lg);
-            border-radius: 50px;
+            border-radius: 5;
             text-decoration: none;
             font-weight: 600;
             letter-spacing: 0.1em;
@@ -2177,14 +2182,14 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
         
         .nav-cta:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(0, , 0.4);
+            box-shadow: 0 8px 30px rgba(0, 255, 65, 0.4);
         }
         
         /* ========== HERO SECTION ========== */
         .hero {
             min-height: 100vh;
             display: flex;
-            align-items: center;
+            aems: center;
             padding: calc(var(--space-xxl) * 2) var(--space-xl) var(--space-xxl);
             position: relative;
             overflow: hidden;
@@ -2195,14 +2200,14 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
             margin: 0 auto;
             width: 100%;
             display: grid;
-            grid-template-colum: 1fr 1fr;
+            grid-template-columns: 1fr 1fr;
             gap: var(--space-xxl);
             align-items: center;
         }
         
         .hero-text {
             position: relative;
-            z-index: 2;
+            z-ind: 2;
         }
         
         .hero-badge {
@@ -2213,13 +2218,12 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
             backdrop-filter: var(--glass-blur);
             padding: var(--space-sm) var(--space-md);
             border-radius: 50px;
-            border:x solid var(--glass-border);
+            border: 1px solid var(--glass-border);
             margin-bottom: var(--space-lg);
             animation: float 3s ease-in-out infinite;
         }
         
-        .hero-badge i {
-            color: var(--secondary);
+        .hero-badge i            color: var(--secondary);
         }
         
         .hero-title {
@@ -2228,13 +2232,13 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
             line-height: 1.1;
             margin-bottom: var(--space-lg);
             background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
-            -webkit-background-cl text;
+            -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             text-shadow: 0 10px 30px rgba(0, 255, 65, 0.2);
         }
         
-        .hero-subtitle {
+        .hero-e {
             font-size: 1.5rem;
             color: var(--secondary);
             margin-bottom: var(--space-xl);
@@ -2246,13 +2250,13 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: var(--space-md);
-            mottom: var(--space-xl);
+            margin-bottom: var(--space-xl);
         }
         
         .stat-card {
             background: var(--glass-bg);
             backdrop-filter: var(--glass-blur);
-            border: 1px solid var(--glass-border);
+            bo 1px solid var(--glass-border);
             border-radius: 16px;
             padding: var(--space-lg);
             transition: all var(--transition-normal);
@@ -2262,11 +2266,12 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
             transform: translateY(-5px);
             border-color: var(--primary);
             box-shadow: var(--glass-shadow);
-        }    
+        }
+        
         .stat-value {
             font-size: 2.5rem;
             font-weight: 700;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, var(--primary), var(--secondary;
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -2287,7 +2292,7 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
         }
         
         .code-terminal {
-            background: rgba(10, 10, 10, 0.95);
+        background: rgba(10, 10, 10, 0.95);
             border-radius: 20px;
             border: 1px solid var(--glass-border);
             overflow: hidden;
@@ -2295,13 +2300,13 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
                 0 20px 60px rgba(0, 0, 0, 0.5),
                 0 0 0 1px rgba(0, 255, 65, 0.1);
             transform-style: preserve-3d;
-            perspeve: 1000px;
+            perspective: 1000px;
         }
         
         .terminal-header {
             background: rgba(30, 30, 30, 0.95);
             padding: var(--space-md) var(--space-lg);
-            display: flex;
+          isplay: flex;
             align-items: center;
             gap: var(--space-sm);
             border-bottom: 1px solid var(--glass-border);
@@ -2314,12 +2319,12 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
         }
         
         .dot-red { background: #ff5f56; }
-        .dot-llow { background: #ffbd2e; }
+        .dot-yellow { background: #ffbd2e; }
         .dot-green { background: #27ca3f; }
         
         .terminal-title {
             margin-left: var(--space-md);
-            color: var(--secondary);
+            color: v-secondary);
             font-size: 0.9rem;
             letter-spacing: 0.1em;
         }
@@ -2331,14 +2336,14 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
             line-height: 1.8;
             max-height: 400px;
             overflow-y: auto;
-       
+        }
         
         .code-line {
             margin-bottom: var(--space-sm);
             display: flex;
             align-items: flex-start;
             gap: var(--space-md);
-        }
+ }
         
         .line-number {
             color: var(--secondary);
@@ -2353,10 +2358,10 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
         }
         
         .code-keyword { color: var(--accent); }
-        .codction { color: var(--primary); }
+        .code-function { color: var(--primary); }
         .code-string { color: var(--warning); }
         .code-comment { color: var(--secondary); opacity: 0.7; font-style: italic; }
-        .code-number { color: var(--secondary-light); }
+        .-number { color: var(--secondary-light); }
         .code-class { color: var(--success); }
         
         /* ========== FEATURES SECTION ========== */
@@ -2366,13 +2371,14 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
         }
         
         .section-header {
-            text-align: center            margin-bottom: var(--space-xxl);
+            text-align: center;
+            margin-bottom: var(--space-xxl);
         }
         
         .section-subtitle {
             display: inline-block;
             color: var(--secondary);
-            font-size: 1rem;
+            f-size: 1rem;
             letter-spacing: 0.2em;
             text-transform: uppercase;
             margin-bottom: var(--space-md);
@@ -2383,13 +2389,13 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
         .section-subtitle::before {
             content: '';
             position: absolute;
-            le
+            left: 0;
             top: 50%;
             width: var(--space-lg);
             height: 2px;
             background: linear-gradient(90deg, var(--primary), transparent);
         }
-        
+       
         .section-title {
             font-size: 3.5rem;
             font-weight: 800;
@@ -2398,14 +2404,14 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin-bottar(--space-lg);
+            margin-bottom: var(--space-lg);
         }
         
         .section-description {
             font-size: 1.2rem;
             color: var(--secondary);
             max-width: 800px;
-            margin: 0 auto;
+         margin: 0 auto;
             opacity: 0.9;
         }
         
@@ -2418,11 +2424,11 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
         }
         
         .feature-card {
-            band: var(--glass-bg);
+            background: var(--glass-bg);
             backdrop-filter: var(--glass-blur);
             border: 1px solid var(--glass-border);
             border-radius: 20px;
-            padding: var(--space-xl);
+            paing: var(--space-xl);
             transition: all var(--transition-normal);
             position: relative;
             overflow: hidden;
@@ -2435,10 +2441,10 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
             left: 0;
             right: 0;
             height: 3px;
-         ackground: linear-gradient(90deg, var(--primary), var(--secondary));
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
             transform: scaleX(0);
             transform-origin: left;
-            transition: transform var(--transition-normal);
+            transition: trnsform var(--transition-normal);
         }
         
         .feature-card:hover {
@@ -2452,11 +2458,11 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
         }
         
         .feature-icon {
-           width: 60px;
+            width: 60px;
             height: 60px;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             border-radius: 16px;
-            display: flex;
+     display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: var(--space-lg);
@@ -2467,12 +2473,13 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
         .feature-title {
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--primary          margin-bottom: var(--space-md);
+            color: var(--primary);
+            margin-bottom: var(--space-md);
         }
         
         .feature-description {
             color: var(--secondary);
-            margin-bottom: var(--space-lg);
+            margin-bottom: var(--space);
             line-height: 1.7;
             opacity: 0.9;
         }
@@ -2486,13 +2493,13 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
         .feature-tag {
             background: rgba(0, 255, 65, 0.1);
             color: var(--secondary);
-            padding: var-space-xs) var(--space-sm);
+            padding: var(--space-xs) var(--space-sm);
             border-radius: 50px;
             font-size: 0.8rem;
             border: 1px solid rgba(0, 255, 65, 0.2);
         }
         
-        /* ========== PORTFOLIO SECTION ========== */
+    * ========== PORTFOLIO SECTION ========== */
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -2502,12 +2509,12 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
         }
         
         .portfolio-card {
-            background: var(---bg);
+            background: var(--glass-bg);
             backdrop-filter: var(--glass-blur);
             border: 1px solid var(--glass-border);
             border-radius: 20px;
             overflow: hidden;
-            transition: all var(--transition-normal);
+        transition: all var(--transition-normal);
         }
         
         .portfolio-card:hover {
@@ -2519,12 +2526,12 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
         .portfolio-image {
             width: 100%;
             height: 200px;
-            ckground: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             position: relative;
             overflow: hidden;
         }
         
-        .portfolio-image::before {
+        .portfolio-ie::before {
             content: '';
             position: absolute;
             top: 0;
@@ -2535,14 +2542,14 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
             animation: shimmer 2s infinite;
         }
         
-        .tfolio-content {
+        .portfolio-content {
             padding: var(--space-xl);
         }
         
         .portfolio-title {
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--primary);
+           color: var(--primary);
             margin-bottom: var(--space-md);
         }
         
@@ -2555,11 +2562,11 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
         
         .portfolio-stats {
             display: flex;
-         stify-content: space-between;
+            justify-content: space-between;
             align-items: center;
             padding-top: var(--space-md);
             border-top: 1px solid var(--glass-border);
-        }
+      
         
         .portfolio-stat {
             text-align: center;
@@ -2593,7 +2600,7 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
             position: absolute;
             top: 50%;
             left: 50%;
-           transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
             width: 1000px;
             height: 1000px;
             background: radial-gradient(circle, rgba(0, 255, 65, 0.1) 0%, transparent 70%);
@@ -2607,14 +2614,14 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
             border-radius: 30px;
             padding: var(--space-xxl);
             max-width: 800px;
-            margn: 0 auto;
+            margin: 0 auto;
             position: relative;
             overflow: hidden;
         }
         
         .cta-card::before {
             content: '';
-            position: absolute;
+            posit: absolute;
             top: -50%;
             left: -50%;
             right: -50%;
@@ -2625,7 +2632,7 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
                 var(--secondary) 120deg,
                 var(--accent) 240deg,
                 var(--primary) 360deg
-         );
+            );
             animation: rotate 10s linear infinite;
             z-index: -1;
         }
@@ -2643,12 +2650,12 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
             font-size: 3rem;
             font-weight: 800;
             margin-bottom: var(--space-lg);
-            background: linear-gradient(135deg, var(--primary(--secondary), var(--accent));
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
-        
+       
         .cta-description {
             font-size: 1.2rem;
             color: var(--secondary);
@@ -2661,13 +2668,13 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
         
         .cta-buttons {
             display: flex;
-            gap: var(--sp);
+            gap: var(--space-md);
             justify-content: center;
             flex-wrap: wrap;
         }
         
         .btn {
-            padding: var(--space-md) var(--space-xl);
+            padding: var(--space-md) var(--space);
             border-radius: 50px;
             font-weight: 600;
             text-decoration: none;
@@ -2677,7 +2684,7 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: var(--spce-sm);
+            gap: var(--space-sm);
             border: 2px solid transparent;
         }
         
@@ -2694,12 +2701,12 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
         
         .btn-secondary {
             background: transparent;
-            lor: var(--primary);
+            color: var(--primary);
             border-color: var(--primary);
         }
         
         .btn-secondary:hover {
-            background: rgba(0, 255, 65, 0.1);
+            background: rgba(0, 255, 6, 0.1);
             transform: translateY(-3px);
         }
         
@@ -2715,7 +2722,7 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
             margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: var(--space-xl);
+            gap: var(--s);
         }
         
         .footer-section-title {
@@ -2731,11 +2738,11 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
         
         .footer-link {
             color: var(--secondary);
-        text-decoration: none;
+            text-decoration: none;
             margin-bottom: var(--space-sm);
             display: block;
             transition: all var(--transition-fast);
-            opacity: 0.8;
+         opacity: 0.8;
         }
         
         .footer-link:hover {
@@ -2751,12 +2758,12 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
         
         .social-link {
             width: 40px;
-            height: px;
+            height: 40px;
             border-radius: 50%;
             background: var(--glass-bg);
             border: 1px solid var(--glass-border);
             display: flex;
-            align-items: center;
+      align-items: center;
             justify-content: center;
             color: var(--primary);
             text-decoration: none;
@@ -2766,14 +2773,14 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
         .social-link:hover {
             background: var(--primary);
             color: var(--bg-primary);
-            transform: translateY(-3p;
+            transform: translateY(-3px);
         }
         
         .copyright {
             text-align: center;
             padding-top: var(--space-xl);
             margin-top: var(--space-xl);
-            border-top: 1px solid var(--glass-border);
+          border-top: 1px solid var(--glass-border);
             color: var(--secondary);
             font-size: 0.9rem;
             opacity: 0.7;
@@ -2785,13 +2792,13 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
             100% { transform: rotate(360deg); }
         }
         
-      @keyframes pulse {
+        @keyframes pulse {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
         }
         
         @keyframes float {
-            0%, 100% { transform: translateY(0); }
+            0%, 100% sform: translateY(0); }
             50% { transform: translateY(-10px); }
         }
         
@@ -2802,12 +2809,11 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
         
         @keyframes rotate {
             0% { transform: translate(-50%, -50%) rotate(0deg); }
-            % { transform: translate(-50%, -50%) rotate(360deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
         }
         
         /* ========== RESPONSIVE DESIGN ========== */
-        @media (max-width: 1024px) {
-            .hero-content {
+        @media (max-width: 1024px)         .hero-content {
                 grid-template-columns: 1fr;
                 text-align: center;
             }
@@ -2821,14 +2827,14 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
             }
             
             .nav-links {
-             display: none;
+                display: none;
             }
         }
         
         @media (max-width: 768px) {
             .hero-stats {
                 grid-template-columns: 1fr;
-            }
+           }
             
             .features-grid,
             .portfolio-grid {
@@ -2851,7 +2857,7 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
                 width: 100%;
                 justify-content: center;
             }
-        }
+      }
         
         @media (max-width: 480px) {
             .hero,
@@ -2865,14 +2871,14 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
             }
             
             .section-title {
-                fon 1.8rem;
+                font-size: 1.8rem;
             }
             
             .feature-card,
             .portfolio-card,
             .cta-card {
                 padding: var(--space-lg);
-            }
+        }
         }
     </style>
 </head>
@@ -2892,14 +2898,14 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
             </a>
             
             <ul class="nav-links">
-                <li><a href="#features" class="nav-link">Features</a></li>
+                <li><a href="#features" class="nav-l>Features</a></li>
                 <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
                 <li><a href="#technology" class="nav-link">Technology</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
             
             <a href="#contact" class="nav-cta">
-           <i class="fas fa-rocket"></i>
+                <i class="fas fa-rocket"></i>
                 Get Started
             </a>
         </div>
@@ -2907,7 +2913,7 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
 
     <!-- Hero Section -->
     <section class="hero">
-        <div class="hero-content">
+        <div css="hero-content">
             <div class="hero-text">
                 <div class="hero-badge">
                     <i class="fas fa-shield-alt"></i>
@@ -2919,17 +2925,17 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
                     <span style="font-size: 0.8em; opacity: 0.9;">Proprietary Python Assets</span>
                 </h1>
                 
-                <p class="hero-subtitle">
+                <p class="hsubtitle">
                     We manufacture advanced algorithms, neural frameworks, and cryptographic systems. 
                     Our proprietary Python assets power the next generation of computational intelligence.
                 </p>
                 
                 <div class="hero-stats">
-                    <div class="stat-rd">
+                    <div class="stat-card">
                         <div class="stat-value">$2.5B+</div>
                         <div class="stat-label">Asset Valuation</div>
                     </div>
-                    
+                 
                     <div class="stat-card">
                         <div class="stat-value">99.99%</div>
                         <div class="stat-label">Uptime SLA</div>
@@ -2937,12 +2943,12 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
                     
                     <div class="stat-card">
                         <div class="stat-value">256-bit</div>
-                      <div class="stat-label">Quantum Security</div>
+                        <div class="stat-label">Quantum Security</div>
                     </div>
                 </div>
                 
                 <div class="cta-buttons">
-                    <a href="#contact" class="btn btn-primary">
+               <a href="#contact" class="btn btn-primary">
                         <i class="fas fa-code"></i>
                         License Code
                     </a>
@@ -2960,80 +2966,79 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
                         <div class="terminal-dot dot-yellow"></div>
                         <div class="terminal-dot dot-green"></div>
                         <div class="terminal-title">~/oxyl/core/quantum_sync.py</div>
-                </div>
+                    </div>
                     
                     <div class="terminal-content">
                         <div class="code-line">
-                            <span class="line-number">1</span>
+                            <span class=-number">1</span>
                             <span class="code-content">
                                 <span class="code-keyword">class</span> 
                                 <span class="code-class">QuantumNeuralSynchronizer</span>:
                             </span>
                         </div>
-                        <di="code-line">
+                        <div class="code-line">
                             <span class="line-number">2</span>
-                            <span class="code-content">&nbsp;&nbsp;<span class="code-keyword">def</span> <span class="code-function">__init__</span>(<span class="code-keyword">self</span>, qubit_count: <span class="code-keyword">int</span>):</span>
+                            <span class="code-content">&nbsp;&nbsp;<span class="code-keyword">de</span> <span class="code-function">__init__</span>(<span class="code-keyword">self</span>, qubit_count: <span class="code-keyword">int</span>):</span>
                         </div>
                         <div class="code-line">
                             <span class="line-number">3</span>
                             <span class="code-content">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">self</span>.qubits = QuantumRegister(qubit_count)</span>
                         </div>
-                        <div class="code-line">
+                        v class="code-line">
                             <span class="line-number">4</span>
                             <span class="code-content">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">self</span>.circuit = QuantumCircuit(<span class="code-keyword">self</span>.qubits)</span>
                         </div>
-                       v class="code-line">
+                        <div class="code-line">
                             <span class="line-number">5</span>
-                            <span class="code-content">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Entanglement protocol initialization</span></span>
+                            <span class="code-content">&nbsp;&nbsp;&nbsp;&nbsp;<span clas"code-comment"># Entanglement protocol initialization</span></span>
                         </div>
                         <div class="code-line">
                             <span class="line-number">6</span>
-                            <span class="code-content">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">self</span>.<span cla="code-function">_initialize_schrodinger_field</span>()</span>
+                            <span class="code-content">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">self</span>.<span class="code-function">_initialize_schrodinger_field</span>()</span>
                         </div>
                         <div class="code-line">
-                            <span class="line-number">7</span>
+                            <spn class="line-number">7</span>
                             <span class="code-content"></span>
                         </div>
                         <div class="code-line">
                             <span class="line-number">8</span>
-                            <span class="code-content">&nbsp;&nbsp;<span class="code-keyword">async despan> <span class="code-function">entangle_neurons</span>(<span class="code-keyword">self</span>, neural_weights):</span>
+                            <span class="code-content">&nbsp;&nbsp;<span class="code-keyword">async def</span> <span class="code-function">entangle_neurons</span>(<span class="code-keyword">self</span>, neural_weights):</span>
                         </div>
-                        <div class="code-line">
+                      <div class="code-line">
                             <span class="line-number">9</span>
                             <span class="code-content">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Quantum-classical hybrid processing</span></span>
                         </div>
                         <div class="code-line">
                             <span class="line-number">10</span>
-                            <span class="code-content">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">with</span> QuantumProcessor(<span class="code-keyword">self</span>.circuit) <span class="code-keyword">as</span> qp:</span>
+                            <span class="code-content">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">with</span> QuProcessor(<span class="code-keyword">self</span>.circuit) <span class="code-keyword">as</span> qp:</span>
                         </div>
                         <div class="code-line">
                             <span class="line-number">11</span>
-                            <span class="code-content">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sp;<span class="code-keyword">await</span> qp.apply_hadamard_gate(<span class="code-string">"ALL"</span>)</span>
+                            <span class="code-content">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">await</span> qp.apply_hadamard_gate(<span class="code-string">"ALL"</span>)</span>
                         </div>
-                        <div class="code-line">
+                        <div cl="code-line">
                             <span class="line-number">12</span>
                             <span class="code-content">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Quantum backpropagation begins here...</span></span>
                         </div>
                         <div class="code-line">
-                         <span class="line-number">13</span>
-                            <span class="code-content">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">for</span> _ <span class="code-keyword">in</span> <span class="code-function">range</span>(<span class="code-number">500</span>):</span>
+                            <span class="line-number">13</span>
+                            <span class="code-content">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">r</span> _ <span class="code-keyword">in</span> <span class="code-function">range</span>(<span class="code-number">500</span>):</span>
                         </div>
                         <div class="code-line">
                             <span class="line-number">14</span>
-                            <span class="code-content">&nsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">self</span>.<span class="code-function">_apply_cnot_layers</span>()</span>
-                        </div>
-                        <div class="code-line">
+                            <span class="code-content">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">self</span>.<span class="code-function">_apply_cnot_layers</span>()</span>
+                        </div                     <div class="code-line">
                             <span class="line-number">15</span>
-                            <span class="code-content">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> <span class="code-keyword">self</span>.<span class="code-function">_measure_bell_se</span>() > <span class="code-number">0.85</span>:</span>
+                            <span class="code-content">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> <span class="code-keyword">self</span>.<span class="code-function">_measure_bell_state</span>() > <span class="code-number">0.85</span>:</span>
                         </div>
                         <div class="code-line">
-                            <span class="line-number">16</span>
+                            <span class=line-number">16</span>
                             <span class="code-content">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">break</span></span>
                         </div>
                         <div class="code-line">
                             <span class="line-number">17</span>
-                        <span class="code-content">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Output truncated - patent pending</span></span>
-                        </div>
+                            <span class="code-content">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Output truncated - patent pending</span></span>
+                        </di
                     </div>
                 </div>
             </div>
@@ -3044,10 +3049,10 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
     <section id="features" class="section">
         <div class="section-header">
             <div class="section-subtitle">Core Capabilities</div>
-            <h2 class="section-title">Proprietary Technoltack</h2>
+            <h2 class="section-title">Proprietary Technology Stack</h2>
             <p class="section-description">
                 Our advanced code factory delivers proprietary solutions across multiple 
-                domains of computational intelligence and secure systems.
+                domains of cputational intelligence and secure systems.
             </p>
         </div>
         
@@ -3072,17 +3077,17 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
                 <div class="feature-icon">
                     <i class="fas fa-lock"></i>
                 </div>
-                <h3 class="feature-title">Cryptographic Mesh</h3>
+                <h3 class=feature-title">Cryptographic Mesh</h3>
                 <p class="feature-description">
                     Post-quantum resistant encryption with lattice-based cryptography 
                     and side-channel attack protection.
                 </p>
                 <div class="feature-tags">
-                    <span class="feature-ta>NTRU</span>
+                    <span class="feature-tag">NTRU</span>
                     <span class="feature-tag">Ring-LWE</span>
                     <span class="feature-tag">Zero Trust</span>
                 </div>
-            </div>
+           v>
             
             <div class="feature-card">
                 <div class="feature-icon">
@@ -3090,11 +3095,11 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
                 </div>
                 <h3 class="feature-title">Spacetime Telemetry</h3>
                 <p class="feature-description">
-                    Real-time curvature measu and warp field analysis 
+                    Real-time curvature measurement and warp field analysis 
                     with quantum gravity corrections.
                 </p>
                 <div class="feature-tags">
-                    <span class="feature-tag">Relativity</span>
+                    <span clss="feature-tag">Relativity</span>
                     <span class="feature-tag">Quantum Gravity</span>
                     <span class="feature-tag">Telemetry</span>
                 </div>
@@ -3102,42 +3107,42 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
             
             <div class="feature-card">
                 <div class="feature-icon">
-                    <i class="fas fer"></i>
+                    <i class="fas fa-server"></i>
                 </div>
                 <h3 class="feature-title">Algorithmic Manufacturing</h3>
                 <p class="feature-description">
-                    Automated code generation and optimization with genetic 
+                   Automated code generation and optimization with genetic 
                     algorithms and machine learning pipelines.
                 </p>
                 <div class="feature-tags">
                     <span class="feature-tag">AutoML</span>
                     <span class="feature-tag">Genetic Alg</span>
-                    <span claseature-tag">Optimization</span>
+                    <span class="feature-tag">Optimization</span>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Portfolio Section -->
-    <section id="portfolio" class="section" style="background: var(--bg-secondary);">
+    <section id="portfolio" lass="section" style="background: var(--bg-secondary);">
         <div class="section-header">
             <div class="section-subtitle">Evidence Assets</div>
             <h2 class="section-title">Manufacturing Vault</h2>
             <p class="section-description">
-                Proprietary code modules and computational assets available for linsing.
+                Proprietary code modules and computational assets available for licensing.
             </p>
         </div>
         
         <div class="portfolio-grid">
             <div class="portfolio-card">
-                <div class="portfolio-image"></div>
+                <div class="portfolio></div>
                 <div class="portfolio-content">
                     <h3 class="portfolio-title">Quantum Neural Sync</h3>
                     <p class="portfolio-description">
                         Quantum-classical hybrid neural network synchronization 
                         with entanglement protocols.
                     </p>
-                  <div class="portfolio-stats">
+                    <div class="portfolio-stats">
                         <div class="portfolio-stat">
                             <div class="portfolio-value">94%</div>
                             <div class="portfolio-label">Accuracy</div>
@@ -3146,10 +3151,9 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
                             <div class="portfolio-value">3.7x</div>
                             <div class="portfolio-label">Speedup</div>
                         </div>
-                   <div class="portfolio-stat">
+                        <div class="portfolio-stat">
                             <div class="portfolio-value">Q#</div>
-                            <div class="portfolio-label">Patent</div>
-                        </div>
+                            <div class="portfolio-label">Patent</di                      </div>
                     </div>
                 </div>
             </div>
@@ -3158,10 +3162,10 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
                 <div class="portfolio-image"></div>
                 <div class="portfolio-content">
                     <h3 class="portfolio-title">Lattice Crypto Mesh</h3>
-                   lass="portfolio-description">
+                    <p class="portfolio-description">
                         Post-quantum cryptographic mesh network with side-channel 
                         resistant operations.
-                    </p>
+                   </p>
                     <div class="portfolio-stats">
                         <div class="portfolio-stat">
                             <div class="portfolio-value">256-bit</div>
@@ -3170,7 +3174,7 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
                         <div class="portfolio-stat">
                             <div class="portfolio-value">&lt;5ms</div>
                             <div class="portfolio-label">Latency</div>
-                        </div>
+                    div>
                         <div class="portfolio-stat">
                             <div class="portfolio-value">NIST</div>
                             <div class="portfolio-label">Compliant</div>
@@ -3182,29 +3186,29 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
             <div class="portfolio-card">
                 <div class="portfolio-image"></div>
                 <div class="portfolio-content">
-                    <h3 class="portfolio-title">Telemetry Engine</h3>
+                    <h3 class="portfolio-title">Telemetry E</h3>
                     <p class="portfolio-description">
                         Spacetime curvature measurement system with quantum 
                         gravity loop corrections.
                     </p>
                     <div class="portfolio-stats">
                         <div class="portfolio-stat">
-                       <div class="portfolio-value">1e-15</div>
+                            <div class="portfolio-value">1e-15</div>
                             <div class="portfolio-label">Precision</div>
                         </div>
-                        <div class="portfolio-stat">
+                        v class="portfolio-stat">
                             <div class="portfolio-value">1kHz</div>
                             <div class="portfolio-label">Sampling</div>
                         </div>
                         <div class="portfolio-stat">
                             <div class="portfolio-value">4D</div>
-                          <div class="portfolio-label">Tensor</div>
+                            <div class="portfolio-label">Tensor</div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </sectin>
 
     <!-- CTA Section -->
     <section id="contact" class="cta-section">
@@ -3213,14 +3217,14 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
             <p class="cta-description">
                 License our proprietary Python assets or schedule a technical deep-dive 
                 with our engineering team.
-       </p>
+            </p>
             
             <div class="cta-buttons">
-                <a href="mailto:rachidelassali442@gmail.com?subject=OXYL.XYZ%20License%20Inquiry&body=Please%20provide%20details%20about%20your%20proprietary%20Python%20assets." class="btn btn-primary">
+                <a href="mailto:rachidelassali442@gmail.com?subject=OXYL.XYZ%20License%20Inquiry&body=Please%0provide%20details%20about%20your%20proprietary%20Python%20assets." class="btn btn-primary">
                     <i class="fas fa-file-contract"></i>
                     License Assets
                 </a>
-                <a href="mailto:rachidelassali442@gmail.com?subject=OXYL.XYZ%20Technical%20Consultation&body=I%20would%20like%20to%20sched20a%20technical%20consultation%20about%20your%20advanced%20code%20factory." class="btn btn-secondary">
+                <a href="mailto:rachidelassali442@gmail.com?subject=OXYL.XYZ%20Technical%20Consultation&body=I%20would%20like%20to%20schedule%20a%20technical%20consultation%20about%20your%20advanced%20code%20factory." class="btn btn-secondary">
                     <i class="fas fa-calendar-alt"></i>
                     Schedule Demo
                 </a>
@@ -3233,50 +3237,50 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
         <div class="footer-content">
             <div>
                 <h3 class="footer-section-title">OXYL.XYZ</h3>
-                <p style="color: var(--secondary); margin-bottom: var(--space-md);opacity: 0.8;">
+                <p style="color: var(--secondary); margin-bottom: var(--space-md); opacity: 0.8;">
                     Advanced Code Factory specializing in proprietary Python assets 
                     and algorithmic manufacturing.
-                </p>
+            </p>
                 <div class="social-links">
                     <a href="#" class="social-link"><i class="fab fa-github"></i></a>
                     <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
                     <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
                 </div>
-            iv>
+            </div>
             
             <div>
                 <h3 class="footer-section-title">Technology</h3>
                 <ul class="footer-links">
-                    <li><a href="#" class="footer-link">Neural Framework</a></li>
+                    <l<a href="#" class="footer-link">Neural Framework</a></li>
                     <li><a href="#" class="footer-link">Cryptographic Systems</a></li>
                     <li><a href="#" class="footer-link">Quantum Computing</a></li>
                     <li><a href="#" class="footer-link">Telemetry Engine</a></li>
                 </ul>
-            </>
+            </div>
             
             <div>
                 <h3 class="footer-section-title">Legal</h3>
                 <ul class="footer-links">
-                    <li><a href="#" class="footer-link">License Agreement</a></li>
+                    <li><a h" class="footer-link">License Agreement</a></li>
                     <li><a href="#" class="footer-link">Privacy Policy</a></li>
                     <li><a href="#" class="footer-link">Terms of Service</a></li>
                     <li><a href="#" class="footer-link">Patent Information</a></li>
                 </ul>
             </div>
-          
+            
             <div>
                 <h3 class="footer-section-title">Contact</h3>
                 <ul class="footer-links">
                     <li><a href="mailto:rachidelassali442@gmail.com" class="footer-link">Email: rachidelassali442@gmail.com</a></li>
                     <li><a href="#" class="footer-link">System: AlmaLinux 9.7</a></li>
                     <li><a href="#" class="footer-link">Status: Production</a></li>
-                    <li><a href="#" class="footer-link">Response: &lt; 24h</a></li
+                    <li><a href="#" class="footer-link">Response: &lt; 24h</a></li>
                 </ul>
             </div>
         </div>
         
         <div class="copyright">
-            &copy; 2024 OXYL Advanced Code Factory. All rights reserved. 
+            &copy; 2024 OXYL Advanced Code Factory. All rights reser 
             Proprietary Python Assets • Patent Pending • Quantum-Resistant Security
         </div>
     </footer>
@@ -3287,11 +3291,11 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
         window.addEventListener('load', function() {
             setTimeout(() => {
                 document.getElementById('loading-screen').style.opacity = '0';
-             setTimeout(() => {
+                setTimeout(() => {
                     document.getElementById('loading-screen').style.display = 'none';
                 }, 500);
             }, 1000);
-        });
+      });
 
         // Smooth Scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -3299,7 +3303,7 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    target.scroliew({
+                    target.scrollIntoView({
                         behavior: 'smooth',
                         block: 'start'
                     });
@@ -3313,7 +3317,7 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
             if (window.scrollY > 50) {
                 navbar.style.background = 'rgba(10, 10, 10, 0.95)';
                 navbar.style.backdropFilter = 'blur(20px) saturate(180%)';
-            } se {
+            } else {
                 navbar.style.background = 'var(--glass-bg)';
                 navbar.style.backdropFilter = 'var(--glass-backdrop)';
             }
@@ -3332,7 +3336,7 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
             });
         }
 
-        // Initialize animations when terminal is in view
+        // Initialize animons when terminal is in view
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if entry.isIntersecting) {
@@ -3342,11 +3346,11 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
             });
         }, { threshold: 0.5 });
 
-        obsver.observe(document.querySelector('.hero-visual'));
+        observer.observe(document.querySelector('.hero-visual'));
 
         // Stats Counter Animation
         function animateStats() {
-            const stats = document.querySelectorAll('.stat-value');
+            const stats = document.querSelectorAll('.stat-value');
             stats.forEach(stat => {
                 const target = parseFloat(stat.textContent);
                 let current = 0;
@@ -3354,9 +3358,9 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
                 const timer = setInterval(() => {
                     current += increment;
                     if (current >= target) {
-                   stat.textContent = target.toLocaleString() + (stat.textContent.includes('$') ? '+' : '');
+                        stat.textContent = target.toLocaleString() + (stat.textContent.includes('$') ? '+' : '');
                         clearInterval(timer);
-                    } else {
+                 } else {
                         stat.textContent = Math.floor(current).toLocaleString();
                     }
                 }, 30);
@@ -3366,12 +3370,12 @@ cat > $FRONTEND_DIR/index.html << 'HTML_EOF'
         // Animate stats when in view
         const statsObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isInters {
+                if (entry.isIntersecting) {
                     animateStats();
                     statsObserver.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.5 });
+        }, { threshold 0.5 });
 
         statsObserver.observe(document.querySelector('.hero-stats'));
 
@@ -3398,7 +3402,7 @@ cat > /tmp/oxyl_nginx.conf << EOF
 # Advanced Code Factory with Python Backend
 
 upstream oxyl_backend {
-    serv7.0.0.1:${PORT};
+    server 127.0.0.1:${PORT};
     keepalive 32;
 }
 
@@ -3407,7 +3411,7 @@ server {
     listen [::]:80;
     
     server_name ${DOMAIN} www.${DOMAIN} localhost;
-    root ${FRONTEND_DIR};
+    root ${FONTEND_DIR};
     index index.html;
     
     # Security Headers
@@ -3415,12 +3419,12 @@ server {
     add_header X-Content-Type-Options "nosniff" always;
     add_header X-XSS-Protection "1; mode=block" always;
     add_header Referrer-Policy "strict-origin-when-cross-origin" always;
-    add_header Content-Security-Policy "default-src 'self' https: da: 'unsafe-inline' 'unsafe-eval'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com 'unsafe-inline' 'unsafe-eval'; style-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline'; font-src 'self' https://cdnjs.cloudflare.com data:; frame-src https://www.linkedin.com; connect-src 'self'; img-src 'self' data: https:" always;
+    add_header Content-Security-Policy "default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com 'unsafe-inline' 'unsafe-eval'; style-src 's https://cdnjs.cloudflare.com 'unsafe-inline'; font-src 'self' https://cdnjs.cloudflare.com data:; frame-src https://www.linkedin.com; connect-src 'self'; img-src 'self' data: https:" always;
     add_header Permissions-Policy "geolocation=(), microphone=(), camera=(), interest-cohort=()" always;
     
     # Performance Optimizations
     sendfile on;
-    tcp_h on;
+    tcp_nopush on;
     tcp_nodelay on;
     keepalive_timeout 65;
     client_max_body_size 10M;
@@ -3428,7 +3432,7 @@ server {
     # Compression
     gzip on;
     gzip_vary on;
-    gzip_min_length 1024;
+    gzip_minength 1024;
     gzip_proxied any;
     gzip_comp_level 6;
     gzip_types
@@ -3458,7 +3462,7 @@ server {
         proxy_set_header Host \$host;
         proxy_set_header X-Real-IP \$remote_addr;
         proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Pr\$scheme;
+        proxy_set_header X-Forwarded-Proto \$scheme;
         proxy_cache_bypass \$http_upgrade;
         
         # Timeouts
@@ -3469,10 +3473,10 @@ server {
         # CORS headers
         add_header 'Access-Control-Allow-Origin' '\$http_origin' always;
         add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, DELETE, OPTIONS' always;
-        add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Aization' always;
+        add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization' always;
         add_header 'Access-Control-Expose-Headers' 'Content-Length,Content-Range' always;
         
-        if (\$request_method = 'OPTIONS') {
+        if (\$request_met= 'OPTIONS') {
             add_header 'Access-Control-Max-Age' 1728000;
             add_header 'Content-Type' 'text/plain; charset=utf-8';
             add_header 'Content-Length' 0;
@@ -3505,7 +3509,7 @@ server {
     
     # Error pages
     error_page 404 /404.html;
-    error_page500 502 503 504 /50x.html;
+    error_page 500 502 503 504 /50x.html;
     
     location = /50x.html {
         root /usr/share/nginx/html;
@@ -3513,7 +3517,7 @@ server {
     }
 }
 
-# HTTP to HTTPS redirect (commented for development)
+# HTTP to HTTPS redire(commented for development)
 # server {
 #     listen 80;
 #     listen [::]:80;
@@ -3528,7 +3532,7 @@ sudo chmod 644 $NGINX_CONF
 print_success "Nginx configuration created"
 
 # ========== PHASE 5: CREATE FASTAPI BACKEND ==========
-print_headerHASE 5: CREATING FASTAPI BACKEND APPLICATION"
+print_header "PHASE 5: CREATING FASTAPI BACKEND APPLICATION"
 
 # Create main application file
 cat > $BACKEND_DIR/app/main.py << 'EOF'
@@ -3547,7 +3551,7 @@ from datetime import datetime, timedelta
 sys.path.append(str(Path(__file__).parent.parent))
 
 from fastapi import FastAPI, HTTPException, Depends, status, Query
-from fastapi.middleware.cors imCORSMiddleware
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.staticfiles import StaticFiles
@@ -3560,8 +3564,8 @@ from loguru import logger
 # Import our proprietary modules
 try:
     from utils.quantum_neural_sync import QuantumNeuralSynchronizer, create_quantum_synchronizer
-    fr utils.spacetime_telemetry import SpacetimeTelemetryEngine, create_spacetime_telemetry_engine
-    from utils.cryptographic_mesh import CryptographicMeshNetwork, create_cryptographic_mesh
+    from utils.spacetime_telemetry import SpacetimeTelemetryEngine, create_spacetime_telemetry_engine
+    from utils.cryptographic_mesh import CrtographicMeshNetwork, create_cryptographic_mesh
     PROPRIETARY_MODULES_AVAILABLE = True
 except ImportError as e:
     logger.warning(f"Proprietary modules not available: {e}")
@@ -3572,47 +3576,47 @@ logging.basicConfig(level=logging.INFO)
 logger.add(
     f"/var/www/oxyl/logs/backend.log",
     rotation="500 MB",
-    retention="10 da,
+    retention="10 days",
     format="{time:YYYY-MM-DD HH:mm:ss} | {level} | {message}",
     level="INFO"
 )
 
 # Models
 class HealthResponse(BaseModel):
-    """Health check response model"""
+    """Heth check response model"""
     status: str = Field(..., description="Service status")
     version: str = Field(..., description="API version")
     timestamp: datetime = Field(..., description="Current timestamp")
     uptime: float = Field(..., description="Service uptime in seconds")
     proprietary_modules: bool = Field(..., description="Proprietary modules status")
-    tem_info: Dict[str, Any] = Field(..., description="System information")
+    system_info: Dict[str, Any] = Field(..., description="System information")
 
 class QuantumSyncRequest(BaseModel):
-    """Quantum synchronization request model"""
+    """Quantum synchronizn request model"""
     weights: List[List[float]] = Field(..., description="Neural network weights")
     qubit_count: int = Field(default=8, ge=2, le=32, description="Number of qubits")
     epochs: int = Field(default=100, ge=1, le=1000, description="Training epochs")
     coherence_time: float = Field(default=100e-6, gt=0, description="Qubit coherence time")
 
-class QuantcResponse(BaseModel):
+class QuantumSyncResponse(BaseModel):
     """Quantum synchronization response model"""
-    synchronized_weights: List[List[float]] = Field(..., description="Synchronized weights")
+    synchronized_weights: List[List[float]] = Field(..., descrion="Synchronized weights")
     convergence_metrics: Dict[str, List[float]] = Field(..., description="Convergence metrics")
     final_sync_quality: float = Field(..., description="Final synchronization quality")
     quantum_operations: int = Field(..., description="Total quantum operations")
     entanglement_pairs: int = Field(..., description="Entanglement pairs created")
-ocessing_time: float = Field(..., description="Processing time in seconds")
+    processing_time: float = Field(..., description="Processing time in seconds")
 
 class TelemetryRequest(BaseModel):
-    """Spacetime telemetry request model"""
+    """Spacetime te request model"""
     coordinates: Dict[str, float] = Field(..., description="4D spacetime coordinates")
     precision: float = Field(default=1e-12, gt=0, description="Measurement precision")
     apply_quantum_corrections: bool = Field(default=True, description="Apply quantum gravity corrections")
 
 class TelemetryResponse(BaseModel):
-    """Spacetime telemetry response mo"
+    """Spacetime telemetry response model"""
     metric_tensor: List[List[float]] = Field(..., description="Metric tensor components")
-    curvature: Dict[str, Any] = Field(..., description="Curvature tensors")
+    curvature: Dict[str, Any] = Field(...description="Curvature tensors")
     warp_metrics: Dict[str, Any] = Field(..., description="Warp field metrics")
     quantum_corrections: Dict[str, Any] = Field(..., description="Quantum correction data")
     timestamp: datetime = Field(..., description="Measurement timestamp")
@@ -3621,24 +3625,24 @@ class CryptoMeshRequest(BaseModel):
     """Cryptographic mesh request model"""
     message: str = Field(..., description="Message to encrypt")
     security_level: str = Field(default="NTRU_256", description="Security level")
-    enable_side_channel_protection: bool = Field(default=True, description="Enable side-channel protection")
+    enaide_channel_protection: bool = Field(default=True, description="Enable side-channel protection")
 
 class CryptoMeshResponse(BaseModel):
     """Cryptographic mesh response model"""
     encrypted_message: str = Field(..., description="Base64 encoded encrypted message")
     key_id: str = Field(..., description="Encryption key ID")
-    security_level: str = Field(..., descrion="Applied security level")
+    security_level: str = Field(..., description="Applied security level")
     encryption_time: float = Field(..., description="Encryption time in seconds")
-    message_hash: str = Field(..., description="SHA-256 hash of original message")
+    message_hash: str = Fi..., description="SHA-256 hash of original message")
 
 class LicenseInquiry(BaseModel):
     """License inquiry model"""
     name: str = Field(..., min_length=2, max_length=100, description="Contact name")
     email: str = Field(..., description="Contact email")
     company: Optional[str] = Field(None, description="Company name")
-    interest: List[str] = Field(..., desc="Areas of interest")
+    interest: List[str] = Field(..., description="Areas of interest")
     message: Optional[str] = Field(None, description="Additional message")
-    preferred_contact: str = Field(default="email", description="Preferred contact method")
+    preferred_contact: str = Field(det="email", description="Preferred contact method")
 
 # Security
 security = HTTPBearer()
@@ -3651,7 +3655,7 @@ def verify_token(credentials: HTTPAuthorizationCredentials = Depends(security)):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid authentication token",
-            headers={"WWW-Authenticate": "Bearer"},
+            headers={"WWW-Authentic "Bearer"},
         )
     return token
 
@@ -3664,11 +3668,12 @@ app = FastAPI(
     redoc_url="/api/redoc",
     openapi_url="/api/openapi.json",
     contact={
-        "name": "OXYL Engineering"      "email": "rachidelassali442@gmail.com",
+        "name": "OXYL Engineering",
+        "email": "rachidelassali442@gmail.com",
         "url": "https://oxyl.xyz",
     },
     license_info={
-        "name": "Proprietary License",
+        "name": "Proprietary Lic
         "url": "https://oxyl.xyz/license",
     },
 )
@@ -3702,10 +3707,10 @@ async def startup_event():
     
     if PROPRIETARY_MODULES_AVAILABLE:
         try:
-            # Initializeuantum synchronizer
+            # Initialize quantum synchronizer
             app.state.quantum_synchronizer = create_quantum_synchronizer({
                 "qubit_count": 8,
-                "backend": "simulator",
+              backend": "simulator",
                 "gate_fidelity": 0.999,
                 "enable_neural_bridge": True
             })
@@ -3714,10 +3719,10 @@ async def startup_event():
             # Initialize telemetry engine
             app.state.telemetry_engine = create_spacetime_telemetry_engine({
                 "precision": 1e-12,
-               pling_rate": 1000.0,
+                "sampling_rate": 1000.0,
                 "enable_quantum_corrections": True
             })
-            logger.info("Spacetime telemetry engine initialized")
+            logger.info("Spacetime telemetry engine inlized")
             
             # Initialize cryptographic mesh
             app.state.crypto_mesh = create_cryptographic_mesh(
@@ -3727,12 +3732,12 @@ async def startup_event():
             logger.info("Cryptographic mesh network initialized")
             
         except Exception as e:
-            logger.error(f"Faileo initialize proprietary modules: {e}")
+            logger.error(f"Failed to initialize proprietary modules: {e}")
     else:
         logger.warning("Running without proprietary modules")
 
 @app.on_event("shutdown")
-async def shutdown_event():
+asyf shutdown_event():
     """Cleanup on shutdown"""
     logger.info("Shutting down OXYL.XYZ API")
 
@@ -3743,7 +3748,7 @@ async def root():
     return FileResponse(f"{os.path.dirname(os.path.dirname(__file__))}/frontend/index.html")
 
 @app.get("/api/health", response_model=HealthResponse)
-asf health_check():
+async def health_check():
     """Health check endpoint"""
     uptime = (datetime.utcnow() - app.state.start_time).total_seconds()
     
@@ -3756,8 +3761,9 @@ asf health_check():
         system_info={
             "python_version": sys.version,
             "platform": sys.platform,
-            "processor": os.uname().machine if hasattr(os, 'uname') else "unknown           "environment": os.getenv("ENVIRONMENT", "development"),
-            "memory_usage": "N/A",  # Could add psutil for actual metrics
+            "processor": os.uname().machine if hasattr(os, 'uname') else "unknown",
+            "environment": os.getenv("ENVIRONMENT", "development"),
+            "memory_usage": "N/A",  # Could add psutil for actual metr
         }
     )
 
@@ -3769,12 +3775,11 @@ async def quantum_sync(request: QuantumSyncRequest, token: str = Depends(verify_
     """
     if not PROPRIETARY_MODULES_AVAILABLE:
         raise HTTPException(
-            status_code=status.HT_503_SERVICE_UNAVAILABLE,
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
             detail="Proprietary quantum modules not available"
         )
     
-    start_time = datetime.utcnow()
-    
+    start_time = datetime.utcnow()   
     try:
         # Convert weights to numpy arrays
         import numpy as np
@@ -3786,22 +3791,22 @@ async def quantum_sync(request: QuantumSyncRequest, token: str = Depends(verify_
             epochs=request.epochs
         )
         
-        # Convert to lists
+        # Convert back to lists
         synchronized_weights = [w.tolist() for w in result["synchronized_weights"]]
         
-        processing_time = (datetime.utcnow() - start_time).total_seconds()
+        processing_time = (datetinow() - start_time).total_seconds()
         
         return QuantumSyncResponse(
             synchronized_weights=synchronized_weights,
             convergence_metrics=result["convergence_metrics"],
             final_sync_quality=result["final_sync_quality"],
             quantum_operations=result["quantum_operations"],
-            entanglement_pairs=result["entanglemenpairs_created"],
+            entanglement_pairs=result["entanglement_pairs_created"],
             processing_time=processing_time
         )
         
     except Exception as e:
-        logger.error(f"Quantum sync failed: {e}")
+        logger.error(f"Quantum siled: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Quantum synchronization failed: {str(e)}"
@@ -3810,12 +3815,12 @@ async def quantum_sync(request: QuantumSyncRequest, token: str = Depends(verify_
 @app.post("/api/telemetry/measure", response_model=TelemetryResponse)
 async def measure_telemetry(request: TelemetryRequest, token: str = Depends(verify_token)):
     """
-    Spacetime telemeasurement endpoint
+    Spacetime telemetry measurement endpoint
     Requires authentication token
     """
     if not PROPRIETARY_MODULES_AVAILABLE:
         raise HTTPException(
-            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+        status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
             detail="Proprietary telemetry modules not available"
         )
     
@@ -3824,12 +3829,12 @@ async def measure_telemetry(request: TelemetryRequest, token: str = Depends(veri
         from utils.spacetime_telemetry import SpacetimeCoordinate
         coord = SpacetimeCoordinate(
             t=request.coordinates.get("t", 0),
-            x=request.coordinates.get("x"0),
+            x=request.coordinates.get("x", 0),
             y=request.coordinates.get("y", 0),
             z=request.coordinates.get("z", 0)
         )
         
-        # Measure telemetry
+        # Measure telemety
         telemetry_data = await app.state.telemetry_engine.measure_warp_field(
             coord,
             apply_quantum_corrections=request.apply_quantum_corrections
@@ -3840,11 +3845,11 @@ async def measure_telemetry(request: TelemetryRequest, token: str = Depends(veri
     except Exception as e:
         logger.error(f"Telemetry measurement failed: {e}")
         raise HTTPException(
-         status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Telemetry measurement failed: {str(e)}"
         )
 
-@app.post("/api/crypto/encrypt", response_model=CryptoMeshResponse)
+@app.post("/rypto/encrypt", response_model=CryptoMeshResponse)
 async def encrypt_message(request: CryptoMeshRequest, token: str = Depends(verify_token)):
     """
     Cryptographic mesh encryption endpoint
@@ -3853,7 +3858,7 @@ async def encrypt_message(request: CryptoMeshRequest, token: str = Depends(verif
     if not PROPRIETARY_MODULES_AVAILABLE:
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-     detail="Proprietary crypto modules not available"
+            detail="Proprietary crypto modules not available"
         )
     
     start_time = datetime.utcnow()
@@ -3872,8 +3877,7 @@ async def encrypt_message(request: CryptoMeshRequest, token: str = Depends(verif
         import json
         from datetime import datetime
         
-        # Simulate encryption
-        message_hash = hashlib.sha256(request.message.encode()).hexdigest()
+        # Simulate encrypti      message_hash = hashlib.sha256(request.message.encode()).hexdigest()
         simulated_ciphertext = {
             "encrypted": True,
             "timestamp": datetime.utcnow().isoformat(),
@@ -3893,12 +3897,12 @@ async def encrypt_message(request: CryptoMeshRequest, token: str = Depends(verif
             key_id=f"key_{hashlib.sha256(request.message.encode()).hexdigest()[:16]}",
             security_level=request.security_level,
             encryption_time=encryption_time,
-            messhash=message_hash
+            message_hash=message_hash
         )
         
     except Exception as e:
         logger.error(f"Encryption failed: {e}")
-        raise HTTPException(
+        raise HTTPExceptio
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Encryption failed: {str(e)}"
         )
@@ -3910,10 +3914,10 @@ async def license_inquiry(inquiry: LicenseInquiry):
     No authentication required for inquiries
     """
     # Log the inquiry
-    logger.info(f"License inquiry from {inquiry.n{inquiry.email})")
+    logger.info(f"License inquiry from {inquiry.name} ({inquiry.email})")
     logger.info(f"Interests: {', '.join(inquiry.interest)}")
     
-    # In production, this would send an email and store in database
+    # In production, this would send an email andore in database
     # For demo, we'll just return a success response
     
     return JSONResponse(
@@ -3922,9 +3926,9 @@ async def license_inquiry(inquiry: LicenseInquiry):
             "status": "inquiry_received",
             "message": "Thank you for your interest in OXYL.XYZ proprietary assets. "
                       "Our engineering team will contact you within 24 hours.",
-          ference_id": f"INQ-{datetime.utcnow().strftime('%Y%m%d-%H%M%S')}",
+            "reference_id": f"INQ-{datetime.utcnow().strftime('%Y%m%d-%H%M%S')}",
             "contact_email": "rachidelassali442@gmail.com"
-        }
+      }
     )
 
 @app.get("/api/system/metrics")
@@ -3941,9 +3945,9 @@ async def system_metrics(token: str = Depends(verify_token)):
             "timestamp": datetime.utcnow().isoformat(),
             "system": {
                 "os": platform.system(),
-         "os_version": platform.version(),
+                "os_version": platform.version(),
                 "python_version": platform.python_version(),
-                "hostname": platform.node()
+                "hostname":tform.node()
             },
             "cpu": {
                 "usage_percent": psutil.cpu_percent(interval=1),
@@ -3952,14 +3956,14 @@ async def system_metrics(token: str = Depends(verify_token)):
                 "frequency": psutil.cpu_freq().current if psutil.cpu_freq() else None
             },
             "memory": {
-                "to_gb": round(psutil.virtual_memory().total / (1024**3), 2),
-                "available_gb": round(psutil.virtual_memory().available / (1024**3), 2),
+                "total_gb": round(psutil.virtual_memory().total / (1024**3), 2),
+                "available_gb": round(psutil.virtual_memory().availab1024**3), 2),
                 "used_percent": psutil.virtual_memory().percent,
                 "swap_total_gb": round(psutil.swap_memory().total / (1024**3), 2) if psutil.swap_memory().total > 0 else 0
             },
             "disk": {
                 "total_gb": round(psutil.disk_usage('/').total / (1024**3), 2),
-                "used_gb": round(psutil.disk_usage('/').use(1024**3), 2),
+                "used_gb": round(psutil.disk_usage('/').used / (1024**3), 2),
                 "free_gb": round(psutil.disk_usage('/').free / (1024**3), 2),
                 "used_percent": psutil.disk_usage('/').percent
             },
@@ -3970,8 +3974,8 @@ async def system_metrics(token: str = Depends(verify_token)):
                 "packets_recv": psutil.net_io_counters().packets_recv
             },
             "process": {
-               "pid": os.getpid(),
-                "create_time": datetime.fromtimestamp(psutil.Process().create_time()).isoformat(),
+                "pid": os.getpid(),
+                "create_time": datetime.fromtimestamp(psutil.Process().create_time()).isoformat
                 "memory_usage_mb": round(psutil.Process().memory_info().rss / (1024**2), 2),
                 "cpu_percent": psutil.Process().cpu_percent(interval=0.1)
             }
@@ -3982,7 +3986,7 @@ async def system_metrics(token: str = Depends(verify_token)):
     except Exception as e:
         logger.error(f"Failed to collect system metrics: {e}")
         raise HTTPException(
-           status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Failed to collect system metrics: {str(e)}"
         )
 )
@@ -3997,13 +4001,13 @@ async def http_exception_handler(request, exc):
             "error": exc.detail,
             "status_code": exc.status_code,
             "timestamp": datetime.utcnow().isoformat(),
-            "path": request.uth
+            "path": request.url.path
         }
     )
 
 @app.exception_handler(Exception)
 async def generic_exception_handler(request, exc):
-    """Generic exception handler"""
+    """Generic excepthandler"""
     logger.error(f"Unhandled exception: {exc}", exc_info=True)
     return JSONResponse(
         status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -4011,7 +4015,7 @@ async def generic_exception_handler(request, exc):
             "error": "Internal server error",
             "detail": str(exc) if os.getenv("ENVIRONMENT") == "development" else None,
             "status_code": status.HTTP_500_INTERNAL_SERVER_ERROR,
-        "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.utcnow().isoformat(),
             "path": request.url.path
         }
     )
@@ -4032,12 +4036,12 @@ EOF
 print_success "FastAPI backend application created"
 
 # Create requirements file
-cat > $BAKEND_DIR/requirements.txt << 'EOF'
+cat > $BACKEND_DIR/requirements.txt << 'EOF'
 fastapi>=0.104.1
 uvicorn[standard]==0.24.0
 pydantic>=2.5.2
 pydantic-settings>=2.1.0
-python-jose[cryptography]==3.3.0
+pythoncryptography]==3.3.0
 passlib[bcrypt]==1.7.4
 python-multipart==0.0.6
 aiofiles==23.2.1
@@ -4057,7 +4061,8 @@ email-validator==2.1.0
 python-dotenv==1.0.0
 loguru==0.7.2
 prometheus-client==0.19.0
-pydantic-extra-types==2util==5.9.6
+pydantic-extra-types==2.4.0
+psutil==5.9.6
 python-multipart==0.0.6
 orjson==3.9.10
 python-dateutil==2.8.2
@@ -4065,7 +4070,7 @@ pytz==2023.3
 tzdata==2023.3
 EOF
 
-# Create environment file
+# Create environme
 cat > $BACKEND_DIR/.env << EOF
 ENVIRONMENT=production
 DEBUG=false
@@ -4080,14 +4085,14 @@ CRYPTO_SECURITY_LEVEL=NTRU_256
 TELEMETRY_PRECISION=1e-12
 EOF
 
-# Create startscript
+# Create startup script
 cat > $BACKEND_DIR/start.sh << 'EOF'
 #!/bin/bash
 # OXYL.XYZ Backend Startup Script
 
 source ../../venv/bin/activate
 
-# Load environment variables
+# Loavironment variables
 set -a
 source .env
 set +a
@@ -4106,7 +4111,7 @@ EOF
 chmod +x $BACKEND_DIR/start.sh
 
 # ========== PHASE 6: FINAL DEPLOYMENT ==========
-print_header "PHASE 6: FINAL DEPLOYMENT & VERCATION"
+print_header "PHASE 6: FINAL DEPLOYMENT & VERIFICATION"
 
 print_info "6.1 Setting correct permissions..."
 sudo chown -R $USER:$USER $PROJECT_ROOT
@@ -4126,7 +4131,7 @@ Type=exec
 User=$USER
 Group=$USER
 WorkingDirectory=$BACKEND_DIR
-vironment="PATH=$VENV_PATH/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin"
+Environment="PATH=$VENV_PATH/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin"
 EnvironmentFile=$BACKEND_DIR/.env
 ExecStart=$VENV_PATH/bin/uvicorn app.main:app --host 0.0.0.0 --port $PORT --workers 4 --log-level info
 Restart=always
@@ -4142,7 +4147,7 @@ sudo cp /tmp/oxyl-backend.service /etc/systemd/system/
 sudo systemctl daemon-reload
 sudo systemctl enable oxyl-backend
 
-print_info.3 Testing Nginx configuration..."
+print_info "6.3 Testing Nginx configuration..."
 sudo nginx -t
 
 print_info "6.4 Restarting services..."
@@ -4163,7 +4168,7 @@ else
     sudo systemctl status nginx --no-pager
 fi
 
-print_info "Checking bakend status..."
+print_info "Checking backend status..."
 if systemctl is-active --quiet oxyl-backend; then
     print_success "Backend service is running"
 else
@@ -4176,7 +4181,7 @@ API_RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost/api/healt
 if [ "$API_RESPONSE" = "200" ]; then
     print_success "API is responding (HTTP $API_RESPONSE)"
 else
-    print_warning "API check failed (HTTP $API_RESPOSE). Backend might need more time to start."
+    print_warning "API check failed (HTTP $API_RESPONSE). Backend might need more time to start."
 fi
 
 print_info "Testing frontend..."
@@ -4191,7 +4196,7 @@ fi
 WSL_IP=$(hostname -I | awk '{print $1}' 2>/dev/null || echo "127.0.0.1")
 WINDOWS_IP="localhost"
 
-# ========== DEPLOYMENT SUMMARY ===
+# ========== DEPLOYMENT SUMMARY ==========
 print_header "DEPLOYMENT COMPLETE!"
 echo ""
 echo "=============================================================="
@@ -4206,7 +4211,7 @@ echo "   Logs:      $LOG_DIR"
 echo ""
 echo "🌐 ACCESS URLs:"
 echo "   From WSL:        http://$WSL_IP"
-echo "   From W:    http://$WINDOWS_IP"
+echo "   From Windows:    http://$WINDOWS_IP"
 echo "   API Endpoint:    http://localhost/api/health"
 echo "   API Docs:        http://localhost/api/docs"
 echo ""
@@ -4218,7 +4223,7 @@ echo "   Stop Backend:   sudo systemctl stop oxyl-backend"
 echo ""
 echo "📊 VERIFICATION:"
 echo "   Test Frontend:  curl -I http://localhost/"
-echo "   Test API:       curlttp://localhost/api/health"
+echo "   Test API:       curl http://localhost/api/health"
 echo "   View Logs:      tail -f $LOG_DIR/backend.log"
 echo ""
 echo "⚙️  TECHNICAL DETAILS:"
@@ -4231,7 +4236,7 @@ echo ""
 echo "🚀 NEXT STEPS:"
 echo "   1. Open browser to: http://localhost"
 echo "   2. Test API documentation: http://localhost/api/docs"
-echo "   3. Configure firewall if needed: sudo firewall-cmd --add-0/tcp"
+echo "   3. Configure firewall if needed: sudo firewall-cmd --add-port=80/tcp"
 echo "   4. Set up SSL certificates: sudo certbot --nginx -d $DOMAIN"
 echo ""
 echo "⚠️  SECURITY NOTES:"
@@ -4243,4 +4248,1486 @@ echo ""
 echo "=============================================================="
 echo "   Advanced Code Factory is now operational!"
 echo "=============================================================="
-echo ""
+echo ""1 notification total
+You’ll be notified about all new posts from ASM International | Boston Chapter.
+
+Dismiss
+
+Skip to search
+
+Skip to main content
+
+Keyboard shortcuts
+Close jump menu
+Search
+new feed updates notifications
+Home
+My Network
+Jobs
+Messaging
+Notifications
+Rachid El Assali
+Me
+
+For Business
+Claim 1 free month of Premium Page
+Subscribed to all page notifications. Click to manage.
+ASM International | Boston Chapter logo
+ASM International | Boston Chapter
+Advanced scientific, engineering and technical materials society.
+
+Non-profit Organizations Boston, Massachusetts 5K followers 11-50 employees
+
+Following
+
+Message
+ 
+
+More Pages to follow
+  
+Boston University’s cover photo
+Boston University’s logo
+Company name
+Boston University
+Higher Education
+Relevance reason
+573,149 followers
+
+Follow
+GE Aerospace’s cover photo
+GE Aerospace’s logo
+Company name
+GE Aerospace
+Aviation and Aerospace Component Manufacturing
+Relevance reason
+1,681,418 followers
+
+Follow
+LinkedIn’s cover photo
+LinkedIn’s logo
+Company name
+LinkedIn
+Software Development
+Relevance reason
+7 connections follow this page
+
+Follow
+Gates Foundation’s cover photo
+Gates Foundation’s logo
+Company name
+Gates Foundation
+Non-profit Organizations
+Relevance reason
+1,468,582 followers
+
+Follow
+
+Show all
+Home
+About
+Posts
+Jobs
+People
+Overview
+ASM International is the world's largest association of materials-centric scientists and engineers dedicated to informing, educating, and connecting the materials community to solve problems and stimulate innovation around the world.
+Show all details 
+Featured
+Feed post number 1
+Page posts
+Page 1 of 4Previous
+Next
+
+ASM International | Boston ChapterASM International | Boston Chapter
+4,642 followers4,642 followers
+3w •  3 weeks ago • Visible to anyone on or off LinkedIn
+
+We are honored to present Prof. Rebecca Belisle to the ASM International | Boston Chapter and ASM International - Central Massachusetts Chapter Stage on January 15, 2026.
+
+Rebecca Belisle is the Knafel Assistant Professor of Natural Sciences and an Assistant Professor of Physics at Wellesley College, where her research group focuses on synthesizing and characterizing new solution processed semiconductors. Trained as a materials scientist (PhD from Stanford University, MPhil from the University of Bath, and BS from Franklin W. Olin College of Engineering), Dr. Belisle loves exploring how we can use an understanding of chemistry and structure to design materials to solve real world problems. Currently, her lab is focused on the need for new renewable energy technologies and is using in situ characterization of atomic structure and optical properties to develop wide bandgap perovskite semiconductors for tandem solar cells. Outside of the lab, Dr. Belisle is a distinguished teacher with a passion for undergraduate education, having developed student-centered and active curriculum in the areas of mechanics, thermodynamics, and materials science. 
+
+Join us to learn the latest innovations, meet outstanding professors, world-class leaders, professionals and have fun. Register at http://www.asmboston.org
+
+hashtag#Innovation hashtag#Technology hashtag#Development hashtag#Future hashtag#Education hashtag#Entrepreneurship hashtag#Startups hashtag#Leadership hashtag#Engineering hashtag#Networking
+…more
+Activate to view larger image,
+No alternative text description for this image
+Activate to view larger image,
+likelovecelebrate
+21
+5 comments
+
+
+
+
+
+ASM International | Boston ChapterASM International | Boston Chapter
+4,642 followers4,642 followers
+2mo • Edited •  2 months ago • Edited • Visible to anyone on or off LinkedIn
+
+We are honored to present AJ Jbeili to the ASM International | Boston Chapter Stage on November 20, 2025.
+
+As Allium's Head of Engineering and Manufacturing, AJ Jbeili leads operational excellence and advanced manufacturing across the organization. Bringing over ten years of expertise in metal and additive manufacturing, AJ holds a degree in Metallurgical & Materials Engineering from the Colorado School of Mines and is a Lean Six Sigma Black Belt. AJ joined Allium two years ago, driven by a commitment to delivering economically scalable solutions for clean energy and carbon emission reduction.
+Allium Engineering is revolutionizing critical infrastructure with our innovative process for creating stainless steel claddings in the construction industry. Our breakthrough rebar technology increases resilience of critical infrastructure by tenfold and significantly reduces carbon emissions; all while costing a fraction of other alternatives and eliminating what is currently mandatory maintenance and replacement costs. Outside of our beachhead market in construction materials, we are in process of developing into new verticals where we believe we have an unbeatable technical and cost advantage.
+
+Join us to learn the latest innovations, meet outstanding professors, world-class leaders, professionals and have fun. Register at http://www.asmboston.org
+
+hashtag#Innovation hashtag#Technology hashtag#Development hashtag#Future hashtag#Education hashtag#Entrepreneurship hashtag#Startups hashtag#Leadership hashtag#Engineering hashtag#Networking
+…more
+Activate to view larger image,
+graphical user interface, application
+Activate to view larger image,
+likecelebratelove
+73
+6 comments
+1 repost
+
+
+
+
+1
+2
+3
+4
+Show all posts
+Unlock insights on ASM International | Boston Chapter
+The latest hiring trends
+Chart
+Chart with 13 data points.
+The chart has 1 X axis displaying values. Range: 1732579200000 to 1770422400000.
+The chart has 1 Y axis displaying values. Range: 0 to 6.
+End of interactive chart.
+Growth trends
+ 0%0
+
+Employee growth
+
+And more hiring trends
+Recent hires
+Connection image
+Show ASM
+Try Premium for MAD0
+1 month free before paying. Cancel anytime.
+
+About
+Accessibility
+Talent Solutions
+Professional Community Policies
+Careers
+Marketing Solutions
+
+Privacy & Terms 
+Ad Choices
+Advertising
+Sales Solutions
+Mobile
+Small Business
+Safety Center
+Questions?
+Visit our Help Center.
+
+Manage your account and privacy
+Go to your Settings.
+
+Recommendation transparency
+Learn more about Recommended Content.
+
+Select Language
+
+English (English)
+LinkedIn Corporation © 2026
+
+
+Pages people also viewed
+ASM International page logo
+ASM International
+Non-profit Organizations
+19,537 followers
+
+Follow
+Systems Thinking Alliance page logo
+Systems Thinking Alliance
+Professional Training and Coaching
+22,288 followers
+
+Follow
+Harvard Business Review page logo
+Harvard Business Review
+Book and Periodical Publishing
+14,569,505 followers
+Khadija Mtibat
+Khadija & 2 other connections follow this page
+
+Follow
+
+Show all
+People also follow
+LinkedIn page logo
+LinkedIn
+Software Development
+32,855,159 followers
+Younes Ouba is open to work
+Younes & 6 other connections follow this page
+
+Follow
+Deloitte page logo
+Deloitte
+Business Consulting and Services
+20,856,584 followers
+Ikhlass Loukili
+Ikhlass & 9 other connections follow this page
+
+Follow
+Oracle page logo
+Oracle
+IT Services and IT Consulting
+11,083,836 followers
+El Hachchad Abdelghaffar is open to work
+El Hachchad & 6 other connections follow this page
+
+Follow
+
+Show all
+
+Rachid El AssaliStatus is online
+MessagingYou are on the messaging overlay. Press enter to open the list of conversations.
+
+Compose message
+You are on the messaging overlay. Press enter to open the list of conversations.
+Quantum-OXYL-Research Lab picture
+Quantum-OXYL-Research Lab
+1 notification total
+You’ll be notified about all new posts from ASM International | Boston Chapter.
+
+Dismiss
+
+Skip to search
+
+Skip to main content
+
+Keyboard shortcuts
+Close jump menu
+Search
+new feed updates notifications
+Home
+My Network
+Jobs
+Messaging
+Notifications
+Rachid El Assali
+Me
+
+For Business
+Claim 1 free month of Premium Page
+Subscribed to all page notifications. Click to manage.
+ASM International | Boston Chapter logo
+ASM International | Boston Chapter
+Advanced scientific, engineering and technical materials society.
+
+Non-profit Organizations Boston, Massachusetts 5K followers 11-50 employees
+
+Following
+
+Message
+ 
+
+More Pages to follow
+  
+Boston University’s cover photo
+Boston University’s logo
+Company name
+Boston University
+Higher Education
+Relevance reason
+573,149 followers
+
+Follow
+GE Aerospace’s cover photo
+GE Aerospace’s logo
+Company name
+GE Aerospace
+Aviation and Aerospace Component Manufacturing
+Relevance reason
+1,681,418 followers
+
+Follow
+LinkedIn’s cover photo
+LinkedIn’s logo
+Company name
+LinkedIn
+Software Development
+Relevance reason
+7 connections follow this page
+
+Follow
+Gates Foundation’s cover photo
+Gates Foundation’s logo
+Company name
+Gates Foundation
+Non-profit Organizations
+Relevance reason
+1,468,582 followers
+
+Follow
+
+Show all
+Home
+About
+Posts
+Jobs
+People
+Overview
+ASM International is the world's largest association of materials-centric scientists and engineers dedicated to informing, educating, and connecting the materials community to solve problems and stimulate innovation around the world.
+Show all details 
+Featured
+Feed post number 1
+Page posts
+Page 1 of 4Previous
+Next
+
+ASM International | Boston ChapterASM International | Boston Chapter
+4,642 followers4,642 followers
+3w •  3 weeks ago • Visible to anyone on or off LinkedIn
+
+We are honored to present Prof. Rebecca Belisle to the ASM International | Boston Chapter and ASM International - Central Massachusetts Chapter Stage on January 15, 2026.
+
+Rebecca Belisle is the Knafel Assistant Professor of Natural Sciences and an Assistant Professor of Physics at Wellesley College, where her research group focuses on synthesizing and characterizing new solution processed semiconductors. Trained as a materials scientist (PhD from Stanford University, MPhil from the University of Bath, and BS from Franklin W. Olin College of Engineering), Dr. Belisle loves exploring how we can use an understanding of chemistry and structure to design materials to solve real world problems. Currently, her lab is focused on the need for new renewable energy technologies and is using in situ characterization of atomic structure and optical properties to develop wide bandgap perovskite semiconductors for tandem solar cells. Outside of the lab, Dr. Belisle is a distinguished teacher with a passion for undergraduate education, having developed student-centered and active curriculum in the areas of mechanics, thermodynamics, and materials science. 
+
+Join us to learn the latest innovations, meet outstanding professors, world-class leaders, professionals and have fun. Register at http://www.asmboston.org
+
+hashtag#Innovation hashtag#Technology hashtag#Development hashtag#Future hashtag#Education hashtag#Entrepreneurship hashtag#Startups hashtag#Leadership hashtag#Engineering hashtag#Networking
+…more
+Activate to view larger image,
+No alternative text description for this image
+Activate to view larger image,
+likelovecelebrate
+21
+5 comments
+
+
+
+
+
+ASM International | Boston ChapterASM International | Boston Chapter
+4,642 followers4,642 followers
+2mo • Edited •  2 months ago • Edited • Visible to anyone on or off LinkedIn
+
+We are honored to present AJ Jbeili to the ASM International | Boston Chapter Stage on November 20, 2025.
+
+As Allium's Head of Engineering and Manufacturing, AJ Jbeili leads operational excellence and advanced manufacturing across the organization. Bringing over ten years of expertise in metal and additive manufacturing, AJ holds a degree in Metallurgical & Materials Engineering from the Colorado School of Mines and is a Lean Six Sigma Black Belt. AJ joined Allium two years ago, driven by a commitment to delivering economically scalable solutions for clean energy and carbon emission reduction.
+Allium Engineering is revolutionizing critical infrastructure with our innovative process for creating stainless steel claddings in the construction industry. Our breakthrough rebar technology increases resilience of critical infrastructure by tenfold and significantly reduces carbon emissions; all while costing a fraction of other alternatives and eliminating what is currently mandatory maintenance and replacement costs. Outside of our beachhead market in construction materials, we are in process of developing into new verticals where we believe we have an unbeatable technical and cost advantage.
+
+Join us to learn the latest innovations, meet outstanding professors, world-class leaders, professionals and have fun. Register at http://www.asmboston.org
+
+hashtag#Innovation hashtag#Technology hashtag#Development hashtag#Future hashtag#Education hashtag#Entrepreneurship hashtag#Startups hashtag#Leadership hashtag#Engineering hashtag#Networking
+…more
+Activate to view larger image,
+graphical user interface, application
+Activate to view larger image,
+likecelebratelove
+73
+6 comments
+1 repost
+
+
+
+
+1
+2
+3
+4
+Show all posts
+Unlock insights on ASM International | Boston Chapter
+The latest hiring trends
+Chart
+Chart with 13 data points.
+The chart has 1 X axis displaying values. Range: 1732579200000 to 1770422400000.
+The chart has 1 Y axis displaying values. Range: 0 to 6.
+End of interactive chart.
+Growth trends
+ 0%0
+
+Employee growth
+
+And more hiring trends
+Recent hires
+Connection image
+Show ASM
+Try Premium for MAD0
+1 month free before paying. Cancel anytime.
+
+About
+Accessibility
+Talent Solutions
+Professional Community Policies
+Careers
+Marketing Solutions
+
+Privacy & Terms 
+Ad Choices
+Advertising
+Sales Solutions
+Mobile
+Small Business
+Safety Center
+Questions?
+Visit our Help Center.
+
+Manage your account and privacy
+Go to your Settings.
+
+Recommendation transparency
+Learn more about Recommended Content.
+
+Select Language
+
+English (English)
+LinkedIn Corporation © 2026
+
+
+Pages people also viewed
+ASM International page logo
+ASM International
+Non-profit Organizations
+19,537 followers
+
+Follow
+Systems Thinking Alliance page logo
+Systems Thinking Alliance
+Professional Training and Coaching
+22,288 followers
+
+Follow
+Harvard Business Review page logo
+Harvard Business Review
+Book and Periodical Publishing
+14,569,505 followers
+Khadija Mtibat
+Khadija & 2 other connections follow this page
+
+Follow
+
+Show all
+People also follow
+LinkedIn page logo
+LinkedIn
+Software Development
+32,855,159 followers
+Younes Ouba is open to work
+Younes & 6 other connections follow this page
+
+Follow
+Deloitte page logo
+Deloitte
+Business Consulting and Services
+20,856,584 followers
+Ikhlass Loukili
+Ikhlass & 9 other connections follow this page
+
+Follow
+Oracle page logo
+Oracle
+IT Services and IT Consulting
+11,083,836 followers
+El Hachchad Abdelghaffar is open to work
+El Hachchad & 6 other connections follow this page
+
+Follow
+
+Show all
+
+Rachid El AssaliStatus is online
+MessagingYou are on the messaging overlay. Press enter to open the list of conversations.
+
+Compose message
+You are on the messaging overlay. Press enter to open the list of conversations.
+Quantum-OXYL-Research Lab picture
+Quantum-OXYL-Research Lab
+1 notification total
+You’ll be notified about all new posts from ASM International | Boston Chapter.
+
+Dismiss
+
+Skip to search
+
+Skip to main content
+
+Keyboard shortcuts
+Close jump menu
+Search
+new feed updates notifications
+Home
+My Network
+Jobs
+Messaging
+Notifications
+Rachid El Assali
+Me
+
+For Business
+Claim 1 free month of Premium Page
+Subscribed to all page notifications. Click to manage.
+ASM International | Boston Chapter logo
+ASM International | Boston Chapter
+Advanced scientific, engineering and technical materials society.
+
+Non-profit Organizations Boston, Massachusetts 5K followers 11-50 employees
+
+Following
+
+Message
+ 
+
+More Pages to follow
+  
+Boston University’s cover photo
+Boston University’s logo
+Company name
+Boston University
+Higher Education
+Relevance reason
+573,149 followers
+
+Follow
+GE Aerospace’s cover photo
+GE Aerospace’s logo
+Company name
+GE Aerospace
+Aviation and Aerospace Component Manufacturing
+Relevance reason
+1,681,418 followers
+
+Follow
+LinkedIn’s cover photo
+LinkedIn’s logo
+Company name
+LinkedIn
+Software Development
+Relevance reason
+7 connections follow this page
+
+Follow
+Gates Foundation’s cover photo
+Gates Foundation’s logo
+Company name
+Gates Foundation
+Non-profit Organizations
+Relevance reason
+1,468,582 followers
+
+Follow
+
+Show all
+Home
+About
+Posts
+Jobs
+People
+Overview
+ASM International is the world's largest association of materials-centric scientists and engineers dedicated to informing, educating, and connecting the materials community to solve problems and stimulate innovation around the world.
+Show all details 
+Featured
+Feed post number 1
+Page posts
+Page 1 of 4Previous
+Next
+
+ASM International | Boston ChapterASM International | Boston Chapter
+4,642 followers4,642 followers
+3w •  3 weeks ago • Visible to anyone on or off LinkedIn
+
+We are honored to present Prof. Rebecca Belisle to the ASM International | Boston Chapter and ASM International - Central Massachusetts Chapter Stage on January 15, 2026.
+
+Rebecca Belisle is the Knafel Assistant Professor of Natural Sciences and an Assistant Professor of Physics at Wellesley College, where her research group focuses on synthesizing and characterizing new solution processed semiconductors. Trained as a materials scientist (PhD from Stanford University, MPhil from the University of Bath, and BS from Franklin W. Olin College of Engineering), Dr. Belisle loves exploring how we can use an understanding of chemistry and structure to design materials to solve real world problems. Currently, her lab is focused on the need for new renewable energy technologies and is using in situ characterization of atomic structure and optical properties to develop wide bandgap perovskite semiconductors for tandem solar cells. Outside of the lab, Dr. Belisle is a distinguished teacher with a passion for undergraduate education, having developed student-centered and active curriculum in the areas of mechanics, thermodynamics, and materials science. 
+
+Join us to learn the latest innovations, meet outstanding professors, world-class leaders, professionals and have fun. Register at http://www.asmboston.org
+
+hashtag#Innovation hashtag#Technology hashtag#Development hashtag#Future hashtag#Education hashtag#Entrepreneurship hashtag#Startups hashtag#Leadership hashtag#Engineering hashtag#Networking
+…more
+Activate to view larger image,
+No alternative text description for this image
+Activate to view larger image,
+likelovecelebrate
+21
+5 comments
+
+
+
+
+
+ASM International | Boston ChapterASM International | Boston Chapter
+4,642 followers4,642 followers
+2mo • Edited •  2 months ago • Edited • Visible to anyone on or off LinkedIn
+
+We are honored to present AJ Jbeili to the ASM International | Boston Chapter Stage on November 20, 2025.
+
+As Allium's Head of Engineering and Manufacturing, AJ Jbeili leads operational excellence and advanced manufacturing across the organization. Bringing over ten years of expertise in metal and additive manufacturing, AJ holds a degree in Metallurgical & Materials Engineering from the Colorado School of Mines and is a Lean Six Sigma Black Belt. AJ joined Allium two years ago, driven by a commitment to delivering economically scalable solutions for clean energy and carbon emission reduction.
+Allium Engineering is revolutionizing critical infrastructure with our innovative process for creating stainless steel claddings in the construction industry. Our breakthrough rebar technology increases resilience of critical infrastructure by tenfold and significantly reduces carbon emissions; all while costing a fraction of other alternatives and eliminating what is currently mandatory maintenance and replacement costs. Outside of our beachhead market in construction materials, we are in process of developing into new verticals where we believe we have an unbeatable technical and cost advantage.
+
+Join us to learn the latest innovations, meet outstanding professors, world-class leaders, professionals and have fun. Register at http://www.asmboston.org
+
+hashtag#Innovation hashtag#Technology hashtag#Development hashtag#Future hashtag#Education hashtag#Entrepreneurship hashtag#Startups hashtag#Leadership hashtag#Engineering hashtag#Networking
+…more
+Activate to view larger image,
+graphical user interface, application
+Activate to view larger image,
+likecelebratelove
+73
+6 comments
+1 repost
+
+
+
+
+1
+2
+3
+4
+Show all posts
+Unlock insights on ASM International | Boston Chapter
+The latest hiring trends
+Chart
+Chart with 13 data points.
+The chart has 1 X axis displaying values. Range: 1732579200000 to 1770422400000.
+The chart has 1 Y axis displaying values. Range: 0 to 6.
+End of interactive chart.
+Growth trends
+ 0%0
+
+Employee growth
+
+And more hiring trends
+Recent hires
+Connection image
+Show ASM
+Try Premium for MAD0
+1 month free before paying. Cancel anytime.
+
+About
+Accessibility
+Talent Solutions
+Professional Community Policies
+Careers
+Marketing Solutions
+
+Privacy & Terms 
+Ad Choices
+Advertising
+Sales Solutions
+Mobile
+Small Business
+Safety Center
+Questions?
+Visit our Help Center.
+
+Manage your account and privacy
+Go to your Settings.
+
+Recommendation transparency
+Learn more about Recommended Content.
+
+Select Language
+
+English (English)
+LinkedIn Corporation © 2026
+
+
+Pages people also viewed
+ASM International page logo
+ASM International
+Non-profit Organizations
+19,537 followers
+
+Follow
+Systems Thinking Alliance page logo
+Systems Thinking Alliance
+Professional Training and Coaching
+22,288 followers
+
+Follow
+Harvard Business Review page logo
+Harvard Business Review
+Book and Periodical Publishing
+14,569,505 followers
+Khadija Mtibat
+Khadija & 2 other connections follow this page
+
+Follow
+
+Show all
+People also follow
+LinkedIn page logo
+LinkedIn
+Software Development
+32,855,159 followers
+Younes Ouba is open to work
+Younes & 6 other connections follow this page
+
+Follow
+Deloitte page logo
+Deloitte
+Business Consulting and Services
+20,856,584 followers
+Ikhlass Loukili
+Ikhlass & 9 other connections follow this page
+
+Follow
+Oracle page logo
+Oracle
+IT Services and IT Consulting
+11,083,836 followers
+El Hachchad Abdelghaffar is open to work
+El Hachchad & 6 other connections follow this page
+
+Follow
+
+Show all
+
+Rachid El AssaliStatus is online
+MessagingYou are on the messaging overlay. Press enter to open the list of conversations.
+
+Compose message
+You are on the messaging overlay. Press enter to open the list of conversations.
+Quantum-OXYL-Research Lab picture
+Quantum-OXYL-Research Lab
+1 notification total
+You’ll be notified about all new posts from ASM International | Boston Chapter.
+
+Dismiss
+
+Skip to search
+
+Skip to main content
+
+Keyboard shortcuts
+Close jump menu
+Search
+new feed updates notifications
+Home
+My Network
+Jobs
+Messaging
+Notifications
+Rachid El Assali
+Me
+
+For Business
+Claim 1 free month of Premium Page
+Subscribed to all page notifications. Click to manage.
+ASM International | Boston Chapter logo
+ASM International | Boston Chapter
+Advanced scientific, engineering and technical materials society.
+
+Non-profit Organizations Boston, Massachusetts 5K followers 11-50 employees
+
+Following
+
+Message
+ 
+
+More Pages to follow
+  
+Boston University’s cover photo
+Boston University’s logo
+Company name
+Boston University
+Higher Education
+Relevance reason
+573,149 followers
+
+Follow
+GE Aerospace’s cover photo
+GE Aerospace’s logo
+Company name
+GE Aerospace
+Aviation and Aerospace Component Manufacturing
+Relevance reason
+1,681,418 followers
+
+Follow
+LinkedIn’s cover photo
+LinkedIn’s logo
+Company name
+LinkedIn
+Software Development
+Relevance reason
+7 connections follow this page
+
+Follow
+Gates Foundation’s cover photo
+Gates Foundation’s logo
+Company name
+Gates Foundation
+Non-profit Organizations
+Relevance reason
+1,468,582 followers
+
+Follow
+
+Show all
+Home
+About
+Posts
+Jobs
+People
+Overview
+ASM International is the world's largest association of materials-centric scientists and engineers dedicated to informing, educating, and connecting the materials community to solve problems and stimulate innovation around the world.
+Show all details 
+Featured
+Feed post number 1
+Page posts
+Page 1 of 4Previous
+Next
+
+ASM International | Boston ChapterASM International | Boston Chapter
+4,642 followers4,642 followers
+3w •  3 weeks ago • Visible to anyone on or off LinkedIn
+
+We are honored to present Prof. Rebecca Belisle to the ASM International | Boston Chapter and ASM International - Central Massachusetts Chapter Stage on January 15, 2026.
+
+Rebecca Belisle is the Knafel Assistant Professor of Natural Sciences and an Assistant Professor of Physics at Wellesley College, where her research group focuses on synthesizing and characterizing new solution processed semiconductors. Trained as a materials scientist (PhD from Stanford University, MPhil from the University of Bath, and BS from Franklin W. Olin College of Engineering), Dr. Belisle loves exploring how we can use an understanding of chemistry and structure to design materials to solve real world problems. Currently, her lab is focused on the need for new renewable energy technologies and is using in situ characterization of atomic structure and optical properties to develop wide bandgap perovskite semiconductors for tandem solar cells. Outside of the lab, Dr. Belisle is a distinguished teacher with a passion for undergraduate education, having developed student-centered and active curriculum in the areas of mechanics, thermodynamics, and materials science. 
+
+Join us to learn the latest innovations, meet outstanding professors, world-class leaders, professionals and have fun. Register at http://www.asmboston.org
+
+hashtag#Innovation hashtag#Technology hashtag#Development hashtag#Future hashtag#Education hashtag#Entrepreneurship hashtag#Startups hashtag#Leadership hashtag#Engineering hashtag#Networking
+…more
+Activate to view larger image,
+No alternative text description for this image
+Activate to view larger image,
+likelovecelebrate
+21
+5 comments
+
+
+
+
+
+ASM International | Boston ChapterASM International | Boston Chapter
+4,642 followers4,642 followers
+2mo • Edited •  2 months ago • Edited • Visible to anyone on or off LinkedIn
+
+We are honored to present AJ Jbeili to the ASM International | Boston Chapter Stage on November 20, 2025.
+
+As Allium's Head of Engineering and Manufacturing, AJ Jbeili leads operational excellence and advanced manufacturing across the organization. Bringing over ten years of expertise in metal and additive manufacturing, AJ holds a degree in Metallurgical & Materials Engineering from the Colorado School of Mines and is a Lean Six Sigma Black Belt. AJ joined Allium two years ago, driven by a commitment to delivering economically scalable solutions for clean energy and carbon emission reduction.
+Allium Engineering is revolutionizing critical infrastructure with our innovative process for creating stainless steel claddings in the construction industry. Our breakthrough rebar technology increases resilience of critical infrastructure by tenfold and significantly reduces carbon emissions; all while costing a fraction of other alternatives and eliminating what is currently mandatory maintenance and replacement costs. Outside of our beachhead market in construction materials, we are in process of developing into new verticals where we believe we have an unbeatable technical and cost advantage.
+
+Join us to learn the latest innovations, meet outstanding professors, world-class leaders, professionals and have fun. Register at http://www.asmboston.org
+
+hashtag#Innovation hashtag#Technology hashtag#Development hashtag#Future hashtag#Education hashtag#Entrepreneurship hashtag#Startups hashtag#Leadership hashtag#Engineering hashtag#Networking
+…more
+Activate to view larger image,
+graphical user interface, application
+Activate to view larger image,
+likecelebratelove
+73
+6 comments
+1 repost
+
+
+
+
+1
+2
+3
+4
+Show all posts
+Unlock insights on ASM International | Boston Chapter
+The latest hiring trends
+Chart
+Chart with 13 data points.
+The chart has 1 X axis displaying values. Range: 1732579200000 to 1770422400000.
+The chart has 1 Y axis displaying values. Range: 0 to 6.
+End of interactive chart.
+Growth trends
+ 0%0
+
+Employee growth
+
+And more hiring trends
+Recent hires
+Connection image
+Show ASM
+Try Premium for MAD0
+1 month free before paying. Cancel anytime.
+
+About
+Accessibility
+Talent Solutions
+Professional Community Policies
+Careers
+Marketing Solutions
+
+Privacy & Terms 
+Ad Choices
+Advertising
+Sales Solutions
+Mobile
+Small Business
+Safety Center
+Questions?
+Visit our Help Center.
+
+Manage your account and privacy
+Go to your Settings.
+
+Recommendation transparency
+Learn more about Recommended Content.
+
+Select Language
+
+English (English)
+LinkedIn Corporation © 2026
+
+
+Pages people also viewed
+ASM International page logo
+ASM International
+Non-profit Organizations
+19,537 followers
+
+Follow
+Systems Thinking Alliance page logo
+Systems Thinking Alliance
+Professional Training and Coaching
+22,288 followers
+
+Follow
+Harvard Business Review page logo
+Harvard Business Review
+Book and Periodical Publishing
+14,569,505 followers
+Khadija Mtibat
+Khadija & 2 other connections follow this page
+
+Follow
+
+Show all
+People also follow
+LinkedIn page logo
+LinkedIn
+Software Development
+32,855,159 followers
+Younes Ouba is open to work
+Younes & 6 other connections follow this page
+
+Follow
+Deloitte page logo
+Deloitte
+Business Consulting and Services
+20,856,584 followers
+Ikhlass Loukili
+Ikhlass & 9 other connections follow this page
+
+Follow
+Oracle page logo
+Oracle
+IT Services and IT Consulting
+11,083,836 followers
+El Hachchad Abdelghaffar is open to work
+El Hachchad & 6 other connections follow this page
+
+Follow
+
+Show all
+
+Rachid El AssaliStatus is online
+MessagingYou are on the messaging overlay. Press enter to open the list of conversations.
+
+Compose message
+You are on the messaging overlay. Press enter to open the list of conversations.
+Quantum-OXYL-Research Lab picture
+Quantum-OXYL-Research Lab
+1 notification total
+You’ll be notified about all new posts from ASM International | Boston Chapter.
+
+Dismiss
+
+Skip to search
+
+Skip to main content
+
+Keyboard shortcuts
+Close jump menu
+Search
+new feed updates notifications
+Home
+My Network
+Jobs
+Messaging
+Notifications
+Rachid El Assali
+Me
+
+For Business
+Claim 1 free month of Premium Page
+Subscribed to all page notifications. Click to manage.
+ASM International | Boston Chapter logo
+ASM International | Boston Chapter
+Advanced scientific, engineering and technical materials society.
+
+Non-profit Organizations Boston, Massachusetts 5K followers 11-50 employees
+
+Following
+
+Message
+ 
+
+More Pages to follow
+  
+Boston University’s cover photo
+Boston University’s logo
+Company name
+Boston University
+Higher Education
+Relevance reason
+573,149 followers
+
+Follow
+GE Aerospace’s cover photo
+GE Aerospace’s logo
+Company name
+GE Aerospace
+Aviation and Aerospace Component Manufacturing
+Relevance reason
+1,681,418 followers
+
+Follow
+LinkedIn’s cover photo
+LinkedIn’s logo
+Company name
+LinkedIn
+Software Development
+Relevance reason
+7 connections follow this page
+
+Follow
+Gates Foundation’s cover photo
+Gates Foundation’s logo
+Company name
+Gates Foundation
+Non-profit Organizations
+Relevance reason
+1,468,582 followers
+
+Follow
+
+Show all
+Home
+About
+Posts
+Jobs
+People
+Overview
+ASM International is the world's largest association of materials-centric scientists and engineers dedicated to informing, educating, and connecting the materials community to solve problems and stimulate innovation around the world.
+Show all details 
+Featured
+Feed post number 1
+Page posts
+Page 1 of 4Previous
+Next
+
+ASM International | Boston ChapterASM International | Boston Chapter
+4,642 followers4,642 followers
+3w •  3 weeks ago • Visible to anyone on or off LinkedIn
+
+We are honored to present Prof. Rebecca Belisle to the ASM International | Boston Chapter and ASM International - Central Massachusetts Chapter Stage on January 15, 2026.
+
+Rebecca Belisle is the Knafel Assistant Professor of Natural Sciences and an Assistant Professor of Physics at Wellesley College, where her research group focuses on synthesizing and characterizing new solution processed semiconductors. Trained as a materials scientist (PhD from Stanford University, MPhil from the University of Bath, and BS from Franklin W. Olin College of Engineering), Dr. Belisle loves exploring how we can use an understanding of chemistry and structure to design materials to solve real world problems. Currently, her lab is focused on the need for new renewable energy technologies and is using in situ characterization of atomic structure and optical properties to develop wide bandgap perovskite semiconductors for tandem solar cells. Outside of the lab, Dr. Belisle is a distinguished teacher with a passion for undergraduate education, having developed student-centered and active curriculum in the areas of mechanics, thermodynamics, and materials science. 
+
+Join us to learn the latest innovations, meet outstanding professors, world-class leaders, professionals and have fun. Register at http://www.asmboston.org
+
+hashtag#Innovation hashtag#Technology hashtag#Development hashtag#Future hashtag#Education hashtag#Entrepreneurship hashtag#Startups hashtag#Leadership hashtag#Engineering hashtag#Networking
+…more
+Activate to view larger image,
+No alternative text description for this image
+Activate to view larger image,
+likelovecelebrate
+21
+5 comments
+
+
+
+
+
+ASM International | Boston ChapterASM International | Boston Chapter
+4,642 followers4,642 followers
+2mo • Edited •  2 months ago • Edited • Visible to anyone on or off LinkedIn
+
+We are honored to present AJ Jbeili to the ASM International | Boston Chapter Stage on November 20, 2025.
+
+As Allium's Head of Engineering and Manufacturing, AJ Jbeili leads operational excellence and advanced manufacturing across the organization. Bringing over ten years of expertise in metal and additive manufacturing, AJ holds a degree in Metallurgical & Materials Engineering from the Colorado School of Mines and is a Lean Six Sigma Black Belt. AJ joined Allium two years ago, driven by a commitment to delivering economically scalable solutions for clean energy and carbon emission reduction.
+Allium Engineering is revolutionizing critical infrastructure with our innovative process for creating stainless steel claddings in the construction industry. Our breakthrough rebar technology increases resilience of critical infrastructure by tenfold and significantly reduces carbon emissions; all while costing a fraction of other alternatives and eliminating what is currently mandatory maintenance and replacement costs. Outside of our beachhead market in construction materials, we are in process of developing into new verticals where we believe we have an unbeatable technical and cost advantage.
+
+Join us to learn the latest innovations, meet outstanding professors, world-class leaders, professionals and have fun. Register at http://www.asmboston.org
+
+hashtag#Innovation hashtag#Technology hashtag#Development hashtag#Future hashtag#Education hashtag#Entrepreneurship hashtag#Startups hashtag#Leadership hashtag#Engineering hashtag#Networking
+…more
+Activate to view larger image,
+graphical user interface, application
+Activate to view larger image,
+likecelebratelove
+73
+6 comments
+1 repost
+
+
+
+
+1
+2
+3
+4
+Show all posts
+Unlock insights on ASM International | Boston Chapter
+The latest hiring trends
+Chart
+Chart with 13 data points.
+The chart has 1 X axis displaying values. Range: 1732579200000 to 1770422400000.
+The chart has 1 Y axis displaying values. Range: 0 to 6.
+End of interactive chart.
+Growth trends
+ 0%0
+
+Employee growth
+
+And more hiring trends
+Recent hires
+Connection image
+Show ASM
+Try Premium for MAD0
+1 month free before paying. Cancel anytime.
+
+About
+Accessibility
+Talent Solutions
+Professional Community Policies
+Careers
+Marketing Solutions
+
+Privacy & Terms 
+Ad Choices
+Advertising
+Sales Solutions
+Mobile
+Small Business
+Safety Center
+Questions?
+Visit our Help Center.
+
+Manage your account and privacy
+Go to your Settings.
+
+Recommendation transparency
+Learn more about Recommended Content.
+
+Select Language
+
+English (English)
+LinkedIn Corporation © 2026
+
+
+Pages people also viewed
+ASM International page logo
+ASM International
+Non-profit Organizations
+19,537 followers
+
+Follow
+Systems Thinking Alliance page logo
+Systems Thinking Alliance
+Professional Training and Coaching
+22,288 followers
+
+Follow
+Harvard Business Review page logo
+Harvard Business Review
+Book and Periodical Publishing
+14,569,505 followers
+Khadija Mtibat
+Khadija & 2 other connections follow this page
+
+Follow
+
+Show all
+People also follow
+LinkedIn page logo
+LinkedIn
+Software Development
+32,855,159 followers
+Younes Ouba is open to work
+Younes & 6 other connections follow this page
+
+Follow
+Deloitte page logo
+Deloitte
+Business Consulting and Services
+20,856,584 followers
+Ikhlass Loukili
+Ikhlass & 9 other connections follow this page
+
+Follow
+Oracle page logo
+Oracle
+IT Services and IT Consulting
+11,083,836 followers
+El Hachchad Abdelghaffar is open to work
+El Hachchad & 6 other connections follow this page
+
+Follow
+
+Show all
+
+Rachid El AssaliStatus is online
+MessagingYou are on the messaging overlay. Press enter to open the list of conversations.
+
+Compose message
+You are on the messaging overlay. Press enter to open the list of conversations.
+Quantum-OXYL-Research Lab picture
+Quantum-OXYL-Research Lab
+1 notification total
+You’ll be notified about all new posts from ASM International | Boston Chapter.
+
+Dismiss
+
+Skip to search
+
+Skip to main content
+
+Keyboard shortcuts
+Close jump menu
+Search
+new feed updates notifications
+Home
+My Network
+Jobs
+Messaging
+Notifications
+Rachid El Assali
+Me
+
+For Business
+Claim 1 free month of Premium Page
+Subscribed to all page notifications. Click to manage.
+ASM International | Boston Chapter logo
+ASM International | Boston Chapter
+Advanced scientific, engineering and technical materials society.
+
+Non-profit Organizations Boston, Massachusetts 5K followers 11-50 employees
+
+Following
+
+Message
+ 
+
+More Pages to follow
+  
+Boston University’s cover photo
+Boston University’s logo
+Company name
+Boston University
+Higher Education
+Relevance reason
+573,149 followers
+
+Follow
+GE Aerospace’s cover photo
+GE Aerospace’s logo
+Company name
+GE Aerospace
+Aviation and Aerospace Component Manufacturing
+Relevance reason
+1,681,418 followers
+
+Follow
+LinkedIn’s cover photo
+LinkedIn’s logo
+Company name
+LinkedIn
+Software Development
+Relevance reason
+7 connections follow this page
+
+Follow
+Gates Foundation’s cover photo
+Gates Foundation’s logo
+Company name
+Gates Foundation
+Non-profit Organizations
+Relevance reason
+1,468,582 followers
+
+Follow
+
+Show all
+Home
+About
+Posts
+Jobs
+People
+Overview
+ASM International is the world's largest association of materials-centric scientists and engineers dedicated to informing, educating, and connecting the materials community to solve problems and stimulate innovation around the world.
+Show all details 
+Featured
+Feed post number 1
+Page posts
+Page 1 of 4Previous
+Next
+
+ASM International | Boston ChapterASM International | Boston Chapter
+4,642 followers4,642 followers
+3w •  3 weeks ago • Visible to anyone on or off LinkedIn
+
+We are honored to present Prof. Rebecca Belisle to the ASM International | Boston Chapter and ASM International - Central Massachusetts Chapter Stage on January 15, 2026.
+
+Rebecca Belisle is the Knafel Assistant Professor of Natural Sciences and an Assistant Professor of Physics at Wellesley College, where her research group focuses on synthesizing and characterizing new solution processed semiconductors. Trained as a materials scientist (PhD from Stanford University, MPhil from the University of Bath, and BS from Franklin W. Olin College of Engineering), Dr. Belisle loves exploring how we can use an understanding of chemistry and structure to design materials to solve real world problems. Currently, her lab is focused on the need for new renewable energy technologies and is using in situ characterization of atomic structure and optical properties to develop wide bandgap perovskite semiconductors for tandem solar cells. Outside of the lab, Dr. Belisle is a distinguished teacher with a passion for undergraduate education, having developed student-centered and active curriculum in the areas of mechanics, thermodynamics, and materials science. 
+
+Join us to learn the latest innovations, meet outstanding professors, world-class leaders, professionals and have fun. Register at http://www.asmboston.org
+
+hashtag#Innovation hashtag#Technology hashtag#Development hashtag#Future hashtag#Education hashtag#Entrepreneurship hashtag#Startups hashtag#Leadership hashtag#Engineering hashtag#Networking
+…more
+Activate to view larger image,
+No alternative text description for this image
+Activate to view larger image,
+likelovecelebrate
+21
+5 comments
+
+
+
+
+
+ASM International | Boston ChapterASM International | Boston Chapter
+4,642 followers4,642 followers
+2mo • Edited •  2 months ago • Edited • Visible to anyone on or off LinkedIn
+
+We are honored to present AJ Jbeili to the ASM International | Boston Chapter Stage on November 20, 2025.
+
+As Allium's Head of Engineering and Manufacturing, AJ Jbeili leads operational excellence and advanced manufacturing across the organization. Bringing over ten years of expertise in metal and additive manufacturing, AJ holds a degree in Metallurgical & Materials Engineering from the Colorado School of Mines and is a Lean Six Sigma Black Belt. AJ joined Allium two years ago, driven by a commitment to delivering economically scalable solutions for clean energy and carbon emission reduction.
+Allium Engineering is revolutionizing critical infrastructure with our innovative process for creating stainless steel claddings in the construction industry. Our breakthrough rebar technology increases resilience of critical infrastructure by tenfold and significantly reduces carbon emissions; all while costing a fraction of other alternatives and eliminating what is currently mandatory maintenance and replacement costs. Outside of our beachhead market in construction materials, we are in process of developing into new verticals where we believe we have an unbeatable technical and cost advantage.
+
+Join us to learn the latest innovations, meet outstanding professors, world-class leaders, professionals and have fun. Register at http://www.asmboston.org
+
+hashtag#Innovation hashtag#Technology hashtag#Development hashtag#Future hashtag#Education hashtag#Entrepreneurship hashtag#Startups hashtag#Leadership hashtag#Engineering hashtag#Networking
+…more
+Activate to view larger image,
+graphical user interface, application
+Activate to view larger image,
+likecelebratelove
+73
+6 comments
+1 repost
+
+
+
+
+1
+2
+3
+4
+Show all posts
+Unlock insights on ASM International | Boston Chapter
+The latest hiring trends
+Chart
+Chart with 13 data points.
+The chart has 1 X axis displaying values. Range: 1732579200000 to 1770422400000.
+The chart has 1 Y axis displaying values. Range: 0 to 6.
+End of interactive chart.
+Growth trends
+ 0%0
+
+Employee growth
+
+And more hiring trends
+Recent hires
+Connection image
+Show ASM
+Try Premium for MAD0
+1 month free before paying. Cancel anytime.
+
+About
+Accessibility
+Talent Solutions
+Professional Community Policies
+Careers
+Marketing Solutions
+
+Privacy & Terms 
+Ad Choices
+Advertising
+Sales Solutions
+Mobile
+Small Business
+Safety Center
+Questions?
+Visit our Help Center.
+
+Manage your account and privacy
+Go to your Settings.
+
+Recommendation transparency
+Learn more about Recommended Content.
+
+Select Language
+
+English (English)
+LinkedIn Corporation © 2026
+
+
+Pages people also viewed
+ASM International page logo
+ASM International
+Non-profit Organizations
+19,537 followers
+
+Follow
+Systems Thinking Alliance page logo
+Systems Thinking Alliance
+Professional Training and Coaching
+22,288 followers
+
+Follow
+Harvard Business Review page logo
+Harvard Business Review
+Book and Periodical Publishing
+14,569,505 followers
+Khadija Mtibat
+Khadija & 2 other connections follow this page
+
+Follow
+
+Show all
+People also follow
+LinkedIn page logo
+LinkedIn
+Software Development
+32,855,159 followers
+Younes Ouba is open to work
+Younes & 6 other connections follow this page
+
+Follow
+Deloitte page logo
+Deloitte
+Business Consulting and Services
+20,856,584 followers
+Ikhlass Loukili
+Ikhlass & 9 other connections follow this page
+
+Follow
+Oracle page logo
+Oracle
+IT Services and IT Consulting
+11,083,836 followers
+El Hachchad Abdelghaffar is open to work
+El Hachchad & 6 other connections follow this page
+
+Follow
+
+Show all
+
+Rachid El AssaliStatus is online
+MessagingYou are on the messaging overlay. Press enter to open the list of conversations.
+
+Compose message
+You are on the messaging overlay. Press enter to open the list of conversations.
+Quantum-OXYL-Research Lab picture
+Quantum-OXYL-Research Lab
+
