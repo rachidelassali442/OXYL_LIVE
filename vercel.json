@@ -1,10 +1,7 @@
 {
   "version": 2,
-  "cleanUrls": true,
-  "trailingSlash": false,
+  "public": true,
   "rewrites": [
-    { "source": "/whitepaper", "destination": "/whitepaper/index.html" },
-    { "source": "/sitemap", "destination": "/sitemap/index.xml" },
-    { "source": "/api/(.*)", "destination": "/api/index.py" }
+    { "source": "/api/(.*)", "destination": "http://IP_DYAL_SERVER:8000/api/$1" }
   ]
 }

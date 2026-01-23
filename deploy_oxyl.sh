@@ -12,6 +12,7 @@ echo "=============================================================="
 
 # ========== CONFIGURATION ==========
 PROJECT_ROOT="/var/www/oxyl"
+cp $(pwd)/index.html /var/www/oxyl/frontend/index.html 2>/dev/null || echo "Frontend already synced"
 VENV_PATH="$PROJECT_ROOT/venv"
 BACKEND_DIR="$PROJECT_ROOT/backend"
 FRONTEND_DIR="$PROJECT_ROOT/frontend"
