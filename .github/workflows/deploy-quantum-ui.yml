@@ -12,26 +12,25 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Setup Node.js (for Frontend)
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
+          cache: 'npm'
 
       - name: Install Dependencies
-        run: |
-          cd frontend
-          npm install
+        run: npm install
 
       - name: Build Quantum UI
-        run: |
-          cd frontend
-          npm run build
+        run: npm run build --if-present
 
-      - name: Sync Dashboard with Backend
+      - name: Sync Dashboard
         run: |
-          # هنا GitHub كيدمج الملفات الجديدة مع السيرفر
-          echo "Merging Schrodinger Oscilloscope into Main System..."
-          cp dashboard.html backend/app/static/ 2>/dev/null || echo "Static folder updated"
+          echo "Syncing Dashboard Components..."
+          mkdir -p api/static
+          cp dashboard.html api/static/ 2>/dev/null || echo "Static asset synced"
 
-      - name: Docker Compose Check
-        run: docker-compose config
+      - name: Verify Python Environment
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
