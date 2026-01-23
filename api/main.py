@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+import time
 
 app = FastAPI()
 
@@ -25,9 +26,6 @@ async def get_state():
         "latency": 15,
         "superposition": 99.1,
         "core_temp": 298.5,
+        "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         "message": "Quantum Link Restored - OXYL.XYZ CORE ONLINE"
     }
-
-@app.get("/")
-async def root():
-    return {"message": "OXYL API ACTIVE"}
