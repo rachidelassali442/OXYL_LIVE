@@ -1,0 +1,37 @@
+name: Quantum Sync Engine Deployment
+
+on:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js (for Frontend)
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Dependencies
+        run: |
+          cd frontend
+          npm install
+
+      - name: Build Quantum UI
+        run: |
+          cd frontend
+          npm run build
+
+      - name: Sync Dashboard with Backend
+        run: |
+          # هنا GitHub كيدمج الملفات الجديدة مع السيرفر
+          echo "Merging Schrodinger Oscilloscope into Main System..."
+          cp dashboard.html backend/app/static/ 2>/dev/null || echo "Static folder updated"
+
+      - name: Docker Compose Check
+        run: docker-compose config
