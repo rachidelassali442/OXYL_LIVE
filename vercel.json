@@ -1,8 +1,6 @@
 {
   "version": 2,
   "public": true,
-  "cleanUrls": true,
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
-  ]
+  "name": "oxyl-quantum-sync-engine",
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }
