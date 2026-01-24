@@ -9,6 +9,8 @@
       gtag("js", new Date());
       gtag("config", "G-PQK477CKHP");
     </script>
+    
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OXYL | Quantum Sync Engine</title>
@@ -51,59 +53,6 @@
         </div>
     </div>
 
-    <script>
-        // 1. Quantum Oscilloscope Animation
-        const canvas = document.getElementById('quantumCanvas');
-        const ctx = canvas.getContext('2d');
-        let time = 0;
-
-        function resize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.onresize = resize;
-        resize();
-
-        function draw() {
-            ctx.fillStyle = 'rgba(5, 5, 5, 0.2)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            ctx.strokeStyle = '#00FFCC';
-            ctx.lineWidth = 1.5;
-            ctx.shadowBlur = 15;
-            ctx.shadowColor = '#00FFCC';
-
-            ctx.beginPath();
-            for (let x = 0; x < canvas.width; x++) {
-                const wave1 = Math.sin(x * 0.005 + time) * 100;
-                const wave2 = Math.sin(x * 0.01 - time * 2) * 30;
-                const y = canvas.height / 2 + wave1 + wave2;
-                if (x === 0) ctx.moveTo(x, y);
-                else ctx.lineTo(x, y);
-            }
-            ctx.stroke();
-            time += 0.02;
-            requestAnimationFrame(draw);
-        }
-        draw();
-
-        // 2. Fetch Data from Backend
-        async function updateStats() {
-            try {
-                // بدل هاد الـ IP بـ IP السيرفر ديالك
-                const res = await fetch('http://YOUR_SERVER_IP:8000/api/v1/quantum-stats');
-                const data = await res.json();
-                document.getElementById('density').innerText = data.density;
-                document.getElementById('curvature').innerText = data.curvature;
-                document.getElementById('heat').innerText = data.heat + " K";
-                document.getElementById('status').innerText = "STABLE";
-            } catch (e) {
-                document.getElementById('status').innerText = "OFFLINE";
-                document.getElementById('status').style.color = "red";
-            }
-        }
-        setInterval(updateStats, 2000);
-    </script>
 </body>
 </html>
 
